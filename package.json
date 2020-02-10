@@ -1,5 +1,5 @@
 {
-  "name": "react-modele",
+  "name": "becomepote",
   "devDependencies": {
     "@babel/core": "*",
     "@babel/plugin-proposal-class-properties": "*",
@@ -10,7 +10,6 @@
     "autoprefixer": "*",
     "babel-eslint": "*",
     "babel-loader": "*",
-    "chai": "*",
     "css-loader": "*",
     "enzyme": "*",
     "enzyme-adapter-react-16": "*",
@@ -24,7 +23,6 @@
     "html-webpack-plugin": "*",
     "ignore-styles": "*",
     "mini-css-extract-plugin": "*",
-    "mocha": "*",
     "node-sass": "*",
     "optimize-css-assets-webpack-plugin": "*",
     "postcss": "*",
@@ -39,8 +37,6 @@
     "webpack-dev-server": "*"
   },
   "scripts": {
-    "test": "mocha --require tests/.setup.js tests/**/*.test.js",
-    "test:watch": "mocha --watch --require tests/.setup.js tests/**/*.test.js",
     "start": "webpack-dev-server",
     "clean": "rm -rf dist",
     "clean:all": "rm -rf dist node_modules",
@@ -51,11 +47,12 @@
     "save-deps": "node updateDeps.js"
   },
   "dependencies": {
+    "axios": "^0.19.0",
+    "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "axios": "^0.19.0",
-    "classnames": "^2.2.6",
+    "react-icons": "^3.9.0",
     "react-redux": "^7.1.0",
     "redux": "^4.0.1"
   }
