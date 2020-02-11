@@ -1,10 +1,10 @@
 // == Import NPM
 import React from 'react';
-import { FaArrowRight } from 'react-icons/fa';
+import { IoMdArrowForward } from 'react-icons/io';
 
 // == Import Local
 import './homepage.scss';
-import logo from './Logo_BeComePote_shadow.png';
+import logo from './Logo_BeComePote_v3.png';
 
 
 const HomePage = () => (
@@ -22,12 +22,12 @@ const HomePage = () => (
         <div className="homePage-links">
           <a className="homePage-links-button" href="#">
             Se connecter
-            <span className="homePage-links-button-arrow"><FaArrowRight />
+            <span className="homePage-links-button-arrow"><IoMdArrowForward />
             </span>
           </a>
           <a className="homePage-links-button" href="#">
             Créer un compte
-            <span className="homePage-links-button-arrow"><FaArrowRight />
+            <span className="homePage-links-button-arrow"><IoMdArrowForward />
             </span>
           </a>
         </div>

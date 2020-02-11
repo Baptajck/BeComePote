@@ -1,3 +1,6 @@
+// == Variable
+$white: #fff;
+
 @media screen and (min-width: 300px) {
   // Gras pour la marque
   .beComePote {
@@ -5,17 +8,18 @@
   }
 
   .homePage-layout {
-
+    background-image: url(./blob-header.png);
+    background-repeat: no-repeat;
   }
 
   // Mise en page de l'accueil
   .homePage {
-    max-width: 60%;
+    max-width: 75%;
     margin-right: auto;
     margin-left: auto;
 
     &-header {
-
+      
       // Position du logo
       &-logo {
         display: block;
@@ -28,11 +32,11 @@
 
       // Position du titre de l'app
       &-title {
-        font-size: 1.5em;
+        font-size: 2em;
         text-align: center;
         font-weight: 700;
-        margin: 1.2rem 0 0;
-        background: linear-gradient(to left, #ee670d,#e9872b);
+        margin: 2rem 0 0;
+        background: linear-gradient(to right, #3453a1,#775da5,#ce6795,#e68676);
         -webkit-background-clip:text;
         -webkit-text-fill-color: transparent;
         text-transform: uppercase;
@@ -46,36 +50,36 @@
         margin-bottom: 2rem;
         margin-top: 0.15rem;
         font-weight: 600;
+        color: $white;
       }
     }
 
     // Position du texte de description
     &-content {
       line-height: 1.4rem;
-      margin-bottom: 2rem;
+      margin: 9rem 0 2rem;
     }
 
       // Liens de connexion
       &-links {
       display: flex;
       flex-direction: column;
-      line-height:1.8rem;
-      margin-top: 2.5rem;
+      line-height:2rem;
+      margin-top: 3rem;
       z-index: 3;
-      text-align: center;
+      text-align: right;
 
       &-button {
         margin-bottom: 0.4rem;
 
         &-arrow {
           background: linear-gradient(to left, #ee670d,#e9872b);
-          padding: .3rem;
-          border-radius: 50%;
+          border-radius: 2em;
           display: inline-block;
           margin-left: 0.5rem;
           vertical-align: middle;
           width: 2rem;
-          height: 2rem;
+          height: 1.5rem;
           text-align: center;
           color: #fff;
         }
@@ -86,6 +90,7 @@
     &-footer {
       font-size: 0.65em;
       text-align: center;
+      margin: 3rem 0;
     }
   }
 }
