@@ -8,16 +8,16 @@ import logo from './Logo_BeComePote_shadow.png';
 
 
 const HomePage = () => (
-  <>
-    <div className="blob1"> </div>
-    <h1 className="homePage">
+  <div className="homePage-layout">
+    <div className="homePage">
       <header className="homePage-header">
         <img className="homePage-header-logo" src={logo} alt="Logo" title="BeComePote" />
         <h1 className="homePage-header-title">BeComePote</h1>
         <h2 className="homePage-header-subtitle">L'app où tu papotes</h2>
       </header>
       <main className="homePage-content">
-        <p className="homePage-presentation">Avec <strong>BeComePote</strong>, tu as enfin une application faite sur mesure pour chercher et te faire des amis.</p>
+        <p className="homePage-presentation">Avec <strong className="beComePote">BeComePote</strong>, tu as enfin une application faite sur mesure pour chercher et te faire des amis.</p>
+        <br />
         <p className="homePage-presentation">Crée ton compte, regarde les profils, vois si tu as des affinités et commence à chatter avec tes nouveaux amis&nbsp;! </p>
         <div className="homePage-links">
           <a className="homePage-links-button" href="#">
@@ -33,9 +33,8 @@ const HomePage = () => (
         </div>
       </main>
       <footer className="homePage-footer">mentions légales</footer>
-    </h1>
-    <div className="blob2"> </div>
-  </>
+    </div>
+  </div>
 );
 
 

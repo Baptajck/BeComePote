@@ -9,7 +9,6 @@ import SignUp from 'src/components/SignUp';
 // == Composant
 const App = () => (
   <div>
-    <SignUp />
     <HomePage />
   </div>
 );
