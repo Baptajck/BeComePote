@@ -1,5 +1,6 @@
 // == Import NPM
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { IoMdArrowForward } from 'react-icons/io';
 
 // == Import Local
@@ -20,16 +21,16 @@ const HomePage = () => (
         <br />
         <p className="homePage-presentation">Crée ton compte, regarde les profils, vois si tu as des affinités et commence à chatter avec tes nouveaux amis&nbsp;! </p>
         <div className="homePage-links">
-          <a className="homePage-links-button" href="#">
+          <NavLink className="homePage-links-button" to="/connect">
             Se connecter
             <span className="homePage-links-button-arrow"><IoMdArrowForward />
             </span>
-          </a>
-          <a className="homePage-links-button" href="#">
+          </NavLink>
+          <NavLink className="homePage-links-button" to="/create">
             Créer un compte
             <span className="homePage-links-button-arrow"><IoMdArrowForward />
             </span>
-          </a>
+          </NavLink>
         </div>
       </main>
       <footer className="homePage-footer">mentions légales</footer>

@@ -1,18 +1,24 @@
 @media screen and (min-width: 300px) {
-  .signUp {
+  .signIn {
     max-width: 80%;
     margin: 10rem auto 1rem;
 
-    &-subtitle {
-      font-size: 1.3rem;
-      text-align: center;
+    &-title {
+      font-size: 4em;
       font-weight: 700;
+      text-align: center;
+    }
+
+    &-subtitle {
+      font-size: 0.8rem;
+      text-align: center;
+      font-style: italic;
       margin: 1rem;
     }
 
     &-form {
       &-container {
-        margin: 3.5rem 1rem;
+        margin: 5rem 1rem;
       }
 
       &-label {
@@ -60,6 +66,16 @@
             padding: 0.5rem;
           }
         }
+      }
+    }
+    &-text {
+      font-size: 0.7rem;
+      margin-top: 3rem;
+      text-align: center;
+
+      &-link {
+        font-weight: 700;
+        text-decoration: underline;
       }
     }
   }
