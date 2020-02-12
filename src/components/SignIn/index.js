@@ -25,12 +25,13 @@ const SignIn = () => (
           <input type="password" name="password" placeholder="Mot de passe" className="signIn-form-input" />
         </label>
       </div>
+      <NavLink to="/forgottenPassword" className="signIn-form-forgottenPassword">Mot de passe oublié</NavLink>
       <div className="signIn-form-input-send-icon">
         <input type="submit" value="Se connecter" className="signIn-form-input-send" />
         <span className="signIn-form-input-send-arrow"><FaArrowRight /></span>
       </div>
     </form>
-    <p className="signIn-text">Tu n'as pas encore de compte ? <NavLink to="/create" className="signIn-text-link">Créer le</NavLink></p>
+    <p className="signIn-text">Tu n'as pas encore de compte ? <NavLink to="/create" className="signIn-text-link">Crée le</NavLink></p>
   </div>
 );
 
