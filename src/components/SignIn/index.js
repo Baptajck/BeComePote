@@ -11,7 +11,7 @@ import './signIn.scss';
 const SignIn = () => (
   <div className="signIn">
     <h1 className="signIn-title">Salut !</h1>
-    <p className="signIn-subtitle">Connecte toi pour chercher de nouveaux amis</p>
+    <p className="signIn-subtitle">Connecte toi pour chercher de nouveaux amis sur <strong className="BeComePote">BeComePote</strong>&nbsp;!</p>
     <form className="signIn-form">
       <div className="signIn-form-container">
         <label className="signIn-form-label">

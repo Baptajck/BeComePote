@@ -1,8 +1,12 @@
 @media screen and (min-width: 300px) {
+  .BeComePote {
+    font-weight: 600;
+  }
+  
   .signIn {
     max-width: 80%;
     margin: 10rem auto 1rem;
-
+  
     &-title {
       font-size: 4em;
       font-weight: 700;
@@ -14,6 +18,7 @@
       text-align: center;
       font-style: italic;
       margin: 1rem;
+      line-height:1.1rem;
     }
 
     &-form {
@@ -30,8 +35,9 @@
         font-size: 0.6rem;
         text-decoration: underline;
         font-style: italic;
-        margin-left: 2rem;
+        margin-left: 1.8rem;
         margin-bottom: 5rem;
+        margin-top: .8rem;
         display: block;
         color: gray;
       }

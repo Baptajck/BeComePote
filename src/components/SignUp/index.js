@@ -13,8 +13,8 @@ const SignUp = () => (
     <form className="signUp-form">
       <div className="signUp-form-container">
         <label className="signUp-form-label">
-          <IoMdMail /> Email
-          <input type="text" name="email" placeholder="Email" className="signUp-form-input" />
+          <IoMdMail /> E-mail
+          <input type="email" name="email" placeholder="E-mail" className="signUp-form-input" />
         </label>
       </div>
       <div className="signUp-form-container">
@@ -26,7 +26,7 @@ const SignUp = () => (
       <div className="signUp-form-container">
         <label className="signUp-form-label">
           <IoIosLock /> Confirme ton mot de passe
-          <input type="password" name="password" placeholder="Mot de passe" className="signUp-form-input" />
+          <input type="password" name="password" placeholder="Confirme ton mot de passe" className="signUp-form-input" />
         </label>
       </div>
       <div className="signUp-form-input-send-icon">

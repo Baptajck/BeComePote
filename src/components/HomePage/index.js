@@ -20,6 +20,8 @@ const HomePage = () => (
         <p className="homePage-presentation">Avec <strong className="beComePote">BeComePote</strong>, tu as enfin une application faite sur mesure pour chercher et te faire des amis.</p>
         <br />
         <p className="homePage-presentation">Crée ton compte, regarde les profils, vois si tu as des affinités et commence à chatter avec tes nouveaux amis&nbsp;! </p>
+        <br />
+        <p className="homePage-presentation"><strong className="beComePote">BeComePote</strong> est entièrement gratuit et exclusivement dédié à créer des <strong className="beComePote">relations amicales.</strong></p>
         <div className="homePage-links">
           <NavLink className="homePage-links-button" to="/connect">
             Se connecter
@@ -33,7 +35,7 @@ const HomePage = () => (
           </NavLink>
         </div>
       </main>
-      <footer className="homePage-footer">mentions légales</footer>
+      <footer className="homePage-footer">Mentions légales - Qui sommes-nous ?</footer>
     </div>
   </div>
 );
