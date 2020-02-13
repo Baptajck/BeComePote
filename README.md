@@ -1,4 +1,5 @@
 # BeComePote
+![Logo_BeComePote_v4.png](https://i.imgur.com/ws3CiLd.png) 
 
 ## Présentation du Projet
 
