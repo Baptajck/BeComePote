@@ -1,0 +1,72 @@
+@media screen and (min-width: 300px) {
+  .signUp {
+    max-width: 80%;
+    margin: 10rem auto 1rem;
+
+    &-subtitle {
+      font-size: 1.3rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 1rem;
+    }
+
+    &-form {
+      &-container {
+        margin: 3.5rem 1rem;
+      }
+
+      &-label {
+        display: inline;
+        margin-left: .5rem;
+      }
+
+      &-input {
+        display: block;
+        margin: .5rem auto;
+        width: 100%;
+        border-radius: 2em;
+        padding: 0.7rem;
+        border: none;
+        -moz-box-shadow: 0px 0px 5px 0px #7c7c7c;
+        -webkit-box-shadow: 0px 0px 5px 0px #7c7c7c;
+        -o-box-shadow: 0px 0px 5px 0px #7c7c7c;
+        box-shadow: 0px 0px 5px 0px #7c7c7c;
+
+        &:placeholder-shown {
+          font-style: italic;
+        }
+
+        &-send {
+          text-align: right;
+          border: none;
+          background: none;
+          font-size: 1.4em;
+
+          &-icon {
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          &-arrow {
+            background: linear-gradient(to left, #ee670d,#e9872b);
+            border-radius: 2em;
+            display: inline-block;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            width: 3rem;
+            text-align: center;
+            color:
+            #fff;
+            padding: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768) {}
+
+@media screen and (min-width: 992) {}
+
+@media screen and (min-width: 1650) {}
