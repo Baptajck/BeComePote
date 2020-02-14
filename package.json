@@ -44,13 +44,17 @@
     "build:dev:win": "set NODE_ENV=development && webpack",
     "build:prod": "NODE_ENV=production webpack --mode production",
     "build:prod:win": "set NODE_ENV=production && webpack --mode production",
+    "start:server": "nodemon backend/server.js",
     "save-deps": "node updateDeps.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
