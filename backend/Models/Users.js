@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const connectionDB = require('../connexion.js');
 
 module.exports = connectionDB.sequelize.define('users', {
-  // attrbiutes
+  // attributes
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -11,40 +11,39 @@ module.exports = connectionDB.sequelize.define('users', {
   },
   token: {
     type: Sequelize.STRING(64),
-    allowNull: false,
+    notNull: false,
   },
   firstname: {
     type: Sequelize.STRING,
-    allowNull: false,
+    notNull: false,
   },
   lastname: {
     type: Sequelize.STRING,
-    allowNull: false,
+    notNull: false,
   },
   pseudo: {
     type: Sequelize.STRING(15),
-    allowNull: false,
+    notNull: false,
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false,
+    notNull: false,
   },
   password: {
     type: Sequelize.STRING(64),
-    allowNull: false,
+    notNull: false,
   },
-
   avatar: {
     type: Sequelize.STRING(128),
-    allowNull: true,
+    notNull: true,
   },
   age: {
     type: Sequelize.STRING(10),
-    allowNull: true,
+    notNull: true,
   },
   presentation: {
     type: Sequelize.TEXT,
-    allowNull: true,
+    notNull: true,
   },
   created_at: {
     type: Sequelize.DATE,
@@ -58,6 +57,9 @@ module.exports = connectionDB.sequelize.define('users', {
 {
   timestamps: false,
 });
+
+// module.exports = {
+
 
 // module.exports = {
 //   registerNewUser: (req, res) => {

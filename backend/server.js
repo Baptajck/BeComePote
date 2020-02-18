@@ -16,17 +16,20 @@ app.use(
     extended: false,
   }),
 );
+
+// TODO Utiliser CORS ou App.use lignes 24-30
 // app.use(cors());
 // app.use(express.favicon(`${__dirname}src/favicon/favicon.ico`));
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', `http://${hostname}:8080`);
-  //   res.header('Access-Control-Allow-Credentials', true);
+  // TODO If a cookie is needed
+  // res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  //   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD');
+  // TODO Pas de bonnes pratiques trouvées pour cette ligne
+  // res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD');
   next();
 });
-
 
 // Start on assigned port
 app.listen(port, () => {
@@ -37,4 +40,4 @@ app.listen(port, () => {
 const routes = require('./routes');
 
 // Importing express.Router for routes
-routes(express.Router());
+routes(app);
