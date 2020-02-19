@@ -1,22 +1,27 @@
 /* eslint-disable no-console */
 const express = require('express');
+const bcrypt = require('bcrypt');
+// const knex = require('knex');
 
 const router = express.Router();
 
 const User = require('../Models/Users');
 
+
 // Route for creating a user account
 router.post('/register', (req, res) => {
   const { pseudo, email, password } = req.body;
+  const test = User.query().select('email').where('email', email);
+  // const test = knex.raw('SELECT email FROM `users`');
   User.query()
     .insert({
       pseudo,
       email,
-      password,
+      password: bcrypt.hashSync(password, 10),
     })
     .then((user) => {
       res.json(user);
-      console.log('Success, your profile has been created!');
+      console.log('Success, your profile has been created!', test);
     })
     .catch((err) => {
       res.status(500).send({
