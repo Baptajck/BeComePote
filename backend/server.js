@@ -7,8 +7,8 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT;
-const hostname = process.env.HOST;
+const { PORT } = process.env;
+const { HOST } = process.env;
 
 app.use(bodyParser.json());
 app.use(
@@ -22,7 +22,7 @@ app.use(
 // app.use(express.favicon(`${__dirname}src/favicon/favicon.ico`));
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', `http://${hostname}:8080`);
+  res.header('Access-Control-Allow-Origin', `http://${HOST}:8080`);
   // TODO If a cookie is needed
   // res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -32,12 +32,9 @@ app.use((req, res, next) => {
 });
 
 // Start on assigned port
-app.listen(port, () => {
-  console.log(`Welcome, this server running at http://${hostname}:${port}`);
+app.listen(PORT, () => {
+  console.log(`Welcome, this server running at http://${HOST}:${PORT}`);
 });
 
-// Importing route
-const routes = require('./routes');
-
-// Importing express.Router for routes
-routes(app);
+// Routes
+app.use('/api', require('./api/users').router);
