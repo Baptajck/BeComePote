@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const express = require('express');
 const bcrypt = require('bcrypt');
-// const knex = require('knex');
+
 
 const router = express.Router();
 
@@ -11,24 +11,24 @@ const User = require('../Models/Users');
 // Route for creating a user account
 router.post('/register', (req, res) => {
   const { pseudo, email, password } = req.body;
-  const test = User.query().select('email').where('email', email);
-  // const test = knex.raw('SELECT email FROM `users`');
-  User.query()
-    .insert({
-      pseudo,
-      email,
-      password: bcrypt.hashSync(password, 10),
-    })
-    .then((user) => {
-      res.json(user);
-      console.log('Success, your profile has been created!', test);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error has occurred while creating the user.',
+  try {
+    User.query()
+      .insert({
+        pseudo,
+        email,
+        password: bcrypt.hashSync(password, 10),
+      })
+      .then((user) => {
+        res.json(user);
+        console.log('Success, your profile has been created!');
       });
+  }
+  catch (err) {
+    res.status(500).send({
+      message:
+        err.message || 'Some error has occurred while creating the user.',
     });
+  }
 });
 
 // Route to see all users
@@ -81,8 +81,8 @@ router.patch('/user/:id/edit', (req, res) => {
       age,
       presentation,
     })
-    .then((user) => {
-      res.json(user);
+    .then((newuser) => {
+      res.json(newuser);
       console.log('Success, your profile has been updated!');
     })
     .catch((err) => {
@@ -107,6 +107,37 @@ router.delete('/user/:id/delete', (req, res) => {
         message:
           err.message || 'Some error occurred while trying to delete the user.',
       });
+    });
+});
+
+// Route to connect a user
+router.post('/connect', (req, res) => {
+  const { email, password } = req.body;
+  User.query()
+    .where('email', email)
+    .select('password', 'email')
+    .then((result) => {
+      if (!result) { // not found!
+      // report invalid email
+        console.log('email not exist', result);
+        return;
+      }
+      const passwordIsValid = bcrypt.compareSync(password, result[0].password);
+      console.log(`HASH ${result[0].password}`, `Je suis le password ${password}`, passwordIsValid);
+      if (passwordIsValid) {
+      // login
+        console.log('Success, your connected', passwordIsValid);
+      }
+      else {
+      // failed login
+        res.status(500).send({
+          message:
+           'Not allowed',
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 });
 
