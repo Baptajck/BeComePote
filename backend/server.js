@@ -7,8 +7,7 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 
 const app = express();
-const { PORT } = process.env;
-const { HOST } = process.env;
+const { PORT, HOST } = process.env;
 
 app.use(bodyParser.json());
 app.use(
@@ -19,6 +18,7 @@ app.use(
 
 // TODO Utiliser CORS ou App.use lignes 24-30
 // app.use(cors());
+// TODO Gérer le flavicon pour le back
 // app.use(express.favicon(`${__dirname}src/favicon/favicon.ico`));
 
 app.use((req, res, next) => {
@@ -28,6 +28,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   // TODO Pas de bonnes pratiques trouvées pour cette ligne
   // res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD');
+  // res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH');
   next();
 });
 
