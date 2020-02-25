@@ -51,3 +51,4 @@ app.listen(PORT_BACK, () => {
 
 // Routes
 app.use('/api', require('./api/users').router);
+app.use('/email', require('./email/email.model').router);

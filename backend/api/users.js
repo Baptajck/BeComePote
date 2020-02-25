@@ -217,4 +217,4 @@ module.exports = {
   router,
 };
 
-// // app.post('/forgotten', Users.forgottenPassword);
+// app.post('/forgotten', Users.forgottenPassword);
