@@ -18,7 +18,14 @@ const User = require('../Models/Users');
    */
 router.post('/register', (req, res) => {
   const { pseudo, email, password } = req.body;
-
+  const privateKEY = fs.readFileSync('key/private.key', 'utf8');
+  const signOptions = {
+    issuer: 'becomepote',
+    subject: 'information utilisateur',
+    audience: 'http://becompote.fr',
+    expiresIn: '24h',
+    algorithm: 'RS256',
+  };
   User.query()
     .where('email', email)
     .select('email')
@@ -37,17 +44,21 @@ router.post('/register', (req, res) => {
             password: bcrypt.hashSync(password, 10),
           })
           .then((newUser) => {
+            const token = jwt.sign({ newUser }, privateKEY, signOptions);
+            res.cookie('registerUserToken', token, {
+              expires: new Date(Date.now() + 86400),
+              secure: false, // set to true if your using https
+              httpOnly: true,
+            });
             res.status(201).send('Success, your profile has been created!');
-            res.json(newUser);
+            res.json(token);
           });
       }
     })
-    .catch((err) => {
-      res.status(500).send({
-        message:
+    .catch((err) => res.status(500).send({
+      message:
           err.message || 'An error has occurred while creating your account.',
-      });
-    });
+    }));
 });
 
 /**
@@ -62,12 +73,10 @@ router.get('/users', (req, res) => {
       res.json(users);
       res.status(200).send('All users have been successful listed!');
     })
-    .catch((err) => {
-      res.status(500).send({
-        message:
+    .catch((err) => res.status(500).send({
+      message:
           err.message || 'An error has occurred while listing the users.',
-      });
-    });
+    }));
 });
 
 /**
@@ -84,12 +93,10 @@ router.get('/user/:id', (req, res) => {
       res.json(user);
       res.status(200).send('The user\'s profile has been successful displayed!');
     })
-    .catch((err) => {
-      res.status(500).send({
-        message:
+    .catch((err) => res.status(500).send({
+      message:
           err.message || 'Some error has occurred while displaying the user\'s profile.',
-      });
-    });
+    }));
 });
 
 /**
@@ -101,7 +108,7 @@ router.get('/user/:id', (req, res) => {
 router.patch('/user/:id/edit', (req, res) => {
   const id = Number(req.params.id);
   const {
-    firstname, lastname, pseudo, email, password, avatar, age, presentation,
+    firstname, lastname, pseudo, email, avatar, age, presentation,
   } = req.body;
   User.query()
     .findById(id)
@@ -110,7 +117,6 @@ router.patch('/user/:id/edit', (req, res) => {
       lastname,
       pseudo,
       email,
-      password: bcrypt.hashSync(password, 10),
       avatar,
       age,
       presentation,
@@ -119,12 +125,10 @@ router.patch('/user/:id/edit', (req, res) => {
       res.json(userUpdated);
       res.status(200).send('Your profile has been updated!');
     })
-    .catch((err) => {
-      res.status(500).send({
-        message:
+    .catch((err) => res.status(500).send({
+      message:
           err.message || 'Some error occurred while updating the user\'s profile.',
-      });
-    });
+    }));
 });
 
 /**
@@ -141,12 +145,10 @@ router.delete('/user/:id/delete', (req, res) => {
       res.json(user);
       res.status(200).send('Success, your profile has been deleted!');
     })
-    .catch((err) => {
-      res.status(500).send({
-        message:
+    .catch((err) => res.status(500).send({
+      message:
           err.message || 'Some error occurred while trying to delete the user.',
-      });
-    });
+    }));
 });
 
 /**
@@ -176,30 +178,38 @@ router.post('/connect', (req, res) => {
           issuer: 'becomepote',
           subject: 'information utilisateur',
           audience: 'http://becompote.fr',
-          expiresIn: '7d',
+          expiresIn: '24h',
           algorithm: 'RS256',
         };
         const token = jwt.sign({ user }, privateKEY, signOptions);
+        res.cookie('userToken', token, {
+          expires: new Date(Date.now() + 86400),
+          // secure: true, if https enabled
+          secure: false,
+          httpOnly: true,
+        });
 
+        // TODO CHECK ENCRYPTION KEY AND IF COOKIE IS EMPTY ERR.MESSAGE DISPLAYS
         // Check if encryption key is correct
         const verifyOptions = {
           issuer: 'becomepote',
           subject: 'information utilisateur',
           audience: 'http://becompote.fr',
-          expiresIn: '7d',
+          expiresIn: '24h',
           algorithm: ['RS256'],
         };
         const verifyToken = jwt.verify(token, publicKEY, verifyOptions);
-        res.json({ verifyToken });
+        if (verifyToken.length === 0) {
+          res.json(verifyToken);
+          res.status(401).send({ message: 'You need to login to access this page.' });
+        }
         res.status(200).send('You\'re connected!');
       }
     })
-    .catch((err) => {
-      res.status(500).send({
-        message:
+    .catch((err) => res.status(500).send({
+      message:
            err.message || 'Login was unsuccessful, please try again',
-      });
-    });
+    }));
 });
 
 
@@ -207,6 +217,4 @@ module.exports = {
   router,
 };
 
-
-// // app.post('/logout', Users.logoutUser);
 // // app.post('/forgotten', Users.forgottenPassword);
