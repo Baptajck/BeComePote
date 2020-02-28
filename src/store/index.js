@@ -2,8 +2,8 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 
 // == Import : local
-import reducer from 'src/store/reducer';
-import logMiddleware from './logMiddleware';
+import reducer from 'src/store/reducers';
+import logMiddleware from './middlewares/logMiddleware';
 
 // == Store
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
