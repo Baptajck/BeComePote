@@ -6,10 +6,10 @@ import { Switch, Route } from 'react-router-dom';
 import './app.scss';
 import ScrollToTop from 'src/components/ScrollToTop';
 import HomePage from 'src/components/HomePage';
-import SignIn from 'src/components/SignIn';
-import ForgottenPassword from 'src/components/ForgottenPassword';
 
-import SignUp from 'src/containers/userAuth';
+import SignUp from 'src/containers/forms/signUp';
+import SignIn from 'src/containers/forms/signIn';
+import ForgottenPassword from 'src/containers/forms/forgottenPassword';
 
 // == Composant
 const App = () => (

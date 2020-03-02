@@ -1,6 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
 @media screen and (min-width: 300px) {
   .BeComePote {
     font-weight: 600;
+  }
+
+  .requirements {
+    padding: 0 30px 0 50px;
+    max-height: 0;
+    transition: 0.28s;
+    overflow: hidden;
+    color: red;
+    font-style: italic;
+  }
+
+  input[type="submit"] {
+    font-family: 'Comfortaa', cursive;
+    display: block;
+    width: 100%;
+    color: #292929;
+    border: 0;
+    font-size: 1.1em;
+    text-align: right;
   }
   
   .signIn {
@@ -23,12 +46,13 @@
 
     &-form {
       &-container {
-        margin: 5rem 1rem 0;
-      }
+        margin: 3.5rem 1rem 0;
+        position: relative;
+        background: white;
 
-      &-label {
-        display: inline;
-        margin-left: .5rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
 
       &-forgottenPassword {
@@ -42,21 +66,75 @@
         color: gray;
       }
 
+      &-label {
+        opacity: 0.5;
+        font-size: 14px;
+        font-weight: bold;
+        position: absolute;
+        top: 11px;
+        left: 20px;
+        cursor: auto;
+        display: block;
+        transition: 0.2s;
+
+        &-icon {
+          display: inline;
+          vertical-align: text-top;
+        }
+      }
+
       &-input {
         display: block;
         margin: .5rem auto;
         width: 100%;
         border-radius: 2em;
-        padding: 0.7rem;
+        padding: 0.7rem 2.1rem;
         border: none;
-        -moz-box-shadow: 0px 0px 5px 0px #7c7c7c;
-        -webkit-box-shadow: 0px 0px 5px 0px #7c7c7c;
-        -o-box-shadow: 0px 0px 5px 0px #7c7c7c;
         box-shadow: 0px 0px 5px 0px #7c7c7c;
+
+        &:focus {
+          ~ .signIn-form-label {
+            position: absolute;
+            top: -22px;
+            display: block;
+            transition: 0.2s;
+            opacity: 1;
+          }
+          
+          background: #eee;
+          border-width: 3px;
+          border-image-slice: 1;
+        }
 
         &:placeholder-shown {
           font-style: italic;
-          padding-left: 1rem;
+        }
+        
+        &:valid {
+          background: url(https://i.imgur.com/cKUyms3.png);
+          background-size: 20px;
+          background-repeat: no-repeat;
+          background-position: 10px 10px;
+
+          & + label {
+            opacity: 0;
+          }
+        }
+
+        &:invalid:not(:focus):not(:placeholder-shown) {
+          background: pink;
+
+          & + label {
+            opacity: 0;
+          }
+        }
+        
+        &:invalid:focus:not(:placeholder-shown) {
+          & ~ .requirements {
+            max-height: 200px;
+            padding: 0 15px 20px 15px;
+            font-size: 13px;
+          }
         }
 
         &-send {
@@ -97,9 +175,3 @@
     }
   }
 }
-
-@media screen and (min-width: 768) {}
-
-@media screen and (min-width: 992) {}
-
-@media screen and (min-width: 1650) {}

@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
 // on importe chacun des sous-reducers
-import userAuth from './userAuth';
+import signUp from './forms/signUp';
+import signIn from './forms/signIn';
+import forgottenPassword from './forms/forgottenPassword';
 
 /**
 * combineReducers nous retourne le reducer parent généré
@@ -11,7 +13,9 @@ import userAuth from './userAuth';
 */
 
 const reducer = combineReducers({
-  userAuth,
+  signUp,
+  signIn,
+  forgottenPassword,
 });
 
 export default reducer;

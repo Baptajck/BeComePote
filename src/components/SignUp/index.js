@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // == Import NPM
 import React from 'react';
-// import { IoMdMail, IoIosLock } from 'react-icons/io';
 import { FaArrowRight } from 'react-icons/fa';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiLock, FiMail } from 'react-icons/fi';

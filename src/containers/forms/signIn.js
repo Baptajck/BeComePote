@@ -2,15 +2,14 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import SignUp from 'src/components/SignUp';
+import SignIn from 'src/components/SignIn';
 
 // Action Creators
-import { changeInput } from 'src/store/reducers/userAuth';
+import { changeInput } from 'src/store/reducers/forms/signIn';
 
 const mapStateToProps = (state) => ({
-  email: state.userAuth.email,
-  password: state.userAuth.password,
-  pseudo: state.userAuth.pseudo,
+  email: state.signIn.email,
+  password: state.signIn.password,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -20,10 +19,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // Container
-const SignUpContainer = connect(
+const SignInContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SignUp);
+)(SignIn);
 
 // == Export
-export default SignUpContainer;
+export default SignInContainer;

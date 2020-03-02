@@ -58,6 +58,8 @@
         top: 11px;
         left: 20px;
         cursor: auto;
+        display: block;
+        transition: 0.2s;
 
         &-icon {
           display: inline;
@@ -74,21 +76,26 @@
         border: none;
         box-shadow: 0px 0px 5px 0px #7c7c7c;
 
+        &:focus {
+          ~ .signUp-form-label {
+            position: absolute;
+            top: -22px;
+            display: block;
+            transition: 0.2s;
+            opacity: 1;
+          }
+          
+          background: #eee;
+          border-width: 3px;
+          border-image-slice: 1;
+        }
+
         &:placeholder-shown {
           font-style: italic;
         }
-
-        &:focus {
-          background: #eee;
-          padding-left: 2.1rem;
-
-          & + label {
-            opacity: 0;
-          }
-        }
         
         &:valid {
-          background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg);
+          background: url(https://i.imgur.com/cKUyms3.png);
           background-size: 20px;
           background-repeat: no-repeat;
           background-position: 10px 10px;
