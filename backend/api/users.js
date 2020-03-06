@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
+
 const router = express.Router();
 const User = require('../Models/Users');
 
@@ -52,6 +53,7 @@ router.post('/register', (req, res) => {
             });
             res.status(201).send('Success, your profile has been created!');
             res.json(token);
+            res.redirect('/forgottenPassword');
           });
       }
     })
