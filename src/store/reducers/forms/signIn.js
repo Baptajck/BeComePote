@@ -5,12 +5,12 @@ const initialState = {
 };
 
 // == Types
-const CHANGE_INPUT = 'CHANGE_INPUT';
+const CHANGE_INPUT_SIGN_IN = 'CHANGE_INPUT_SIGN_IN';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case CHANGE_INPUT:
+    case CHANGE_INPUT_SIGN_IN:
       return {
         ...state,
         [action.name]: action.value,
@@ -22,8 +22,8 @@ const reducer = (state = initialState, action = {}) => {
 };
 
 // == Action Creators
-export const changeInput = (name, value) => ({
-  type: CHANGE_INPUT,
+export const changeInputSignIn = (name, value) => ({
+  type: CHANGE_INPUT_SIGN_IN,
   name,
   value,
 });

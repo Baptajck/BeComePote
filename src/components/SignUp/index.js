@@ -10,22 +10,25 @@ import PropTypes from 'prop-types';
 import './signup.scss';
 
 const SignUp = ({
-  email, password, pseudo, confirmPassword, changeValue, createUser, user,
+  email, password, pseudo, confirmPassword, changeValue, createUser,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     changeValue(name, value);
   };
 
+  const handleChangePassword = (event) => {
+    const { value } = event.target;
+    if (!RegExp.escape) {
+      RegExp.escape = (s) => String(s).replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
+    const t = document.getElementById('confirmPassword');
+    t.pattern = RegExp.escape(value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // if (password !== confirmPassword) {
-    //   alert('Vos mots de passe ne correspondent pas.');
-    // }
-    // else {
     createUser();
-    console.log(user);
-    // }
   };
 
   return (
@@ -70,6 +73,7 @@ const SignUp = ({
               id="password"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
               onChange={handleChange}
+              onInput={handleChangePassword}
               name="password"
               value={password}
               className="signUp-form-input"
@@ -86,13 +90,13 @@ const SignUp = ({
               id="confirmPassword"
               name="confirmPassword"
               value={confirmPassword}
-              className="signUp-form-input"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+              className="signUp-form-input"
               required
               placeholder=" "
             />
             <label htmlFor="confirmPassword" className="signUp-form-label"><span className="signUp-form-label-icon"><FiLock className="signUp-form-label-icon" /></span> Confirme ton mot de passe</label>
-            <div className="requirements">Votre mot de passe doit contenir au moins 6 caractères: au moins un en majuscule, un en minuscule et un chiffre.</div>
+            <div className="requirements">Vos mots de passe ne correspondent pas.</div>
           </div>
           <div className="signUp-box">
             <input
@@ -104,8 +108,10 @@ const SignUp = ({
             <a className="signUp-box-text" href="/terms">Accepter les conditions d'utilisation</a>
           </div>
           <div className="signUp-form-input-send-icon">
-            <input type="submit" value="Créer un compte" className="signUp-form-input-send" />
-            <span className="signUp-form-input-send-arrow"><FaArrowRight /></span>
+            <button type="submit" className="signUp-form-input-send">
+              Créer un compte
+              <span className="signUp-form-input-send-arrow"><FaArrowRight /></span>
+            </button>
           </div>
         </form>
       </div>
@@ -121,7 +127,6 @@ SignUp.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
-  user: PropTypes.array.isRequired,
 };
 
 // == Export

@@ -9,7 +9,7 @@ const initialState = {
 };
 
 // == Types
-const CHANGE_INPUT = 'CHANGE_INPUT';
+const CHANGE_INPUT_SIGN_UP = 'CHANGE_INPUT_SIGN_UP';
 export const CREATE_USER = 'CREATE_USER';
 const SAVE_USER = 'SAVE_USER';
 // const SAVE_NEW_USER = 'SAVE_NEW_USER';
@@ -17,7 +17,7 @@ const SAVE_USER = 'SAVE_USER';
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case CHANGE_INPUT:
+    case CHANGE_INPUT_SIGN_UP:
       return {
         ...state,
         [action.name]: action.value,
@@ -40,8 +40,8 @@ const reducer = (state = initialState, action = {}) => {
 };
 
 // == Action Creators
-export const changeInput = (name, value) => ({
-  type: CHANGE_INPUT,
+export const changeInputSignUp = (name, value) => ({
+  type: CHANGE_INPUT_SIGN_UP,
   name,
   value,
 });

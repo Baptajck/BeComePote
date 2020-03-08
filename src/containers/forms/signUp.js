@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import SignUp from 'src/components/SignUp';
 
 // Action Creators
-import { changeInput, createUser } from 'src/store/reducers/forms/signUp';
+import { changeInputSignUp, createUser } from 'src/store/reducers/forms/signUp';
 
 const mapStateToProps = (state) => ({
   email: state.signUp.email,
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeValue: (name, value) => {
-    dispatch(changeInput(name, value));
+    dispatch(changeInputSignUp(name, value));
   },
   createUser: () => {
     dispatch(createUser());

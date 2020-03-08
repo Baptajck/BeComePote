@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import ForgottenPassword from 'src/components/ForgottenPassword';
 
 // Action Creators
-import { changeInput } from 'src/store/reducers/forms/forgottenPassword';
+import { changeInputForgotten } from 'src/store/reducers/forms/forgottenPassword';
 
 const mapStateToProps = (state) => ({
-  email: state.signIn.email,
+  email: state.forgottenPassword.email,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeValue: (name, value) => {
-    dispatch(changeInput(name, value));
+    dispatch(changeInputForgotten(name, value));
   },
 });
 

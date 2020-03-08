@@ -1,6 +1,7 @@
 // == Import : npm
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // == Import : local
 import './app.scss';
@@ -12,7 +13,7 @@ import SignIn from 'src/containers/forms/signIn';
 import ForgottenPassword from 'src/containers/forms/forgottenPassword';
 
 // == Composant
-const App = () => (
+const App = ({ isConnected }) => (
   <div>
     <ScrollToTop />
     <Switch>
@@ -31,6 +32,10 @@ const App = () => (
     </Switch>
   </div>
 );
+
+App.propTypes = {
+  isConnected: PropTypes.bool.isRequired,
+};
 
 // == Export
 export default App;
