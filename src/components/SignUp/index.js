@@ -39,6 +39,7 @@ const SignUp = ({
           <div className="signUp-form-container">
             <input
               type="text"
+              title="Veuillez renseigner votre pseudo pour l'inscription"
               onChange={handleChange}
               id="pseudo"
               name="pseudo"
@@ -55,6 +56,7 @@ const SignUp = ({
           <div className="signUp-form-container">
             <input
               type="email"
+              title="Veuillez renseigner votre email pour l'inscription"
               onChange={handleChange}
               id="email"
               name="email"
@@ -70,6 +72,7 @@ const SignUp = ({
           <div className="signUp-form-container">
             <input
               type="password"
+              title="Veuillez renseigner votre Mot de passe pour l'inscription"
               id="password"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
               onChange={handleChange}
@@ -86,6 +89,7 @@ const SignUp = ({
           <div className="signUp-form-container">
             <input
               type="password"
+              title="Veuillez renseigner votre mot de passe pour une confirmation pour l'inscription"
               onChange={handleChange}
               id="confirmPassword"
               name="confirmPassword"

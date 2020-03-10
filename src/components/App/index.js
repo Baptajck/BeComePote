@@ -5,33 +5,58 @@ import PropTypes from 'prop-types';
 
 // == Import : local
 import './app.scss';
+// == STATIC
 import ScrollToTop from 'src/components/ScrollToTop';
 import HomePage from 'src/components/HomePage';
+import Profile from 'src/components/Profile';
+import ChatRoom from 'src/components/ChatRoom';
+import Search from 'src/components/Search';
+import PageNotFound from 'src/components/PageNotFound';
 
+// == CONTAINERS
 import SignUp from 'src/containers/forms/signUp';
 import SignIn from 'src/containers/forms/signIn';
 import ForgottenPassword from 'src/containers/forms/forgottenPassword';
 
 // == Composant
-const App = ({ isConnected }) => (
-  <div>
-    <ScrollToTop />
-    <Switch>
-      <Route exact path="/forgottenPassword">
-        <ForgottenPassword />
-      </Route>
-      <Route exact path="/connect">
-        <SignIn />
-      </Route>
-      <Route exact path="/create">
-        <SignUp />
-      </Route>
-      <Route exact path="/">
-        <HomePage />
-      </Route>
-    </Switch>
-  </div>
-);
+const App = ({ isConnected }) => {
+  console.log(isConnected);
+  return (
+    <div>
+      <ScrollToTop />
+      <Switch>
+        <Route exact path="/forgottenPassword">
+          <ForgottenPassword />
+        </Route>
+        <Route exact path="/connect">
+          <SignIn />
+        </Route>
+        <Route exact path="/create">
+          <SignUp isConnected={isConnected} />
+        </Route>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        {isConnected && (
+          <>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/chatroom">
+              <ChatRoom />
+            </Route>
+            <Route path="/search">
+              <Search />
+            </Route>
+          </>
+        )}
+        <Route>
+          <PageNotFound />
+        </Route>
+      </Switch>
+    </div>
+  );
+};
 
 App.propTypes = {
   isConnected: PropTypes.bool.isRequired,

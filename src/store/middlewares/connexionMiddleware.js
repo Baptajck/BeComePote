@@ -25,9 +25,6 @@ const connexionMiddleware = (store) => (next) => (action) => {
             console.error(error);
           });
       }
-      else {
-        alert('Vos mots de passe ne correspondent pas');
-      }
       break;
     }
     default:

@@ -50,10 +50,9 @@ router.post('/register', (req, res) => {
               expires: new Date(Date.now() + 86400),
               secure: false, // set to true if your using https
               httpOnly: true,
-            });
+            }).redirect('/profile');
             res.status(201).send('Success, your profile has been created!');
             res.json(token);
-            res.redirect('/forgottenPassword');
           });
       }
     })

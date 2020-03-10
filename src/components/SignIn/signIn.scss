@@ -18,7 +18,7 @@
     }
   }
 
-  input[type="submit"] {
+  button[type="submit"] {
     font-family: 'Comfortaa', cursive;
     display: block;
     width: 100%;
@@ -26,6 +26,10 @@
     border: 0;
     font-size: 1.1em;
     text-align: right;
+
+    &:hover {
+      color: $color-blue;
+    }
   }
 
   .signIn {
@@ -62,11 +66,15 @@
         text-decoration: underline;
         font-style: italic;
         margin-left: 1.8rem;
-        margin-bottom: 5rem;
+        margin-bottom: 2.5rem;
         margin-top: .8rem;
         display: block;
         color: gray;
         width: 35%;
+
+        &:hover {
+          color: $color-blue;
+        }
       }
 
       &-label {
@@ -177,6 +185,10 @@
       &-link {
         font-weight: 700;
         text-decoration: underline;
+
+        &:hover {
+          color: $color-blue;
+        }
       }
     }
   }
