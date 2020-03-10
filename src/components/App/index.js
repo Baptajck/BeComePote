@@ -1,6 +1,6 @@
 // == Import : npm
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // == Import : local
@@ -32,7 +32,7 @@ const App = ({ isConnected }) => {
           <SignIn />
         </Route>
         <Route exact path="/create">
-          <SignUp isConnected={isConnected} />
+          {isConnected ? <Redirect to="/profile" /> : <SignUp />}
         </Route>
         <Route exact path="/">
           <HomePage />
