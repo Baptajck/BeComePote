@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
 
 // on importe chacun des sous-reducers
-import signUp from './forms/signUp';
-import signIn from './forms/signIn';
+import connexion from './forms/connexion';
 import forgottenPassword from './forms/forgottenPassword';
 
 /**
@@ -13,8 +12,7 @@ import forgottenPassword from './forms/forgottenPassword';
 */
 
 const reducer = combineReducers({
-  signUp,
-  signIn,
+  connexion,
   forgottenPassword,
 });
 

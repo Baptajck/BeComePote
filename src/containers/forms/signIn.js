@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import SignIn from 'src/components/SignIn';
 
 // Action Creators
-import { changeInputSignIn, connectUser } from 'src/store/reducers/forms/signUp';
+import { changeInputSignIn, connectUser } from 'src/store/reducers/forms/connexion';
 
 const mapStateToProps = (state) => ({
   email: state.signUp.email,

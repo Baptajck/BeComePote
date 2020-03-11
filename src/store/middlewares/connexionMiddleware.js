@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import {
   CREATE_USER, saveUserSignUp, CONNECT_USER, connectUserSignIn,
-} from 'src/store/reducers/forms/signUp';
+} from 'src/store/reducers/forms/connexion';
 
 const connexionMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -11,7 +11,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
       const state = store.getState();
       const {
         pseudo, email, password, confirmPassword,
-      } = state.signUp;
+      } = state.connexion;
 
       if (password === confirmPassword) {
         axios.post('http://localhost:3000/api/register', {
@@ -30,7 +30,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
     }
     case CONNECT_USER: {
       const state = store.getState();
-      const { email, password } = state.signUp;
+      const { email, password } = state.connexion;
       axios.post('http://localhost:3000/api/connect', {
         email,
         password,

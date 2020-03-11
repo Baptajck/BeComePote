@@ -7,7 +7,7 @@ import App from 'src/components/App';
 // Action Creators
 
 const mapStateToProps = (state) => ({
-  isConnected: state.signUp.isConnected,
+  isConnected: state.connexion.isConnected,
 });
 
 const mapDispatchToProps = {};

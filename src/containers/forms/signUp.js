@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import SignUp from 'src/components/SignUp';
 
 // Action Creators
-import { changeInputSignUp, createUser } from 'src/store/reducers/forms/signUp';
+import { changeInputSignUp, createUser } from 'src/store/reducers/forms/connexion';
 
 const mapStateToProps = (state) => ({
-  email: state.signUp.email,
-  password: state.signUp.password,
-  pseudo: state.signUp.pseudo,
-  confirmPassword: state.signUp.confirmPassword,
-  isConnected: state.signUp.isConnected,
-  user: state.signUp.user,
+  email: state.connexion.email,
+  password: state.connexion.password,
+  pseudo: state.connexion.pseudo,
+  confirmPassword: state.connexion.confirmPassword,
+  isConnected: state.connexion.isConnected,
+  user: state.connexion.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
