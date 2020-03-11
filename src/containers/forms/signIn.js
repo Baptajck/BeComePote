@@ -5,16 +5,20 @@ import { connect } from 'react-redux';
 import SignIn from 'src/components/SignIn';
 
 // Action Creators
-import { changeInputSignIn } from 'src/store/reducers/forms/signIn';
+import { changeInputSignIn, connectUser } from 'src/store/reducers/forms/signUp';
 
 const mapStateToProps = (state) => ({
-  email: state.signIn.email,
-  password: state.signIn.password,
+  email: state.signUp.email,
+  password: state.signUp.password,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeValue: (name, value) => {
     dispatch(changeInputSignIn(name, value));
+  },
+
+  connectUser: () => {
+    dispatch(connectUser());
   },
 });
 

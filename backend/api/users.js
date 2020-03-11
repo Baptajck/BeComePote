@@ -8,6 +8,7 @@ const fs = require('fs');
 
 const router = express.Router();
 const User = require('../Models/Users');
+const publicKEY = fs.readFileSync('key/public.key', 'utf8');
 
 
 /**
@@ -50,7 +51,7 @@ router.post('/register', (req, res) => {
               expires: new Date(Date.now() + 86400),
               secure: false, // set to true if your using https
               httpOnly: true,
-            }); // .redirect('/profile');
+            }); // .redirect('/connect');
             res.status(201).send({
               message: 'Success, your profile has been created!',
               token,
@@ -162,10 +163,30 @@ router.delete('/user/:id/delete', (req, res) => {
    * @param {object} res
    * @returns {[object]} user object
    */
+// const authenticateJWT = (req, res, next) => {
+//   const authHeader = req.headers.authorization;
+
+//   if (authHeader) {
+//     const token = authHeader.split(' ')[1];
+
+//     jwt.verify(token, publicKEY, (err, user) => {
+//       if (err) {
+//         return res.sendStatus(403);
+//       }
+
+//       req.user = user;
+//       return next();
+//     });
+//   }
+//   else {
+//     res.sendStatus(401);
+//   }
+// };
+
 router.post('/connect', (req, res) => {
   const { email, password } = req.body;
   const privateKEY = fs.readFileSync('key/private.key', 'utf8');
-  const publicKEY = fs.readFileSync('key/public.key', 'utf8');
+  // const publicKEY = fs.readFileSync('key/public.key', 'utf8');
   User.query()
     .where('email', email)
     .select('id', 'email', 'password')
@@ -182,7 +203,7 @@ router.post('/connect', (req, res) => {
         const signOptions = {
           issuer: 'becomepote',
           subject: 'information utilisateur',
-          audience: 'http://becompote.fr',
+          audience: 'http://becomepote.fr',
           expiresIn: '24h',
           algorithm: 'RS256',
         };
@@ -199,7 +220,7 @@ router.post('/connect', (req, res) => {
         const verifyOptions = {
           issuer: 'becomepote',
           subject: 'information utilisateur',
-          audience: 'http://becompote.fr',
+          audience: 'http://becomepote.fr',
           expiresIn: '24h',
           algorithm: ['RS256'],
         };
@@ -208,7 +229,10 @@ router.post('/connect', (req, res) => {
           res.json(verifyToken);
           res.status(401).send({ message: 'You need to login to access this page.' });
         }
-        res.status(200).send('You\'re connected!');
+        res.status(200).send({
+          message: 'You\'re connected!',
+          token,
+        });
       }
     })
     .catch((err) => res.status(500).send({

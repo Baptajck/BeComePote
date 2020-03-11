@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // == Import : npm
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -29,7 +30,7 @@ const App = ({ isConnected }) => {
           <ForgottenPassword />
         </Route>
         <Route exact path="/connect">
-          <SignIn />
+          {isConnected ? <Redirect to="/profile" /> : <SignIn />}
         </Route>
         <Route exact path="/create">
           {isConnected ? <Redirect to="/profile" /> : <SignUp />}

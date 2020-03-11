@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import './signIn.scss';
 
 const SignIn = ({
-  email, password, changeValue,
+  email, password, changeValue, connectUser,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -19,6 +19,7 @@ const SignIn = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    connectUser();
   };
 
   return (
@@ -77,6 +78,7 @@ SignIn.propTypes = {
   changeValue: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
+  connectUser: PropTypes.func.isRequired,
 };
 
 // == Export
