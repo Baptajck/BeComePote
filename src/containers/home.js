@@ -5,12 +5,17 @@ import { connect } from 'react-redux';
 import App from 'src/components/App';
 
 // Action Creators
+import { getHome } from 'src/store/reducers/forms/connexion';
 
 const mapStateToProps = (state) => ({
   isConnected: state.connexion.isConnected,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => ({
+  getHome: () => {
+    dispatch(getHome());
+  },
+});
 
 // Container
 const AppContainer = connect(

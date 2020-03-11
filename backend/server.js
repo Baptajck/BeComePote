@@ -38,8 +38,9 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', `http://${HOST}:${PORT_FRONT}`);
   // res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept X-Requested-With, Authorization, Accept, Client-Security-Token, Accept-Encoding');
+  res.header('Access-Control-Allow-Methods', 'Authorization');
   // TODO Pas de bonnes pratiques trouvées pour cette ligne
+  // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept X-Requested-With, Authorization, Accept, Client-Security-Token, Accept-Encoding');
   // res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH, HEAD');
   res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, PATCH');
   next();

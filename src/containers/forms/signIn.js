@@ -8,8 +8,8 @@ import SignIn from 'src/components/SignIn';
 import { changeInputSignIn, connectUser } from 'src/store/reducers/forms/connexion';
 
 const mapStateToProps = (state) => ({
-  email: state.signUp.email,
-  password: state.signUp.password,
+  email: state.connexion.email,
+  password: state.connexion.password,
 });
 
 const mapDispatchToProps = (dispatch) => ({

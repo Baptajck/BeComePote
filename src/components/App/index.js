@@ -20,47 +20,54 @@ import SignIn from 'src/containers/forms/signIn';
 import ForgottenPassword from 'src/containers/forms/forgottenPassword';
 
 // == Composant
-const App = ({ isConnected }) => {
-  console.log(isConnected);
-  return (
-    <div>
-      <ScrollToTop />
-      <Switch>
-        <Route exact path="/forgottenPassword">
-          <ForgottenPassword />
-        </Route>
-        <Route exact path="/connect">
-          {isConnected ? <Redirect to="/profile" /> : <SignIn />}
-        </Route>
-        <Route exact path="/create">
-          {isConnected ? <Redirect to="/profile" /> : <SignUp />}
-        </Route>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        {isConnected && (
-          <>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-            <Route path="/chatroom">
-              <ChatRoom />
-            </Route>
-            <Route path="/search">
-              <Search />
-            </Route>
-          </>
-        )}
-        <Route>
-          <PageNotFound />
-        </Route>
-      </Switch>
-    </div>
-  );
-};
+class App extends React.Component {
+  componentDidMount() {
+    const { getHome } = this.props;
+    getHome();
+  }
 
+  render() {
+    const { isConnected } = this.props;
+    return (
+      <div>
+        <ScrollToTop />
+        <Switch>
+          <Route exact path="/forgottenPassword">
+            <ForgottenPassword />
+          </Route>
+          <Route exact path="/connect">
+            {isConnected ? <Redirect to="/profile" /> : <SignIn />}
+          </Route>
+          <Route exact path="/create">
+            {isConnected ? <Redirect to="/profile" /> : <SignUp />}
+          </Route>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          {isConnected && (
+            <>
+              <Route path="/profile">
+                <Profile />
+              </Route>
+              <Route path="/chatroom">
+                <ChatRoom />
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+            </>
+          )}
+          <Route>
+            <PageNotFound />
+          </Route>
+        </Switch>
+      </div>
+    );
+  }
+}
 App.propTypes = {
   isConnected: PropTypes.bool.isRequired,
+  getHome: PropTypes.func.isRequired,
 };
 
 // == Export

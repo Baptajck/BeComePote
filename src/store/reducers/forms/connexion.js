@@ -14,6 +14,8 @@ export const CREATE_USER = 'CREATE_USER';
 const SAVE_USER_SIGN_UP = 'SAVE_USER_SIGN_UP';
 export const CONNECT_USER = 'CONNECT_USER';
 const CONNECT_USER_SIGN_IN = 'CONNECT_USER_SIGN_IN';
+export const SHOW_HOME = 'SHOW_HOME';
+export const GET_HOME = 'GET_HOME';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -34,6 +36,11 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         isConnected: true,
         user: action.user,
+      };
+    case SHOW_HOME:
+      return {
+        ...state,
+        isConnected: true,
       };
     default:
       return state;
@@ -71,6 +78,16 @@ export const connectUserSignIn = (user) => ({
 
 export const connectUser = () => ({
   type: CONNECT_USER,
+});
+
+// == HOME
+export const showHome = (home) => ({
+  type: SHOW_HOME,
+  home,
+});
+
+export const getHome = () => ({
+  type: GET_HOME,
 });
 
 // == Export
