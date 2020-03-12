@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 // == Import : npm
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import {
+  Switch, Route, Redirect, withRouter,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // == Import : local
@@ -12,7 +14,7 @@ import HomePage from 'src/components/HomePage';
 import Profile from 'src/components/Profile';
 import ChatRoom from 'src/components/ChatRoom';
 import Search from 'src/components/Search';
-import PageNotFound from 'src/components/PageNotFound';
+import Error404 from 'src/components/Error404';
 import Spinner from 'src/components/Spinner';
 
 // == CONTAINERS
@@ -26,52 +28,82 @@ class App extends React.Component {
     const { getHome } = this.props;
     setTimeout(() => {
       getHome();
-    }, 2000);
-    // getHome();
+    }, 1000);
   }
 
-  render() {
-    const { isConnected, loading } = this.props;
-    console.log(this.props);
-    return (
-      <div>
-        {loading && (<Spinner />)}
-        <ScrollToTop />
-        {!loading && (
-        <Switch>
-          <Route exact path="/forgottenPassword">
-            <ForgottenPassword />
-          </Route>
-          <Route exact path="/connect">
-            {isConnected ? <Redirect to="/profile" /> : <SignIn />}
-          </Route>
-          <Route exact path="/create">
-            {isConnected ? <Redirect to="/profile" /> : <SignUp />}
-          </Route>
-          <Route exact path="/">
-            {isConnected ? <Redirect to="/profile" /> : <HomePage />}
-          </Route>
-          {isConnected && (
-            <>
-              <Route path="/profile">
-                <Profile />
-              </Route>
-              <Route path="/chatroom">
-                <ChatRoom />
-              </Route>
-              <Route path="/search">
-                <Search />
-              </Route>
-            </>
+    changeTitle = () => {
+      switch (window.location.pathname) {
+        case '/forgottenPassword':
+          document.title = 'Mot de passe oublié | BeComePote';
+          break;
+        case '/chatroom':
+          document.title = 'Chat | BeComePote';
+          break;
+        case '/connect':
+          document.title = 'Se connecter | BeComePote';
+          break;
+        case '/create':
+          document.title = 'S\'inscrire | BeComePote';
+          break;
+        case '/profile':
+          document.title = 'Profil | BeComePote';
+          break;
+        case '/search':
+          document.title = 'Rechercher | BeComePote';
+          break;
+        case '/':
+          document.title = 'Accueil | BeComePote';
+          break;
+        case '*':
+          document.title = 'Error | BeComePote';
+          break;
+        default:
+          document.title = 'BeComePote';
+      }
+    }
+
+    render() {
+      const { isConnected, loading } = this.props;
+      this.changeTitle();
+      return (
+        <div>
+          {loading && (<Spinner />)}
+          <ScrollToTop />
+          {!loading && (
+          <Switch>
+            <Route exact path="/forgottenPassword">
+              <ForgottenPassword />
+            </Route>
+            <Route exact path="/connect">
+              {isConnected ? <Redirect to="/profile" /> : <SignIn />}
+            </Route>
+            <Route exact path="/create">
+              {isConnected ? <Redirect to="/profile" /> : <SignUp />}
+            </Route>
+            <Route exact path="/">
+              {isConnected ? <Redirect to="/profile" /> : <HomePage />}
+            </Route>
+            {isConnected && (
+              <>
+                <Route path="/profile">
+                  <Profile />
+                </Route>
+                <Route path="/chatroom">
+                  <ChatRoom />
+                </Route>
+                <Route path="/search">
+                  <Search />
+                </Route>
+              </>
+            )}
+            <Route>
+              <Error404 />
+            </Route>
+          </Switch>
           )}
-          <Route>
-            <PageNotFound />
-          </Route>
-        </Switch>
-        )}
-      </div>
-    );
-  }
+        </div>
+      );
+    }
 }
 App.propTypes = {
   isConnected: PropTypes.bool.isRequired,
@@ -80,4 +112,4 @@ App.propTypes = {
 };
 
 // == Export
-export default App;
+export default withRouter(App);

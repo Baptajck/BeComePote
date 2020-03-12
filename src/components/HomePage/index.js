@@ -7,7 +7,6 @@ import { IoMdArrowForward } from 'react-icons/io';
 import './homepage.scss';
 import logo from './Logo_BeComePote_v3.png';
 
-
 const HomePage = () => (
   <div className="homePage-layout">
     <div className="homePage">
