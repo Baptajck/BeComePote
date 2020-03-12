@@ -9,6 +9,7 @@ import { getHome } from 'src/store/reducers/forms/connexion';
 
 const mapStateToProps = (state) => ({
   isConnected: state.connexion.isConnected,
+  loading: state.connexion.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

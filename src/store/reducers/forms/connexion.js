@@ -5,6 +5,7 @@ const initialState = {
   pseudo: '',
   confirmPassword: '',
   isConnected: false,
+  loading: true,
   user: [],
 };
 
@@ -16,6 +17,7 @@ export const CONNECT_USER = 'CONNECT_USER';
 const CONNECT_USER_SIGN_IN = 'CONNECT_USER_SIGN_IN';
 export const SHOW_HOME = 'SHOW_HOME';
 export const GET_HOME = 'GET_HOME';
+const STOP_LOADING = 'STOP_LOADING';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -28,19 +30,27 @@ const reducer = (state = initialState, action = {}) => {
     case SAVE_USER_SIGN_UP:
       return {
         ...state,
+        loading: true,
         isConnected: true,
         user: action.user,
       };
     case CONNECT_USER_SIGN_IN:
       return {
         ...state,
+        loading: true,
         isConnected: true,
         user: action.user,
       };
     case SHOW_HOME:
       return {
         ...state,
+        loading: true,
         isConnected: true,
+      };
+    case STOP_LOADING:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;
@@ -88,6 +98,11 @@ export const showHome = (home) => ({
 
 export const getHome = () => ({
   type: GET_HOME,
+});
+
+// == SPINNER
+export const stopLoading = () => ({
+  type: STOP_LOADING,
 });
 
 // == Export

@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 import {
-  CREATE_USER, saveUserSignUp, CONNECT_USER, connectUserSignIn, GET_HOME, showHome,
+  CREATE_USER, saveUserSignUp, CONNECT_USER, connectUserSignIn, GET_HOME, showHome, stopLoading,
 } from 'src/store/reducers/forms/connexion';
 
 const connexionMiddleware = (store) => (next) => (action) => {
@@ -24,6 +24,10 @@ const connexionMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             console.error(error);
+          })
+          .finally(() => {
+            const actionStopLoading = stopLoading();
+            store.dispatch(actionStopLoading);
           });
       }
       break;
@@ -44,6 +48,10 @@ const connexionMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.error(error);
+        })
+        .finally(() => {
+          const actionStopLoading = stopLoading();
+          store.dispatch(actionStopLoading);
         });
       break;
     }
@@ -65,6 +73,10 @@ const connexionMiddleware = (store) => (next) => (action) => {
         .catch((err) => {
           console.error(err);
           return isConnected;
+        })
+        .finally(() => {
+          const actionStopLoading = stopLoading();
+          store.dispatch(actionStopLoading);
         });
       break;
     }

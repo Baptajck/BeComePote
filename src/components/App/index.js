@@ -13,6 +13,7 @@ import Profile from 'src/components/Profile';
 import ChatRoom from 'src/components/ChatRoom';
 import Search from 'src/components/Search';
 import PageNotFound from 'src/components/PageNotFound';
+import Spinner from 'src/components/Spinner';
 
 // == CONTAINERS
 import SignUp from 'src/containers/forms/signUp';
@@ -23,14 +24,20 @@ import ForgottenPassword from 'src/containers/forms/forgottenPassword';
 class App extends React.Component {
   componentDidMount() {
     const { getHome } = this.props;
-    getHome();
+    setTimeout(() => {
+      getHome();
+    }, 2000);
+    // getHome();
   }
 
   render() {
-    const { isConnected } = this.props;
+    const { isConnected, loading } = this.props;
+    console.log(this.props);
     return (
       <div>
+        {loading && (<Spinner />)}
         <ScrollToTop />
+        {!loading && (
         <Switch>
           <Route exact path="/forgottenPassword">
             <ForgottenPassword />
@@ -42,7 +49,7 @@ class App extends React.Component {
             {isConnected ? <Redirect to="/profile" /> : <SignUp />}
           </Route>
           <Route exact path="/">
-            <HomePage />
+            {isConnected ? <Redirect to="/profile" /> : <HomePage />}
           </Route>
           {isConnected && (
             <>
@@ -61,12 +68,14 @@ class App extends React.Component {
             <PageNotFound />
           </Route>
         </Switch>
+        )}
       </div>
     );
   }
 }
 App.propTypes = {
   isConnected: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
   getHome: PropTypes.func.isRequired,
 };
 

@@ -14,6 +14,7 @@ const mapStateToProps = (state) => ({
   confirmPassword: state.connexion.confirmPassword,
   isConnected: state.connexion.isConnected,
   user: state.connexion.user,
+  loading: state.connexion.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({

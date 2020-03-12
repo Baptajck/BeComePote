@@ -10,6 +10,7 @@ import { changeInputSignIn, connectUser } from 'src/store/reducers/forms/connexi
 const mapStateToProps = (state) => ({
   email: state.connexion.email,
   password: state.connexion.password,
+  loading: state.connexion.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
