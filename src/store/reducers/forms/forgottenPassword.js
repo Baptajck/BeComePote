@@ -1,6 +1,8 @@
 // == Initial State
 const initialState = {
   email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 // == Types

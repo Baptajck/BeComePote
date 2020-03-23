@@ -21,6 +21,7 @@ import Spinner from 'src/components/Spinner';
 import SignUp from 'src/containers/forms/signUp';
 import SignIn from 'src/containers/forms/signIn';
 import ForgottenPassword from 'src/containers/forms/forgottenPassword';
+import NewPassword from 'src/containers/forms/newPassword';
 
 // == Composant
 class App extends React.Component {
@@ -76,6 +77,9 @@ class App extends React.Component {
             </Route>
             <Route exact path="/create">
               {isConnected ? <Redirect to="/profile" /> : <SignUp />}
+            </Route>
+            <Route exact path="/newPassword/:id/:token">
+              <NewPassword />
             </Route>
             <Route exact path="/">
               {isConnected ? <Redirect to="/profile" /> : <HomePage />}
