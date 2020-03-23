@@ -27,7 +27,9 @@ const connexionMiddleware = (store) => (next) => (action) => {
           })
           .finally(() => {
             const actionStopLoading = stopLoading();
-            store.dispatch(actionStopLoading);
+            setTimeout(() => {
+              store.dispatch(actionStopLoading);
+            }, 1000);
           });
       }
       break;
@@ -51,7 +53,9 @@ const connexionMiddleware = (store) => (next) => (action) => {
         })
         .finally(() => {
           const actionStopLoading = stopLoading();
-          store.dispatch(actionStopLoading);
+          setTimeout(() => {
+            store.dispatch(actionStopLoading);
+          }, 1000);
         });
       break;
     }

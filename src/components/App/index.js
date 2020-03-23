@@ -54,9 +54,6 @@ class App extends React.Component {
         case '/':
           document.title = 'Accueil | BeComePote';
           break;
-        case '*':
-          document.title = 'Error | BeComePote';
-          break;
         default:
           document.title = 'BeComePote';
       }

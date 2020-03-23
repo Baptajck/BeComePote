@@ -15,11 +15,11 @@ const withAuth = (req, res, next) => {
     jwt.verify(token, publicKEY, (err, decoded) => {
       if (err) {
         res.status(401).send('Unauthorized: Invalid token');
-        console.log(err);
+        // console.log(err);
       }
       else {
         req.email = decoded.user[0].email;
-        console.log(req.email);
+        // console.log(req.email);
         next();
       }
     });
