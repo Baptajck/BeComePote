@@ -11,7 +11,7 @@ import './forgottenPassword.scss';
 import logo from './Logo_BeComePote_v4.png';
 
 const ForgottenPassword = ({
-  email, changeValue,
+  email, changeValue, changePassword,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -19,8 +19,14 @@ const ForgottenPassword = ({
   };
 
   const handleSubmit = (event) => {
+    const { value } = event.target;
     event.preventDefault();
+    changePassword(value);
   };
+
+  // const sendMail = (email) => {
+  //   changePassword();
+  // };
 
   return (
     <div className="forgotten-container">
@@ -59,6 +65,7 @@ const ForgottenPassword = ({
 
 ForgottenPassword.propTypes = {
   changeValue: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
 };
 
