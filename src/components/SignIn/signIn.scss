@@ -42,6 +42,26 @@
       text-align: center;
     }
 
+    &-error {
+      color: #D8000C;
+      // background-color: #FFD2D2;
+      margin: 10px 22px;
+      font-size: 14px;
+      padding: 1rem;
+      border-radius: 2em;
+      transition: .3s;
+
+      &--message {
+        margin-left: .3rem;
+        display: inline;
+        vertical-align: text-top;
+      }
+
+      &--link {
+        color: $color-blue;
+      }
+    }
+
     &-subtitle {
       font-size: 0.8rem;
       text-align: center;

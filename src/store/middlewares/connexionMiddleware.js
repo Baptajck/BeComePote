@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 import {
-  CREATE_USER, saveUserSignUp, CONNECT_USER, connectUserSignIn, GET_HOME, showHome, stopLoading,
+  CREATE_USER, saveUserSignUp, CONNECT_USER, connectUserSignIn, GET_HOME, showHome, stopLoading, errorMessage,
 } from 'src/store/reducers/forms/connexion';
 
 const connexionMiddleware = (store) => (next) => (action) => {
@@ -24,6 +24,8 @@ const connexionMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             console.error(error);
+            const actionError = errorMessage(error.response.data);
+            store.dispatch(actionError);
           })
           .finally(() => {
             const actionStopLoading = stopLoading();
@@ -50,6 +52,8 @@ const connexionMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.error(error);
+          const actionError = errorMessage(error.response.data);
+          store.dispatch(actionError);
         })
         .finally(() => {
           const actionStopLoading = stopLoading();

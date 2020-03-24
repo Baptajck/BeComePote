@@ -78,7 +78,7 @@ class App extends React.Component {
             <Route exact path="/create">
               {isConnected ? <Redirect to="/profile" /> : <SignUp />}
             </Route>
-            <Route exact path="/newPassword/:id/:token">
+            <Route exact path="/newPassword/:userId/:token">
               <NewPassword />
             </Route>
             <Route exact path="/">

@@ -48,7 +48,7 @@ const NewPassword = ({
               onChange={handleChange}
               onInput={handleChangePassword}
               name="password"
-              value={password}
+              value={password.trim()}
               className="newPassword-form-input"
               required
               placeholder=" "
@@ -63,7 +63,7 @@ const NewPassword = ({
               onChange={handleChange}
               id="confirmPassword"
               name="confirmPassword"
-              value={confirmPassword}
+              value={confirmPassword.trim()}
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
               className="newPassword-form-input"
               required

@@ -33,6 +33,30 @@
     max-width: 80%;
     margin: 7rem auto 1rem;
 
+    &-error {
+      color: #D8000C;
+      // background-color: #FFD2D2;
+      margin: 10px 22px;
+      font-size: 14px;
+      padding: 1rem;
+      border-radius: 2em;
+      transition: .3s;
+
+      &--message {
+        margin-left: .3rem;
+        display: inline;
+        vertical-align: text-top;
+      }
+    }
+
+    &-password-icon {
+      position: absolute;
+      top: 11px;
+      right: 10px;
+      cursor: pointer;
+      padding: 0 .5rem;
+    }
+
     &-box {
       margin-bottom: 2rem;
       margin-top: -1rem;
@@ -65,7 +89,7 @@
 
       &-label {
         opacity: 0.5;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
         position: absolute;
         top: 11px;
@@ -96,7 +120,7 @@
             display: block;
             transition: 0.2s;
             opacity: 1;
-            padding: 0 .5rem;
+            padding: 0 .2rem;
             background-color: $color-white;
             border-radius: 2em;
             font-size: 12px;

@@ -7,6 +7,9 @@ const initialState = {
   isConnected: false,
   loading: true,
   user: [],
+  isPasswordShown: false,
+  isConfirmPasswordShown: false,
+  errorMessage: '',
 };
 
 // == Types
@@ -17,6 +20,9 @@ export const CONNECT_USER = 'CONNECT_USER';
 const CONNECT_USER_SIGN_IN = 'CONNECT_USER_SIGN_IN';
 export const SHOW_HOME = 'SHOW_HOME';
 export const GET_HOME = 'GET_HOME';
+const PASSWORD_VISIBILITY = 'PASSWORD_VISIBILITY';
+const PASSWORD_CONFIRM_VISIBILITY = 'PASSWORD_CONFIRM_VISIBILITY';
+const ERROR_MESSAGE = 'ERROR_MESSAGE';
 const STOP_LOADING = 'STOP_LOADING';
 
 // == Reducer
@@ -51,6 +57,21 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loading: false,
+      };
+    case PASSWORD_VISIBILITY:
+      return {
+        ...state,
+        isPasswordShown: !state.isPasswordShown,
+      };
+    case PASSWORD_CONFIRM_VISIBILITY:
+      return {
+        ...state,
+        isConfirmPasswordShown: !state.isConfirmPasswordShown,
+      };
+    case ERROR_MESSAGE:
+      return {
+        ...state,
+        errorMessage: action.errorMessage,
       };
     default:
       return state;
@@ -103,6 +124,24 @@ export const getHome = () => ({
 // == SPINNER
 export const stopLoading = () => ({
   type: STOP_LOADING,
+});
+
+// == Show password
+export const passwordVisibility = () => ({
+  type: PASSWORD_VISIBILITY,
+
+});
+
+export const confirmPasswordVisibility = () => ({
+  type: PASSWORD_CONFIRM_VISIBILITY,
+
+});
+
+// == Error message
+export const errorMessage = (errorMessage) => ({
+  type: ERROR_MESSAGE,
+  errorMessage,
+
 });
 
 // == Export

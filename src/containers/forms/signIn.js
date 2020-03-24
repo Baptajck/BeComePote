@@ -5,19 +5,23 @@ import { connect } from 'react-redux';
 import SignIn from 'src/components/SignIn';
 
 // Action Creators
-import { changeInputSignIn, connectUser } from 'src/store/reducers/forms/connexion';
+import { changeInputSignIn, connectUser, passwordVisibility } from 'src/store/reducers/forms/connexion';
 
 const mapStateToProps = (state) => ({
   email: state.connexion.email,
   password: state.connexion.password,
   loading: state.connexion.loading,
+  isPasswordShown: state.connexion.isPasswordShown,
+  errorMessage: state.connexion.errorMessage,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeValue: (name, value) => {
     dispatch(changeInputSignIn(name, value));
   },
-
+  passwordVisibility: () => {
+    dispatch(passwordVisibility());
+  },
   connectUser: () => {
     dispatch(connectUser());
   },

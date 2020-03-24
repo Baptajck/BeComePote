@@ -18,7 +18,8 @@ const transporter = nodemailer.createTransport({
 });
 
 // Generation of the Password Reset URL with token and dynamic ID User
-const getPasswordResetURL = (user, token) => `http://localhost:3000/password/reset/${user.id}/${token}`;
+const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${token}`;
+// const getPasswordResetURL = (user, token) => 'http://gamebook.tech';
 
 
 // Generating a hashedToken to set the timestamp on reset password link valid for an hour
@@ -331,12 +332,12 @@ router.post('/user/:email', (req, res, next) => {
 
 // TODO Route pour être raccord avec celle envoyé dans le mail !!
 // Grants access with token to the form to change the user's password
-router.post('/receive_new_password/:userId/:token', (req, res) => {
+router.post('/new_password_reset/:userId/:token', (req, res) => {
   const { userId, token } = req.params;
   const { password } = req.body;
 
-  User.query().where({ id: userId })
-
+  User.query()
+    .findById({ id: userId })
     .then((user) => {
       const secret = `${user.password}-${user.created_at}`;
       const payload = jwt.decode(token, secret);
@@ -345,14 +346,20 @@ router.post('/receive_new_password/:userId/:token', (req, res) => {
           if (err) return;
           bcrypt.hashSync(password, salt, (hash) => {
             if (err) return;
-            User.findOneAndUpdate({ id: userId }, { password: hash })
+            // User.findOneAndUpdate({ id: userId }, { password: hash })
+            User.query()
+              .findById({
+                id: userId,
+              })
+              .patch({
+                password: hash,
+              })
               .then(() => res.status(202).json('New password is accepted'))
               .catch(() => res.status(500).json(err));
           });
         });
       }
     })
-
     .catch(() => {
       res.status(404).json('Invalid user');
     });

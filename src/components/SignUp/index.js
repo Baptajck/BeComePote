@@ -4,13 +4,14 @@ import React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiLock, FiMail } from 'react-icons/fi';
+import { IoIosEye, IoMdEyeOff, IoMdCloseCircle } from 'react-icons/io';
 import PropTypes from 'prop-types';
 
 // == Import Local
 import './signup.scss';
 
 const SignUp = ({
-  email, password, pseudo, confirmPassword, changeValue, createUser,
+  email, password, pseudo, confirmPassword, changeValue, createUser, isPasswordShown, passwordVisibility, isConfirmPasswordShown, confirmPasswordVisibility, errorMessage,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,10 +32,19 @@ const SignUp = ({
     createUser();
   };
 
+  const togglePasswordVisiblity = () => {
+    passwordVisibility();
+  };
+
+  const toggleConfirmPasswordVisiblity = () => {
+    confirmPasswordVisibility();
+  };
+
   return (
     <div className="signUp-container">
       <div className="signUp">
         <p className="signUp-subtitle">Créer un compte</p>
+        {errorMessage === 'Email already exist' ? <p className="signUp-error"><IoMdCloseCircle /> <span className="signUp-error--message">Cette email est déjà utilisé. Essayez en un autre</span></p> : <p> </p>}
         <form action="#0" className="signUp-form" onSubmit={handleSubmit}>
           <div className="signUp-form-container">
             <input
@@ -43,7 +53,7 @@ const SignUp = ({
               onChange={handleChange}
               id="pseudo"
               name="pseudo"
-              value={pseudo}
+              value={pseudo.trim()}
               className="signUp-form-input"
               minLength="3"
               maxLength="15"
@@ -60,7 +70,7 @@ const SignUp = ({
               onChange={handleChange}
               id="email"
               name="email"
-              value={email}
+              value={email.trim()}
               className="signUp-form-input"
               minLength="3"
               required
@@ -71,29 +81,30 @@ const SignUp = ({
           </div>
           <div className="signUp-form-container">
             <input
-              type="password"
+              type={isPasswordShown ? 'text' : 'password'}
               title="Veuillez renseigner votre Mot de passe pour l'inscription"
               id="password"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
               onChange={handleChange}
               onInput={handleChangePassword}
               name="password"
-              value={password}
+              value={password.trim()}
               className="signUp-form-input"
               required
               placeholder=" "
             />
             <label htmlFor="password" className="signUp-form-label"><span className="signUp-form-label-icon"><FiLock className="signUp-form-label-icon" /></span> Mot de passe</label>
             <div className="requirements">Votre mot de passe doit contenir au moins 6 caractères: au moins un en majuscule, un en minuscule et un chiffre.</div>
+            <div className="signUp-password-icon" onClick={togglePasswordVisiblity}>{isPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
           </div>
           <div className="signUp-form-container">
             <input
-              type="password"
+              type={isConfirmPasswordShown ? 'text' : 'password'}
               title="Veuillez renseigner votre mot de passe pour une confirmation pour l'inscription"
               onChange={handleChange}
               id="confirmPassword"
               name="confirmPassword"
-              value={confirmPassword}
+              value={confirmPassword.trim()}
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
               className="signUp-form-input"
               required
@@ -101,6 +112,7 @@ const SignUp = ({
             />
             <label htmlFor="confirmPassword" className="signUp-form-label"><span className="signUp-form-label-icon"><FiLock className="signUp-form-label-icon" /></span> Confirme ton mot de passe</label>
             <div className="requirements">Vos mots de passe ne correspondent pas.</div>
+            <div className="signUp-password-icon" onClick={toggleConfirmPasswordVisiblity}>{isConfirmPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
           </div>
           <div className="signUp-box">
             <input
@@ -131,6 +143,11 @@ SignUp.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
+  isPasswordShown: PropTypes.bool.isRequired,
+  isConfirmPasswordShown: PropTypes.bool.isRequired,
+  passwordVisibility: PropTypes.func.isRequired,
+  confirmPasswordVisibility: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string.isRequired,
 };
 
 // == Export

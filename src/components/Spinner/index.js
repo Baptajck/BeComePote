@@ -15,7 +15,7 @@ import spinner from './spinner.scss';
  */
 const Spinner = ({ loading }) => (
   <div className="spinner">
-    <h2 className="spinner-title">Veuillez patientez...</h2>
+    <h2 className="spinner-title">Veuillez patienter...</h2>
     <ClipLoader
       css={spinner}
       sizeUnit="px"

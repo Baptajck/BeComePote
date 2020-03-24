@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import SignUp from 'src/components/SignUp';
 
 // Action Creators
-import { changeInputSignUp, createUser } from 'src/store/reducers/forms/connexion';
+import {
+  changeInputSignUp, createUser, passwordVisibility, confirmPasswordVisibility,
+} from 'src/store/reducers/forms/connexion';
 
 const mapStateToProps = (state) => ({
   email: state.connexion.email,
@@ -15,11 +17,20 @@ const mapStateToProps = (state) => ({
   isConnected: state.connexion.isConnected,
   user: state.connexion.user,
   loading: state.connexion.loading,
+  isPasswordShown: state.connexion.isPasswordShown,
+  isConfirmPasswordShown: state.connexion.isPasswordShown,
+  errorMessage: state.connexion.errorMessage,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeValue: (name, value) => {
     dispatch(changeInputSignUp(name, value));
+  },
+  passwordVisibility: () => {
+    dispatch(passwordVisibility());
+  },
+  confirmPasswordVisibility: () => {
+    dispatch(confirmPasswordVisibility());
   },
   createUser: () => {
     dispatch(createUser());

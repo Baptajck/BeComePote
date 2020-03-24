@@ -42,7 +42,7 @@ const ForgottenPassword = ({
               onChange={handleChange}
               id="email"
               name="email"
-              value={email}
+              value={email.trim()}
               className="forgotten-form-input"
               minLength="3"
               required

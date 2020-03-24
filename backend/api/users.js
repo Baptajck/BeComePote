@@ -77,7 +77,7 @@ router.post('/register', (req, res) => {
     .select('email')
     .then((user) => {
       if (user.length > 0) {
-        res.status(409).send('Email already exist!');
+        res.status(409).send('Email already exist');
       }
       if (!email || !password || !pseudo) {
         res.status(400).send({ message: 'One or more values are missing for creating account' });
@@ -97,7 +97,7 @@ router.post('/register', (req, res) => {
               httpOnly: true,
             });
             res.status(201).send({
-              message: 'Success, your profile has been created!',
+              message: 'Bravo ! Votre compte à été crée avec succès',
               token,
             });
             res.json(token);
@@ -232,9 +232,9 @@ router.post('/connect', (req, res) => {
         };
         const token = jwt.sign({ user }, privateKEY, signOptions);
         res.cookie('userToken', token, {
-          expires: new Date(Date.now() + 900000),
+          expires: new Date(Date.now() + 90000),
           // secure: true, if https enabled
-          // maxAge: 900000,
+          maxAge: 1296000000,
           secure: false,
           httpOnly: true,
         });
@@ -255,7 +255,7 @@ router.post('/connect', (req, res) => {
           res.status(401).send({ message: 'You need to login to access this page.' });
         }
         res.status(200).send({
-          message: 'You\'re connected!',
+          message: 'Vous êtes connecté',
           token,
         }).redirect('/profile');
       }

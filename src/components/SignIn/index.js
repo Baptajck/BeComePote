@@ -4,13 +4,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiLock, FiMail } from 'react-icons/fi';
 import { FaArrowRight } from 'react-icons/fa';
+import { IoIosEye, IoMdEyeOff, IoMdCloseCircle } from 'react-icons/io';
 import PropTypes from 'prop-types';
 
 // == Import Local
 import './signIn.scss';
 
 const SignIn = ({
-  email, password, changeValue, connectUser,
+  email, password, changeValue, connectUser, errorMessage, isPasswordShown, passwordVisibility,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,11 +23,17 @@ const SignIn = ({
     connectUser();
   };
 
+  const togglePasswordVisiblity = () => {
+    passwordVisibility();
+  };
+
   return (
     <div className="signIn-container">
       <div className="signIn">
         <h1 className="signIn-title">Salut !</h1>
         <p className="signIn-subtitle">Connecte toi pour chercher de nouveaux amis sur <strong className="BeComePote">BeComePote</strong>&nbsp;!</p>
+        {errorMessage === 'Email is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Ce compte BeComePote n'existe pas, entrez un autre compte ou <a href="/create" className="signIn-error--link"> obtenez en un nouveau</a></span></p> : <p> </p>}
+        {errorMessage === 'Password is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Votre mot de passe est incorrect. Si vous avez oublié votre mot de passe,<a href="/forgottenPassword" className="signIn-error--link"> redéfinissez-le ici</a></span></p> : <p> </p>}
         <form className="signIn-form" onSubmit={handleSubmit}>
           <div className="signIn-form-container">
             <input
@@ -35,7 +42,7 @@ const SignIn = ({
               onChange={handleChange}
               id="email"
               name="email"
-              value={email}
+              value={email.trim()}
               className="signIn-form-input"
               minLength="3"
               required
@@ -46,19 +53,20 @@ const SignIn = ({
           </div>
           <div className="signIn-form-container">
             <input
-              type="password"
+              type={isPasswordShown ? 'text' : 'password'}
               title="Veuillez renseigner votre mot de passe pour la connection"
               id="password"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
               onChange={handleChange}
               name="password"
-              value={password}
+              value={password.trim()}
               className="signIn-form-input"
               required
               placeholder=" "
             />
             <label htmlFor="password" className="signIn-form-label"><span className="signIn-form-label-icon"><FiLock className="signIn-form-label-icon" /></span> Mot de passe</label>
             <div className="requirements">Votre mot de passe doit contenir au moins 6 caractères: au moins un en majuscule, un en minuscule et un chiffre.</div>
+            <div className="signUp-password-icon" onClick={togglePasswordVisiblity}>{isPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
           </div>
           <NavLink to="/forgottenPassword" className="signIn-form-forgottenPassword">Mot de passe oublié</NavLink>
           <div className="signIn-form-input-send-icon">
@@ -78,7 +86,10 @@ SignIn.propTypes = {
   changeValue: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
+  isPasswordShown: PropTypes.bool.isRequired,
   connectUser: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  passwordVisibility: PropTypes.func.isRequired,
 };
 
 // == Export
