@@ -56,7 +56,7 @@ const SignUp = ({
     <div className="signUp-container">
       <div className="signUp">
         <p className="signUp-subtitle">Créer un compte</p>
-        {error === 'Email already exist' ? <p className="signUp-error"><IoMdCloseCircle /> <span className="signUp-error--message">Cette email est déjà utilisé. Essayez en un autre ou<a href="/connect" className="signIn-error--link"> connectez-vous</a></span></p> : <p> </p>}
+        {error === 'Email already exist' ? <p className="signUp-error"><IoMdCloseCircle /> <span className="signUp-error--message">Cette email est déjà utilisé. Essayez en un autre ou<NavLink to="/connect" className="signIn-error--link"> connectez-vous</NavLink></span></p> : <p> </p>}
         <form action="#0" className="signUp-form" onSubmit={handleSubmit}>
           <div className="signUp-form-container">
             <input

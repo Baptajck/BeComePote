@@ -30,7 +30,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
             console.log(response);
           })
           .catch((error) => {
-            console.error(error);
+            // console.error(error);
             const actionError = errorMessage(error.response.data);
             store.dispatch(actionError);
           })
@@ -58,7 +58,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
           store.dispatch(actionSaveUser);
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
           const actionError = errorMessage(error.response.data);
           store.dispatch(actionError);
         })
@@ -86,7 +86,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
           }
         })
         .catch((err) => {
-          console.error(err);
+          // console.error(err);
           return isConnected;
         })
         .finally(() => {
