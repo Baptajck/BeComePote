@@ -18,8 +18,8 @@ const mapStateToProps = (state) => ({
   user: state.connexion.user,
   loading: state.connexion.loading,
   isPasswordShown: state.connexion.isPasswordShown,
-  isConfirmPasswordShown: state.connexion.isPasswordShown,
-  errorMessage: state.connexion.errorMessage,
+  isConfirmPasswordShown: state.connexion.isConfirmPasswordShown,
+  error: state.connexion.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

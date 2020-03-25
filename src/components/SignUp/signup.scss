@@ -33,9 +33,23 @@
     max-width: 80%;
     margin: 7rem auto 1rem;
 
+    &-text {
+      font-size: 0.7rem;
+      margin-top: 3rem;
+      text-align: center;
+
+      &-link {
+        font-weight: 700;
+        text-decoration: underline;
+
+        &:hover {
+          color: $color-blue;
+        }
+      }
+    }
+
     &-error {
-      color: #D8000C;
-      // background-color: #FFD2D2;
+      color: red;
       margin: 10px 22px;
       font-size: 14px;
       padding: 1rem;
@@ -51,16 +65,17 @@
 
     &-password-icon {
       position: absolute;
-      top: 11px;
+      top: 9px;
       right: 10px;
       cursor: pointer;
       padding: 0 .5rem;
+      font-size: 1.3rem;
     }
 
     &-box {
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       margin-top: -1rem;
-      text-align: center;
+      margin-left: 1.8rem;
 
       &-text {
         font-size: .8rem;
@@ -85,6 +100,17 @@
         margin: 3.5rem 1rem 2rem;
         position: relative;
         background: $color-white;
+      }
+
+      &-important {
+        font-size: 0.6rem;
+        font-style: italic;
+        margin-left: 1.8rem;
+        margin-bottom: 2.5rem;
+        margin-top: .8rem;
+        display: block;
+        color: gray;
+        width: 50%;
       }
 
       &-label {
@@ -171,6 +197,7 @@
           &-icon {
             display: flex;
             justify-content: flex-end;
+            margin-top: 5rem;
           }
 
           &-arrow {

@@ -2,7 +2,14 @@
 import axios from 'axios';
 
 import {
-  CREATE_USER, saveUserSignUp, CONNECT_USER, connectUserSignIn, GET_HOME, showHome, stopLoading, errorMessage,
+  CREATE_USER,
+  saveUserSignUp,
+  CONNECT_USER,
+  connectUserSignIn,
+  GET_HOME,
+  showHome,
+  stopLoading,
+  errorMessage,
 } from 'src/store/reducers/forms/connexion';
 
 const connexionMiddleware = (store) => (next) => (action) => {

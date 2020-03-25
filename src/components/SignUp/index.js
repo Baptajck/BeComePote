@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // == Import NPM
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiLock, FiMail } from 'react-icons/fi';
@@ -11,7 +12,17 @@ import PropTypes from 'prop-types';
 import './signup.scss';
 
 const SignUp = ({
-  email, password, pseudo, confirmPassword, changeValue, createUser, isPasswordShown, passwordVisibility, isConfirmPasswordShown, confirmPasswordVisibility, errorMessage,
+  email,
+  password,
+  pseudo,
+  confirmPassword,
+  changeValue,
+  createUser,
+  isPasswordShown,
+  passwordVisibility,
+  isConfirmPasswordShown,
+  confirmPasswordVisibility,
+  error,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,11 +51,12 @@ const SignUp = ({
     confirmPasswordVisibility();
   };
 
+
   return (
     <div className="signUp-container">
       <div className="signUp">
         <p className="signUp-subtitle">Créer un compte</p>
-        {errorMessage === 'Email already exist' ? <p className="signUp-error"><IoMdCloseCircle /> <span className="signUp-error--message">Cette email est déjà utilisé. Essayez en un autre</span></p> : <p> </p>}
+        {error === 'Email already exist' ? <p className="signUp-error"><IoMdCloseCircle /> <span className="signUp-error--message">Cette email est déjà utilisé. Essayez en un autre ou<a href="/connect" className="signIn-error--link"> connectez-vous</a></span></p> : <p> </p>}
         <form action="#0" className="signUp-form" onSubmit={handleSubmit}>
           <div className="signUp-form-container">
             <input
@@ -123,6 +135,7 @@ const SignUp = ({
             />
             <a className="signUp-box-text" href="/terms">Accepter les conditions d'utilisation</a>
           </div>
+          <p className="signUp-form-important">&#42; Tous les champs sont obligatoires</p>
           <div className="signUp-form-input-send-icon">
             <button type="submit" className="signUp-form-input-send">
               Créer un compte
@@ -130,6 +143,7 @@ const SignUp = ({
             </button>
           </div>
         </form>
+        <p className="signUp-text">Tu as déjà un compte ? <NavLink to="/connect" className="signUp-text-link">Connecte-toi</NavLink></p>
       </div>
     </div>
   );
@@ -147,7 +161,7 @@ SignUp.propTypes = {
   isConfirmPasswordShown: PropTypes.bool.isRequired,
   passwordVisibility: PropTypes.func.isRequired,
   confirmPasswordVisibility: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 // == Export

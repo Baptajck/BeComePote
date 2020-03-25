@@ -42,9 +42,17 @@
       text-align: center;
     }
 
+    &-password-icon {
+      position: absolute;
+      top: 9px;
+      right: 10px;
+      cursor: pointer;
+      padding: 0 .5rem;
+      font-size: 1.3rem;
+    }
+
     &-error {
-      color: #D8000C;
-      // background-color: #FFD2D2;
+      color: red;
       margin: 10px 22px;
       font-size: 14px;
       padding: 1rem;
@@ -58,7 +66,11 @@
       }
 
       &--link {
-        color: $color-blue;
+        color: blue;
+
+        &:hover {
+          opacity: .7;
+        }
       }
     }
 
@@ -99,7 +111,7 @@
 
       &-label {
         opacity: 0.5;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
         position: absolute;
         top: 11px;

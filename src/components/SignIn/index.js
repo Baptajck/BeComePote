@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import './signIn.scss';
 
 const SignIn = ({
-  email, password, changeValue, connectUser, errorMessage, isPasswordShown, passwordVisibility,
+  email, password, changeValue, connectUser, error, isPasswordShown, passwordVisibility,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -32,8 +32,8 @@ const SignIn = ({
       <div className="signIn">
         <h1 className="signIn-title">Salut !</h1>
         <p className="signIn-subtitle">Connecte toi pour chercher de nouveaux amis sur <strong className="BeComePote">BeComePote</strong>&nbsp;!</p>
-        {errorMessage === 'Email is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Ce compte BeComePote n'existe pas, entrez un autre compte ou <a href="/create" className="signIn-error--link"> obtenez en un nouveau</a></span></p> : <p> </p>}
-        {errorMessage === 'Password is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Votre mot de passe est incorrect. Si vous avez oublié votre mot de passe,<a href="/forgottenPassword" className="signIn-error--link"> redéfinissez-le ici</a></span></p> : <p> </p>}
+        {error === 'Email is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Ce compte BeComePote n'existe pas, entrez un autre compte ou <a href="/create" className="signIn-error--link"> obtenez en un nouveau</a></span></p> : <p> </p>}
+        {error === 'Password is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Votre mot de passe est incorrect. Si vous avez oublié votre mot de passe,<a href="/forgottenPassword" className="signIn-error--link"> redéfinissez-le ici</a></span></p> : <p> </p>}
         <form className="signIn-form" onSubmit={handleSubmit}>
           <div className="signIn-form-container">
             <input
@@ -66,7 +66,7 @@ const SignIn = ({
             />
             <label htmlFor="password" className="signIn-form-label"><span className="signIn-form-label-icon"><FiLock className="signIn-form-label-icon" /></span> Mot de passe</label>
             <div className="requirements">Votre mot de passe doit contenir au moins 6 caractères: au moins un en majuscule, un en minuscule et un chiffre.</div>
-            <div className="signUp-password-icon" onClick={togglePasswordVisiblity}>{isPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
+            <div className="signIn-password-icon" onClick={togglePasswordVisiblity}>{isPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
           </div>
           <NavLink to="/forgottenPassword" className="signIn-form-forgottenPassword">Mot de passe oublié</NavLink>
           <div className="signIn-form-input-send-icon">
@@ -88,9 +88,12 @@ SignIn.propTypes = {
   password: PropTypes.string.isRequired,
   isPasswordShown: PropTypes.bool.isRequired,
   connectUser: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  error: PropTypes.string,
   passwordVisibility: PropTypes.func.isRequired,
 };
 
+SignIn.defaultProps = {
+  error: '',
+};
 // == Export
 export default SignIn;

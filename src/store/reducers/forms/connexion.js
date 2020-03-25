@@ -9,7 +9,7 @@ const initialState = {
   user: [],
   isPasswordShown: false,
   isConfirmPasswordShown: false,
-  errorMessage: '',
+  error: '',
 };
 
 // == Types
@@ -71,7 +71,7 @@ const reducer = (state = initialState, action = {}) => {
     case ERROR_MESSAGE:
       return {
         ...state,
-        errorMessage: action.errorMessage,
+        error: action.error,
       };
     default:
       return state;
@@ -129,19 +129,16 @@ export const stopLoading = () => ({
 // == Show password
 export const passwordVisibility = () => ({
   type: PASSWORD_VISIBILITY,
-
 });
 
 export const confirmPasswordVisibility = () => ({
   type: PASSWORD_CONFIRM_VISIBILITY,
-
 });
 
 // == Error message
-export const errorMessage = (errorMessage) => ({
+export const errorMessage = (error) => ({
   type: ERROR_MESSAGE,
-  errorMessage,
-
+  error,
 });
 
 // == Export
