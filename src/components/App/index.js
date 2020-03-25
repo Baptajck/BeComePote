@@ -16,6 +16,7 @@ import ChatRoom from 'src/components/ChatRoom';
 import Search from 'src/components/Search';
 import Error404 from 'src/components/Error404';
 import Spinner from 'src/components/Spinner';
+import Navigation from 'src/components/Navigation';
 
 // == CONTAINERS
 import SignUp from 'src/containers/forms/signUp';
@@ -95,6 +96,7 @@ class App extends React.Component {
                 <Route path="/search">
                   <Search />
                 </Route>
+                <Navigation />
               </>
             )}
             <Route>
