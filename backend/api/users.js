@@ -4,9 +4,55 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-
 const router = express.Router();
 const User = require('../Models/Users');
+const publicKEY = fs.readFileSync('key/public.key', 'utf8');
+const privateKEY = fs.readFileSync('key/private.key', 'utf8');
+
+const withAuth = require('../middleware');
+
+
+const checkToken = (req, res, next) => {
+  const header = req.headers.authorization;
+
+  if (typeof header !== 'undefined') {
+    const bearer = header.split(' ');
+    const token = bearer[1];
+
+    req.token = token;
+    next();
+  }
+  else {
+    // If header is undefined return Forbidden (403)
+    res.sendStatus(403);
+  }
+};
+
+/**
+   * RECUP TOKEN -
+   * @param {object} req
+   * @param {object} res
+   * @func checkToken
+   * @returns {object} user object
+   */
+router.get('/user/data', checkToken, (req, res) => {
+  // verify the JWT token generated for the user
+  jwt.verify(req.token, publicKEY, (err, authorizedData) => {
+    if (err) {
+      // If error send Forbidden (403)
+      console.log('ERROR: Could not connect to the protected route');
+      res.sendStatus(403);
+    }
+    else {
+      // If token is successfully verified, we can send the autorized data
+      res.json({
+        message: 'Successful log in',
+        authorizedData,
+      });
+      console.log('SUCCESS: Connected to protected route');
+    }
+  });
+});
 
 
 /**
@@ -18,7 +64,7 @@ const User = require('../Models/Users');
    */
 router.post('/register', (req, res) => {
   const { pseudo, email, password } = req.body;
-  const privateKEY = fs.readFileSync('key/private.key', 'utf8');
+  // const privateKEY = fs.readFileSync('key/private.key', 'utf8');
   const signOptions = {
     issuer: 'becomepote',
     subject: 'information utilisateur',
@@ -31,7 +77,7 @@ router.post('/register', (req, res) => {
     .select('email')
     .then((user) => {
       if (user.length > 0) {
-        res.status(409).send('Email already exist!');
+        res.status(409).send('Email already exist');
       }
       if (!email || !password || !pseudo) {
         res.status(400).send({ message: 'One or more values are missing for creating account' });
@@ -50,7 +96,10 @@ router.post('/register', (req, res) => {
               secure: false, // set to true if your using https
               httpOnly: true,
             });
-            res.status(201).send('Success, your profile has been created!');
+            res.status(201).send({
+              message: 'Bravo ! Votre compte à été crée avec succès',
+              token,
+            });
             res.json(token);
           });
       }
@@ -159,8 +208,8 @@ router.delete('/user/:id/delete', (req, res) => {
    */
 router.post('/connect', (req, res) => {
   const { email, password } = req.body;
-  const privateKEY = fs.readFileSync('key/private.key', 'utf8');
-  const publicKEY = fs.readFileSync('key/public.key', 'utf8');
+  // const privateKEY = fs.readFileSync('key/private.key', 'utf8');
+  // const publicKEY = fs.readFileSync('key/public.key', 'utf8');
   User.query()
     .where('email', email)
     .select('id', 'email', 'password')
@@ -177,33 +226,38 @@ router.post('/connect', (req, res) => {
         const signOptions = {
           issuer: 'becomepote',
           subject: 'information utilisateur',
-          audience: 'http://becompote.fr',
+          audience: 'http://becomepote.fr',
           expiresIn: '24h',
           algorithm: 'RS256',
         };
         const token = jwt.sign({ user }, privateKEY, signOptions);
         res.cookie('userToken', token, {
-          expires: new Date(Date.now() + 86400),
+          expires: new Date(Date.now() + 900000),
           // secure: true, if https enabled
+          maxAge: 1296000000,
           secure: false,
           httpOnly: true,
         });
 
         // TODO CHECK ENCRYPTION KEY AND IF COOKIE IS EMPTY ERR.MESSAGE DISPLAYS
         // Check if encryption key is correct
-        const verifyOptions = {
-          issuer: 'becomepote',
-          subject: 'information utilisateur',
-          audience: 'http://becompote.fr',
-          expiresIn: '24h',
-          algorithm: ['RS256'],
-        };
-        const verifyToken = jwt.verify(token, publicKEY, verifyOptions);
-        if (verifyToken.length === 0) {
-          res.json(verifyToken);
+        // const verifyOptions = {
+        //   issuer: 'becomepote',
+        //   subject: 'information utilisateur',
+        //   audience: 'http://becomepote.fr',
+        //   expiresIn: '24h',
+        //   notBefore: '60s',
+        //   algorithm: ['RS256'],
+        // };
+        // const verifyToken = jwt.verify(token, publicKEY, verifyOptions);
+        if (token.length === 0) {
+          res.json(token);
           res.status(401).send({ message: 'You need to login to access this page.' });
         }
-        res.status(200).send('You\'re connected!');
+        res.status(200).send({
+          message: 'Vous êtes connecté',
+          token,
+        }).redirect('/profile');
       }
     })
     .catch((err) => res.status(500).send({
@@ -213,8 +267,10 @@ router.post('/connect', (req, res) => {
 });
 
 
+router.get('/checkToken', withAuth, (req, res) => {
+  res.sendStatus(200);
+});
+
 module.exports = {
   router,
 };
-
-// app.post('/forgotten', Users.forgottenPassword);

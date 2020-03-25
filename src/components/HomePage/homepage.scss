@@ -1,5 +1,4 @@
-// == Variable
-$white: #fff;
+@import 'src/styles/vars';
 
 @media screen and (min-width: 300px) {
   // Gras pour la marque
@@ -19,7 +18,6 @@ $white: #fff;
     margin-left: auto;
 
     &-header {
-      
       // Position du logo
       &-logo {
         display: block;
@@ -50,7 +48,7 @@ $white: #fff;
         margin-bottom: 2rem;
         margin-top: 0.15rem;
         font-weight: 600;
-        color: $white;
+        color: $color-white;
       }
     }
 
@@ -95,24 +93,52 @@ $white: #fff;
 }
 
 @media screen and (min-width: 768px) {
- 
   .homePage {
+    max-width: none;
+    height: 100vh;
+
+    &-container-text {
+      text-align: center;
+      margin: 5rem 0;
+    }
+
+    &-layout {
+    background-image: none;
+    }
   
     &-header {
+      background-color: #292929;
+      border-radius: 0 0 85% 85% / 30%;
+      padding-bottom: 2rem;
 
       &-logo {
-        width: 30%;
-        margin-top: 10rem;
+        width: 20%;
+
+        &-test {
+          width: 100vw;
+        }
       }
+
+      &-subtitle {
+        color: #fff;
+      }
+    }
+    &-content {
+      max-width: 80%;
+      margin: 5rem auto 1rem;
     }
   }
 }
 
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1000px) {
+  .homePage {
+    &-header {
+      border-radius: 0 0 85% 85% / 40%;
 
-}
-
-@media screen and (min-width: 1650px) {
-  
+      &-logo {
+        width: 10%;
+      }
+    }
+  }
 }

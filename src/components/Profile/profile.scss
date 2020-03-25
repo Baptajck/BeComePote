@@ -1,0 +1,138 @@
+@import 'src/styles/vars';
+
+@media screen and (min-width: 300px) {
+  .requirements {
+    padding: 0 30px 0 50px;
+    max-height: 0;
+    transition: 0.28s;
+    overflow: hidden;
+    color: $color-red;
+    font-style: italic;
+
+    &-span {
+      font-size: 10px;
+    }
+  }
+
+  .profile-container {
+    text-align: center;
+
+    &-image {
+      background-color: $color-blue;
+      height: 350px;
+    }
+  }
+  
+  .profile-header {
+    height: 250px;
+    width: 250px;
+    margin-top: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 0.5em solid rgba(255, 255, 255, .3);
+  }
+
+  .profile-title {
+    font-size: 1.3rem;
+    text-align: center;
+    font-weight: 700;
+    margin: 2rem 1rem;
+  }
+
+  .profile-form {
+    width: 80%;
+    margin: 0 auto;
+
+    &-container {
+      margin: 3.5rem 1rem 2rem;
+      position: relative;
+      background: $color-white;
+    }
+
+    &-input {
+      display: block;
+      margin: .5rem auto;
+      width: 100%;
+      padding: 0.7rem 2.1rem;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-size: 1.2rem;
+      line-height: 1.2rem;
+
+      &:focus {
+        ~ .profile-form-label {
+          position: absolute;
+          top: -8px;
+          display: block;
+          transition: 0.2s;
+          opacity: 1;
+          padding: 0 .5rem;
+          background-color: $color-white;
+          border-radius: 2em;
+          font-size: 12px;
+          color: $color-blue;
+        }
+        // box-shadow: 0px 0px 5px 0px $color-blue;
+        border-color: $color-blue;
+        border-width: 3px;
+        border-image-slice: 1;
+      }
+
+      &:placeholder-shown {
+        font-style: italic;
+      }
+      
+      &:valid {
+        background: url(https://i.imgur.com/cKUyms3.png);
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: 10px 10px;
+
+        & + label {
+          opacity: 0;
+        }
+      }
+
+      &:invalid:not(:focus):not(:placeholder-shown) {
+        box-shadow: 0px 0px 5px 0px $color-red;
+        // border-color: $color-red;
+
+        & + label {
+          opacity: 0;
+        }
+      }
+      
+      &:invalid:focus:not(:placeholder-shown) {
+        & ~ .requirements {
+          max-height: 200px;
+          padding: 0 15px 20px 15px;
+          font-size: 13px;
+        }
+      }
+    }
+
+    &-label {
+      opacity: 0.5;
+      font-size: 14px;
+      font-weight: bold;
+      position: absolute;
+      top: 11px;
+      left: 20px;
+      cursor: auto;
+      display: block;
+      transition: 0.2s;
+    }
+  }
+
+
+}
+
+
+// @media screen and (min-width: 768px) {
+
+// }
+
+// @media screen and (min-width: 1000px) {
+  
+// }

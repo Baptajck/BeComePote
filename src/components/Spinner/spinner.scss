@@ -1,0 +1,21 @@
+.spinner {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20%;
+
+  &-title {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 5rem;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .spinner {
+    margin-top: 15%;
+  }
+}
+
+.css-nd0jy9 {
+  margin: 0 auto;
+}
