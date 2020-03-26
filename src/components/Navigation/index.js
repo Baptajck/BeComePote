@@ -10,10 +10,10 @@ import logo from './Logo_BeComePote_v3.png';
 
 // == Composant
 const Navigation = () => (
-    <nav className="navbar">
+    <nav className="navbar" role="navigation">
     <ul className="navbar-nav">
       <img src={logo} alt="logo" className="navbar-img" />
-      <li className="navbar-nav-item">
+      <li className="navbar-nav-item" activeclassname="active">
         <NavLink to="/search" className="navbar-nav-link">
           <svg
             viewBox="0 0 24 24"
@@ -31,7 +31,7 @@ const Navigation = () => (
         </NavLink>
       </li>
 
-      <li className="navbar-nav-item">
+      <li className="navbar-nav-item" activeclassname="active">
         <NavLink to="/chatroom" className="navbar-nav-link">
           <svg
             viewBox="0 0 24 25"
@@ -49,7 +49,7 @@ const Navigation = () => (
         </NavLink>
       </li>
 
-      <li className="navbar-nav-item">
+      <li className="navbar-nav-item" activeclassname="active">
         <NavLink to="/profile" className="navbar-nav-link">
           <svg
             viewBox="0 0 24 24"

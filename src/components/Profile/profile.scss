@@ -1,6 +1,151 @@
 @import 'src/styles/vars';
 
 @media screen and (min-width: 300px) {
+  /*
+  Set up of the accordion general layout and behaviour
+  */
+  .accordion {
+    // Button of an accordion element
+    &-wrapper {
+      // First button of the accordion element
+      margin-top: 0.5em;
+      box-shadow: 5px 5px 15px #969494;
+
+      // Other buttons of the accordion element
+      & + * {
+        margin-top: 0.5em;
+        box-shadow: 5px 5px 15px #969494;
+      }
+    }
+
+    // Opening of an accordion element
+    &-item {
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(1, 0, 1, 0);
+      height: auto;
+      max-height: 9999px;
+      background-color: rgba(119, 93, 165, 0.8);
+    }
+
+    // Closing of an accordion element
+    &-item.collapsed {
+      max-height: 0;
+      transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
+    }
+
+    // Title of an accordion element
+    &-title {
+      height: 3.5rem;
+      width: 100%;
+      background: linear-gradient(to left, #292929 0%, rgb(20, 19, 19) 100%);
+      color: #fff;
+      letter-spacing: 1px;
+      text-align: left;
+      line-height: 1;
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      border-bottom: 0.35rem solid #775da5;
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+      font-weight: lighter;
+
+      &:active {
+        background-color: #e68676;
+        color: #fff;
+        transition: all .3s ease-in;
+      }
+   
+      &:hover,
+      &.open {
+        transition: all .3s ease-in;
+        background: linear-gradient(to left, #181717 0%, rgb(53, 52, 52) 100%);
+      }
+    }
+
+    // Content text appearing from accordion element 
+    &-content {
+      padding: 1em 1.5em;
+    }
+  }
+
+  // Arrow to toggle Accordion element
+  .arrow {
+    font-size: 1.1em;
+    display: block;
+    float: right;
+    transition: all .3s ease-in;
+    margin-right: 1em;
+
+    // Arrow to collapse Accordion element
+    &.open,
+    &.classic {
+      -webkit-transform:rotate(180deg);
+      -moz-transform:rotate(180deg);
+      transform:rotate(180deg);
+      transition: all .4s ease-in;
+      color: #ce6795;
+    }
+  }
+  
+  /*
+  Set up of the profile section
+  */
+  .profile {
+    // Container for the full profile page
+    &-layout{
+      background-color: $color-white;  
+      max-height: 9999px;
+      min-height: 850px;
+    }
+    &-container {
+      text-align: center;
+
+      // Image container for avatar
+      &-image {
+        background: $gradient-background2;
+        height: 350px;
+        border-bottom-left-radius: 70%;
+        box-shadow: inset 3px 0px 15px #292929;
+      }
+    }
+
+    // Avatar section
+    &-header {
+      height: 250px;
+      width: 250px;
+      margin-top: 40px;
+      border-radius: 50%;
+      border: 0.5em solid rgba(255, 255, 255, .4);
+      -webkit-filter: drop-shadow(2px 2px 2px white);
+    }
+
+    // Wrapper for the section under the avatar
+    &-wrapper {
+      width: 85%;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 5.5rem;
+      padding-bottom: 5rem;
+    }
+
+    // Page title - h1
+    &-title {
+      font-size: 1.3rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 2rem 1rem;
+      color: $color-black;
+      text-transform: uppercase;
+    }
+  }
+
+  /* 
+  Set up of the form section
+  */
+  // Error message for inputs
   .requirements {
     padding: 0 30px 0 50px;
     max-height: 0;
@@ -14,53 +159,48 @@
     }
   }
 
-  .profile-container {
-    text-align: center;
-
-    &-image {
-      background-color: $color-blue;
-      height: 350px;
-    }
-  }
-  
-  .profile-header {
-    height: 250px;
-    width: 250px;
-    margin-top: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 0.5em solid rgba(255, 255, 255, .3);
-  }
-
-  .profile-title {
-    font-size: 1.3rem;
-    text-align: center;
-    font-weight: 700;
-    margin: 2rem 1rem;
-  }
-
+  // Layout of the form before inputs
   .profile-form {
+  
     width: 80%;
     margin: 0 auto;
 
+    // General form container
     &-container {
-      margin: 3.5rem 1rem 2rem;
-      position: relative;
-      background: $color-white;
+      margin: 1rem 0rem 1.7rem;
     }
 
+    // Title of inputs
+    &-label {
+      opacity: 0.8;
+      font-size: 0.8em;
+      font-weight: bold;
+      display: block;
+      text-align: left;
+      color: #292929;
+      cursor: default;
+    }
+
+    // Input layout
     &-input {
       display: block;
       margin: .5rem auto;
       width: 100%;
-      padding: 0.7rem 2.1rem;
+      padding: 0.7rem;
       border-top: none;
       border-left: none;
       border-right: none;
       font-size: 1.2rem;
       line-height: 1.2rem;
+      background-color: rgba(119, 93, 165, 0);
+      color: #fff;
 
+      // Different behaviour depending on focus, placeholder delimitations and if input is valid or not
       &:focus {
+        border-color: $color-white;
+        border-width: 3px;
+        border-image-slice: 1;
+
         ~ .profile-form-label {
           position: absolute;
           top: -8px;
@@ -73,30 +213,16 @@
           font-size: 12px;
           color: $color-blue;
         }
-        // box-shadow: 0px 0px 5px 0px $color-blue;
-        border-color: $color-blue;
-        border-width: 3px;
-        border-image-slice: 1;
       }
 
       &:placeholder-shown {
         font-style: italic;
       }
       
-      &:valid {
-        background: url(https://i.imgur.com/cKUyms3.png);
-        background-size: 20px;
-        background-repeat: no-repeat;
-        background-position: 10px 10px;
 
-        & + label {
-          opacity: 0;
-        }
-      }
 
       &:invalid:not(:focus):not(:placeholder-shown) {
         box-shadow: 0px 0px 5px 0px $color-red;
-        // border-color: $color-red;
 
         & + label {
           opacity: 0;
@@ -111,27 +237,92 @@
         }
       }
     }
+  }
 
-    &-label {
-      opacity: 0.5;
-      font-size: 14px;
-      font-weight: bold;
-      position: absolute;
-      top: 11px;
-      left: 20px;
-      cursor: auto;
-      display: block;
-      transition: 0.2s;
+  /* 
+  Set up of the edition mode
+  */
+  // Edition mode container
+  .edition-mode {
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2em;
+    line-height: 2;
+    transition: all .4s ease-in;
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+
+    // If edition mode is active
+    &.open {
+      width: 85%;
+    }
+
+    // Input area
+    &-text {
+      font: inherit;
+      line-height: 1.5em;
+      width: 75%;
+    }
+
+    // Icon container
+    &-button {
+      background-color: #fff;
+      border: none;
+      outline: 0;
+    }
+
+    // Icons to edit, check or cancel the edition action
+    &-icon {
+    font-size: 1.3em;
+    color: $color-black;
     }
   }
 
+  /* 
+  Set up of the logout section
+  */
+  // logout container
+  .logout {
+    &-container{
+      width: 85%;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 2rem;
+      padding-bottom: 4rem;
 
+      // Title of the button
+      &-input{
+        border: none;
+        background: none;
+
+        // Logout icon
+        &-arrow{
+          background: linear-gradient(to left, #ee670d,#e9872b);
+          border-radius: 2em;
+          display: inline-block;
+          margin-left: 0.5rem;
+          vertical-align: middle;
+          width: 3rem;
+          text-align: center;
+          color: $color-white;
+          padding: 0.5rem;
+        }
+      }
+    }
+  }
 }
 
 
-// @media screen and (min-width: 768px) {
 
-// }
+
+@media screen and (min-width: 768px) {
+  // Edition mode container
+  .edition-mode {
+    margin-top: 8em;
+  }
+}
 
 // @media screen and (min-width: 1000px) {
   

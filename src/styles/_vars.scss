@@ -14,6 +14,15 @@ $color-orange-light: #fabe52;
 // == Shadow
 $color-grey-shadow: #7c7c7c;
 
+// == Background BeComePote
+$gradient-background: linear-gradient(to left, #3453a1, #775da5, #ce6795, #e68676);
+$gradient-background2: linear-gradient(to bottom, #3453a1, #775da5, #ce6795, #e68676);
+$gradient-background3: linear-gradient(to top, #3453a1, #775da5, #ce6795, #e68676);
+
+
+// == Form Input Background
+$form-background:#3453a1;
+
 // == Autres
 $text-primary: #ececec;
 $text-secondary: #f3f1f1;

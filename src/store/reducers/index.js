@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 // on importe chacun des sous-reducers
 import connexion from './forms/connexion';
 import forgottenPassword from './forms/forgottenPassword';
+import profile from './profile';
 
 /**
 * combineReducers nous retourne le reducer parent généré
@@ -14,6 +15,7 @@ import forgottenPassword from './forms/forgottenPassword';
 const reducer = combineReducers({
   connexion,
   forgottenPassword,
+  profile,
 });
 
 export default reducer;
