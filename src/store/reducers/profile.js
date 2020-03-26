@@ -2,16 +2,20 @@
 const initialState = {
   firstname: 'Fanny',
   isInEditMode: false,
+  test: true,
+  currentValue: '',
 };
 
 // == Types
 const CHANGE_INPUT_PROFILE = 'CHANGE_INPUT_PROFILE';
 const CHANGE_EDIT_MODE = 'CHANGE_EDIT_MODE';
 const UPDATE_INPUT_VALUE = 'UPDATE_INPUT_VALUE';
+const CLOSE = 'CLOSE';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
-  console.log(action);
+  console.log(state);
+  console.log('je suis l\'action', action.type);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {
@@ -27,6 +31,15 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isInEditMode: false,
+        currentValue: state.firstname,
+        test: false,
+      };
+    case CLOSE:
+      return {
+        ...state,
+        isInEditMode: !state.isInEditMode,
+        currentValue: state.firstname,
+        test: false,
       };
     default:
       return state;
@@ -46,6 +59,10 @@ export const changeEditMode = () => ({
 
 export const updateInputValue = () => ({
   type: UPDATE_INPUT_VALUE,
+});
+
+export const close = () => ({
+  type: CLOSE,
 });
 
 // == Selectors

@@ -5,11 +5,13 @@ import { connect } from 'react-redux';
 import Profile from 'src/components/Profile';
 
 // Action Creators
-import { changeInputProfile, changeEditMode, updateInputValue } from 'src/store/reducers/profile';
+import { changeInputProfile, changeEditMode, updateInputValue, close } from 'src/store/reducers/profile';
 
 const mapStateToProps = (state) => ({
   firstname: state.profile.firstname,
   isInEditMode: state.profile.isInEditMode,
+  currentValue: state.profile.currentValue,
+  test: state.profile.test,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -21,6 +23,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateInputValue: () => {
     dispatch(updateInputValue());
+  },
+  close: () => {
+    dispatch(close());
   },
 });
 

@@ -10,54 +10,67 @@ import {
 // == Import : local
 import './profile.scss';
 
-// == Composant
-const Accordion = ({ title, children }) => {
-  const [isOpen, setOpen] = React.useState(false);
-  return (
-    <div className="accordion-wrapper">
-      <div
-        className={`accordion-title ${isOpen ? 'open' : ''}`}
-        onClick={() => setOpen(!isOpen)}
-      >
-        {title}
-        <FaChevronDown className={`arrow ${isOpen ? 'open' : ''}`} />
-      </div>
-      <div className={`accordion-item ${!isOpen ? 'collapsed' : ''}`}>
-        <div className="accordion-content">{children}</div>
-      </div>
-    </div>
-  );
-};
 
 // == Class
-class Profile extends React.Component {
-  changeEditMode = () => {
-    const { changeEditMode } = this.props;
-    changeEditMode();
-  };
+const Profile = ({
+  firstname,
+  isInEditMode,
+  changeEditMode,
+  changeInputProfile,
+  updateInputValue,
+  currentValue,
+  test,
+  close,
+}) => {
+  // == Composant
+  // const Accordion = ({ title, children }) => {
+  //   const [isOpen, setOpen] = React.useState(false);
+  //   return (
+  //     <div className="accordion-wrapper">
+  //       <div
+  //         className={`accordion-title ${isOpen ? 'open' : ''}`}
+  //         onClick={() => setOpen(!isOpen)}
+  //       >
+  //         {title}
+  //         <FaChevronDown className={`arrow ${isOpen ? 'open' : ''}`} />
+  //       </div>
+  //       <div className={`accordion-item ${!isOpen ? 'collapsed' : ''}`}>
+  //         <div className="accordion-content">{children}</div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
-  handleChange = (event) => {
-    const { changeInputProfile } = this.props;
+  const handleChange = (event) => {
     const { name, value } = event.target;
     changeInputProfile(name, value);
   };
 
-  updateInputValue = () => {
-    const { updateInputValue } = this.props;
+  const handleChangeEditMode = () => {
+    changeEditMode();
+  };
+
+  const handleUpdateInputValue = () => {
     updateInputValue();
   };
 
-  closeToAction = () => {
-    const { updateInputValue, firstname } = this.props;
-    if (!updateInputValue) {
-      this.newTextInput.current.value;
-    }
+  const handleRenderDefaultView = () => {
+    return (
+    <div className="edition-mode">
+      {firstname}
+      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditMode}>
+        <span className="edition-mode-icon"><FaRegEdit /></span>
+      </button>
+    </div>
+    );
+  };
+  const closeToAction = () => {
+    close();
   };
 
-
-  renderEditView = () => {
-    this.newTextInput = React.createRef();
-    const { firstname } = this.props;
+  const renderEditView = () => {
+    // this.newTextInput = React.createRef();
+    console.log('Je suis le composant', test);
     return (
       <div className="edition-mode open">
         <input
@@ -65,37 +78,23 @@ class Profile extends React.Component {
           // defaultValue={firstname}
           className="edition-mode-text"
           name="firstname"
-          ref={this.newTextInput}
-          value={firstname.trim()}
-          onChange={this.handleChange}
+          // ref={this.newTextInput}
+          // value={currentValue}
+          value={test ? currentValue : firstname}
+          onChange={handleChange}
         />
-        <button type="button" className="edition-mode-button" title="Valider" onClick={this.updateInputValue}>
+        <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValue}>
           <span className="edition-mode-icon"><FaRegCheckCircle /></span>
         </button>
-        <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={this.changeEditMode}>
+        <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeToAction}>
           <span className="edition-mode-icon"><FaRegTimesCircle /></span>
         </button>
       </div>
     );
   };
 
-  renderDefaultView = () => {
-    const { firstname } = this.props;
-    return (
-    <div className="edition-mode">
-      {firstname}
-      <button type="button" className="edition-mode-button" title="Editer" onClick={this.changeEditMode}>
-        <span className="edition-mode-icon"><FaRegEdit /></span>
-      </button>
-    </div>
-    );
-  };
-
-  render() {
-    console.log(this.props);
-    const { firstname, isInEditMode } = this.props;
-    return (
-      isInEditMode ? this.renderEditView() : this.renderDefaultView()
+  return (
+    isInEditMode ? renderEditView() : handleRenderDefaultView()
     // <div className="profile-layout">
     //   <div className="profile-container">
     //     <div className="profile-container-image">
@@ -195,22 +194,21 @@ class Profile extends React.Component {
     //     </div>
     //   </div>
     // </div>
-    );
-  }
-}
+  );
+};
 
 // == Export
 export default Profile;
 
-Accordion.defaultProps = {
-  title: '',
-  children: '',
-};
+// Accordion.defaultProps = {
+//   title: '',
+//   children: '',
+// };
 
-Accordion.propTypes = {
-  title: PropTypes.string,
-  children: PropTypes.string,
-};
+// Accordion.propTypes = {
+//   title: PropTypes.string,
+//   children: PropTypes.string,
+// };
 
 Profile.propTypes = {
   firstname: PropTypes.string.isRequired,
