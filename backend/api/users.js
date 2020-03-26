@@ -208,8 +208,7 @@ router.delete('/user/:id/delete', (req, res) => {
    */
 router.post('/connect', (req, res) => {
   const { email, password } = req.body;
-  // const privateKEY = fs.readFileSync('key/private.key', 'utf8');
-  // const publicKEY = fs.readFileSync('key/public.key', 'utf8');
+  const tokenList = {};
   User.query()
     .where('email', email)
     .select('id', 'email', 'password')
@@ -231,6 +230,7 @@ router.post('/connect', (req, res) => {
           algorithm: 'RS256',
         };
         const token = jwt.sign({ user }, privateKEY, signOptions);
+        const refreshToken = jwt.sign({ user }, privateKEY, { expiresIn: process.env.REFRESHTOKENLIFE });
         res.cookie('userToken', token, {
           expires: new Date(Date.now() + 900000),
           // secure: true, if https enabled
@@ -239,31 +239,60 @@ router.post('/connect', (req, res) => {
           httpOnly: true,
         });
 
-        // TODO CHECK ENCRYPTION KEY AND IF COOKIE IS EMPTY ERR.MESSAGE DISPLAYS
-        // Check if encryption key is correct
-        // const verifyOptions = {
-        //   issuer: 'becomepote',
-        //   subject: 'information utilisateur',
-        //   audience: 'http://becomepote.fr',
-        //   expiresIn: '24h',
-        //   notBefore: '60s',
-        //   algorithm: ['RS256'],
-        // };
-        // const verifyToken = jwt.verify(token, publicKEY, verifyOptions);
+        res.cookie('refreshToken', refreshToken, {
+          expires: new Date(Date.now() + 900000),
+          // secure: true, if https enabled
+          maxAge: 1296000000,
+          secure: false,
+          httpOnly: true,
+        });
+
         if (token.length === 0) {
           res.json(token);
           res.status(401).send({ message: 'You need to login to access this page.' });
         }
-        res.status(200).send({
-          message: 'Vous êtes connecté',
+        // TODO Refresh token
+        const response = {
+          status: 'Logged in',
           token,
-        }).redirect('/profile');
+          refreshToken,
+        };
+        tokenList[refreshToken] = response;
+        res.status(200).send(response).redirect('/profile');
       }
     })
     .catch((err) => res.status(500).send({
       message:
            err.message || 'Login was unsuccessful, please try again',
     }));
+});
+
+//
+router.post('/token', (req, res) => {
+  const tokenList = {};
+  // refresh the damn token
+  const postData = req.cookies;
+  const postBody = req.body;
+  // console.log(postData.refreshToken in tokenList);
+  // if refresh token exists
+  if (postData.refreshToken) {
+    const user = {
+      email: postBody.email,
+    };
+    console.log('je suis user', user);
+    const token = jwt.sign({ user }, privateKEY, { expiresIn: process.env.TOKENLIFE });
+    const response = {
+      token,
+    };
+    // update the token in the list
+    tokenList[postData.refreshToken] = token;
+    res.status(200).json(response);
+    // console.log(tokenList);
+    // console.log(response);
+  }
+  else {
+    res.status(404).send('Invalid request');
+  }
 });
 
 

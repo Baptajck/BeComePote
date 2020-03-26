@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import Profile from 'src/components/Profile';
 
 // Action Creators
-import { changeInputProfile, changeEditMode, updateInputValue, close } from 'src/store/reducers/profile';
+import {
+  changeInputProfile, changeEditMode, updateInputValue, close,
+} from 'src/store/reducers/profile';
 
 const mapStateToProps = (state) => ({
   firstname: state.profile.firstname,
