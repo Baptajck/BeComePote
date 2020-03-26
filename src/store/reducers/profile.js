@@ -2,7 +2,7 @@
 const initialState = {
   firstname: 'Fanny',
   isInEditMode: false,
-  test: true,
+  isFailEdit: false,
   currentValue: '',
 };
 
@@ -14,8 +14,6 @@ const CLOSE = 'CLOSE';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
-  console.log(state);
-  console.log('je suis l\'action', action.type);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {
@@ -26,20 +24,21 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isInEditMode: !state.isInEditMode,
+        isFailEdit: false,
       };
     case UPDATE_INPUT_VALUE:
       return {
         ...state,
         isInEditMode: false,
         currentValue: state.firstname,
-        test: false,
+        isFailEdit: false,
       };
     case CLOSE:
       return {
         ...state,
         isInEditMode: !state.isInEditMode,
-        currentValue: state.firstname,
-        test: false,
+        isFailEdit: true,
+        firstname: state.currentValue,
       };
     default:
       return state;

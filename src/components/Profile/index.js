@@ -19,8 +19,8 @@ const Profile = ({
   changeInputProfile,
   updateInputValue,
   currentValue,
-  test,
   close,
+  isFailEdit,
 }) => {
   // == Composant
   // const Accordion = ({ title, children }) => {
@@ -41,6 +41,7 @@ const Profile = ({
   //   );
   // };
 
+  // == Appel des fonctions venant du reducer
   const handleChange = (event) => {
     const { name, value } = event.target;
     changeInputProfile(name, value);
@@ -54,33 +55,26 @@ const Profile = ({
     updateInputValue();
   };
 
-  const handleRenderDefaultView = () => {
-    return (
-    <div className="edition-mode">
-      {firstname}
-      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditMode}>
-        <span className="edition-mode-icon"><FaRegEdit /></span>
-      </button>
-    </div>
-    );
-  };
   const closeToAction = () => {
     close();
   };
 
-  const renderEditView = () => {
-    // this.newTextInput = React.createRef();
-    console.log('Je suis le composant', test);
-    return (
+  // == Fonctions pour le rendu
+  const handleRenderDefaultView = () => (
+    <div className="edition-mode">
+      {isFailEdit ? currentValue : firstname}
+      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditMode}>
+        <span className="edition-mode-icon"><FaRegEdit /></span>
+      </button>
+    </div>
+  );
+  const renderEditView = () => (
       <div className="edition-mode open">
         <input
           type="text"
-          // defaultValue={firstname}
           className="edition-mode-text"
           name="firstname"
-          // ref={this.newTextInput}
-          // value={currentValue}
-          value={test ? currentValue : firstname}
+          value={isFailEdit ? currentValue : firstname}
           onChange={handleChange}
         />
         <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValue}>
@@ -90,8 +84,7 @@ const Profile = ({
           <span className="edition-mode-icon"><FaRegTimesCircle /></span>
         </button>
       </div>
-    );
-  };
+  );
 
   return (
     isInEditMode ? renderEditView() : handleRenderDefaultView()
@@ -210,10 +203,17 @@ export default Profile;
 //   children: PropTypes.string,
 // };
 
+// Profile.defaultProps = {
+//   firstname: '',
+// };
+
 Profile.propTypes = {
   firstname: PropTypes.string.isRequired,
   isInEditMode: PropTypes.bool.isRequired,
   changeEditMode: PropTypes.func.isRequired,
   changeInputProfile: PropTypes.func.isRequired,
   updateInputValue: PropTypes.func.isRequired,
+  currentValue: PropTypes.string.isRequired,
+  isFailEdit: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
 };

@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
   firstname: state.profile.firstname,
   isInEditMode: state.profile.isInEditMode,
   currentValue: state.profile.currentValue,
-  test: state.profile.test,
+  isFailEdit: state.profile.isFailEdit,
 });
 
 const mapDispatchToProps = (dispatch) => ({
