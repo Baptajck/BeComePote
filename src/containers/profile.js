@@ -5,7 +5,10 @@ import Profile from 'src/components/Profile';
 // Action Creators
 import {
   changeInputProfile,
-  changeEditMode,
+  changeEditModeFirstname,
+  changeEditModeLastname,
+  changeEditModePseudo,
+  changeEditModePresentation,
   updateInputValueFirstname,
   updateInputValueLastname,
   updateInputValuePseudo,
@@ -23,7 +26,10 @@ const mapStateToProps = (state) => ({
   lastname: state.profile.lastname,
   pseudo: state.profile.pseudo,
   presentation: state.profile.presentation,
-  isInEditMode: state.profile.isInEditMode,
+  isInEditModeFirstname: state.profile.isInEditModeFirstname,
+  isInEditModeLastname: state.profile.isInEditModeLastname,
+  isInEditModePseudo: state.profile.isInEditModePseudo,
+  isInEditModePresentation: state.profile.isInEditModePresentation,
   isFailEdit: state.profile.isFailEdit,
   isConnected: state.connexion.isConnected,
   oldValueFirstname: state.profile.oldValueFirstname,
@@ -36,8 +42,17 @@ const mapDispatchToProps = (dispatch) => ({
   changeInputProfile: (name, value) => {
     dispatch(changeInputProfile(name, value));
   },
-  changeEditMode: () => {
-    dispatch(changeEditMode());
+  changeEditModeFirstname: () => {
+    dispatch(changeEditModeFirstname());
+  },
+  changeEditModeLastname: () => {
+    dispatch(changeEditModeLastname());
+  },
+  changeEditModePseudo: () => {
+    dispatch(changeEditModePseudo());
+  },
+  changeEditModePresentation: () => {
+    dispatch(changeEditModePresentation());
   },
   // saved button
   updateInputValueFirstname: () => {

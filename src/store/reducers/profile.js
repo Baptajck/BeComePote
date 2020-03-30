@@ -4,7 +4,10 @@ const initialState = {
   lastname: 'Ardent',
   pseudo: 'Fanfan',
   presentation: 'Présentez-vous en quelques mots ...',
-  isInEditMode: false,
+  isInEditModeFirstname: false,
+  isInEditModeLastname: false,
+  isInEditModePseudo: false,
+  isInEditModePresentation: false,
   isFailEdit: false,
   oldValueFirstname: '',
   oldValueLastname: '',
@@ -14,7 +17,10 @@ const initialState = {
 
 // == Types
 const CHANGE_INPUT_PROFILE = 'CHANGE_INPUT_PROFILE';
-const CHANGE_EDIT_MODE = 'CHANGE_EDIT_MODE';
+const CHANGE_EDIT_MODE_FIRSTNAME = 'CHANGE_EDIT_MODE_FIRSTNAME';
+const CHANGE_EDIT_MODE_LASTNAME = 'CHANGE_EDIT_MODE_LASTNAME';
+const CHANGE_EDIT_MODE_PSEUDO = 'CHANGE_EDIT_MODE_PSEUDO';
+const CHANGE_EDIT_MODE_PRESENTATION = 'CHANGE_EDIT_MODE_PRESENTATION';
 const UPDATE_INPUT_VALUE_FIRSTNAME = 'UPDATE_INPUT_VALUE_FIRSTNAME';
 const UPDATE_INPUT_VALUE_LASTNAME = 'UPDATE_INPUT_VALUE_LASTNAME';
 const UPDATE_INPUT_VALUE_PSEUDO = 'UPDATE_INPUT_VALUE_PSEUDO';
@@ -27,7 +33,7 @@ const CLOSE_PRESENTATION = 'CLOSE_PRESENTATION';
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
   // console.log(state);
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {
@@ -35,16 +41,32 @@ const reducer = (state = initialState, action = {}) => {
         [action.name]: action.value,
         isFailEdit: false,
       };
-    case CHANGE_EDIT_MODE:
+    // Changement de vision
+    case CHANGE_EDIT_MODE_FIRSTNAME:
       return {
         ...state,
-        isInEditMode: !state.isInEditMode,
+        isInEditModeFirstname: !state.isInEditModeFirstname,
+      };
+    case CHANGE_EDIT_MODE_LASTNAME:
+      return {
+        ...state,
+        isInEditModeLastname: !state.isInEditModeLastname,
+      };
+    case CHANGE_EDIT_MODE_PSEUDO:
+      return {
+        ...state,
+        isInEditModePseudo: !state.isInEditModePseudo,
+      };
+    case CHANGE_EDIT_MODE_PRESENTATION:
+      return {
+        ...state,
+        isInEditModePresentation: !state.isInEditModePresentation,
       };
     // Button Update Input
     case UPDATE_INPUT_VALUE_FIRSTNAME:
       return {
         ...state,
-        isInEditMode: false,
+        isInEditModeFirstname: false,
         firstname: state.firstname,
         oldValueFirstname: state.firstname,
         isFailEdit: false,
@@ -52,7 +74,7 @@ const reducer = (state = initialState, action = {}) => {
     case UPDATE_INPUT_VALUE_LASTNAME:
       return {
         ...state,
-        isInEditMode: false,
+        isInEditModeLastname: false,
         lastname: state.lastname,
         oldValueLastname: state.lastname,
         isFailEdit: false,
@@ -60,7 +82,7 @@ const reducer = (state = initialState, action = {}) => {
     case UPDATE_INPUT_VALUE_PSEUDO:
       return {
         ...state,
-        isInEditMode: false,
+        isInEditModePseudo: false,
         pseudo: state.pseudo,
         oldValuePesudo: state.pseudo,
         isFailEdit: false,
@@ -68,7 +90,7 @@ const reducer = (state = initialState, action = {}) => {
     case UPDATE_INPUT_VALUE_PRESENTATION:
       return {
         ...state,
-        isInEditMode: false,
+        isInEditModePresentation: false,
         presentation: state.presentation,
         oldValuePresentation: state.presentation,
         isFailEdit: false,
@@ -77,28 +99,28 @@ const reducer = (state = initialState, action = {}) => {
     case CLOSE_FIRSTNAME:
       return {
         ...state,
-        isInEditMode: !state.isInEditMode,
+        isInEditModeFirstname: !state.isInEditModeFirstname,
         isFailEdit: false,
         firstname: state.oldValueFirstname,
       };
     case CLOSE_LASTNAME:
       return {
         ...state,
-        isInEditMode: !state.isInEditMode,
+        isInEditModeLastname: !state.isInEditModeLastname,
         isFailEdit: false,
         lastname: state.oldValueLastname,
       };
     case CLOSE_PSEUDO:
       return {
         ...state,
-        isInEditMode: !state.isInEditMode,
+        isInEditModePseudo: !state.isInEditModePseudo,
         isFailEdit: false,
         pseudo: state.oldValuePseudo,
       };
     case CLOSE_PRESENTATION:
       return {
         ...state,
-        isInEditMode: !state.isInEditMode,
+        isInEditModePresentation: !state.isInEditModePresentation,
         isFailEdit: false,
         presentation: state.oldValuePresentation,
       };
@@ -114,11 +136,18 @@ export const changeInputProfile = (name, value) => ({
   value,
 });
 
-
-export const changeEditMode = () => ({
-  type: CHANGE_EDIT_MODE,
+export const changeEditModeFirstname = () => ({
+  type: CHANGE_EDIT_MODE_FIRSTNAME,
 });
-
+export const changeEditModeLastname = () => ({
+  type: CHANGE_EDIT_MODE_LASTNAME,
+});
+export const changeEditModePseudo = () => ({
+  type: CHANGE_EDIT_MODE_PSEUDO,
+});
+export const changeEditModePresentation = () => ({
+  type: CHANGE_EDIT_MODE_PRESENTATION,
+});
 // saved button
 export const updateInputValueFirstname = () => ({
   type: UPDATE_INPUT_VALUE_FIRSTNAME,

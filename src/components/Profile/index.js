@@ -17,8 +17,14 @@ const Profile = ({
   lastname,
   pseudo,
   presentation,
-  isInEditMode,
-  changeEditMode,
+  isInEditModeFirstname,
+  isInEditModeLastname,
+  isInEditModePseudo,
+  isInEditModePresentation,
+  changeEditModeFirstname,
+  changeEditModeLastname,
+  changeEditModePseudo,
+  changeEditModePresentation,
   changeInputProfile,
   updateInputValueFirstname,
   updateInputValueLastname,
@@ -77,8 +83,17 @@ const Profile = ({
   };
 
   // Passer de input à non input
-  const handleChangeEditMode = () => {
-    changeEditMode();
+  const handleChangeEditModeFirstname = () => {
+    changeEditModeFirstname();
+  };
+  const handleChangeEditModeLastname = () => {
+    changeEditModeLastname();
+  };
+  const handleChangeEditModePseudo = () => {
+    changeEditModePseudo();
+  };
+  const handleChangeEditModePresentation = () => {
+    changeEditModePresentation();
   };
 
   return (
@@ -93,18 +108,18 @@ const Profile = ({
               <div className="profile-form-info">
               <p className="profile-form-subtitle">Mes informations personnelles</p>
                 {/* PRENOM */}
-                {!isInEditMode && (
+                {!isInEditModeFirstname && (
                   <div className="profile-form-container">
                     <label htmlFor="prénom" className="profile-form-label">Prénom</label>
                     <div className="edition-mode">
                       {isFailEdit ? oldValueFirstname : firstname}
-                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditMode}>
+                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeFirstname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
                     </div>
                   </div>
                 )}
-                {isInEditMode && (
+                {isInEditModeFirstname && (
                   <div className="profile-form-container">
                     <label htmlFor="prénom" className="profile-form-label">Prénom</label>
                     <div className="edition-mode open">
@@ -127,18 +142,18 @@ const Profile = ({
                   </div>
                 )}
                 {/* NOM */}
-                {!isInEditMode && (
+                {!isInEditModeLastname && (
                   <div className="profile-form-container">
                     <label htmlFor="nom" className="profile-form-label">Nom</label>
                     <div className="edition-mode">
                       {isFailEdit ? oldValueLastname : lastname}
-                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditMode}>
+                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeLastname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
                     </div>
                   </div>
                 )}
-                {isInEditMode && (
+                {isInEditModeLastname && (
                   <div className="profile-form-container">
                     <label htmlFor="nom" className="profile-form-label">Nom</label>
                     <div className="edition-mode open">
@@ -161,19 +176,19 @@ const Profile = ({
                   </div>
                 )}
                 {/* CHANGER SON PSEUDO */}
-                {!isInEditMode && (
+                {!isInEditModePseudo && (
                   <div className="profile-form-container">
                     <label htmlFor="pseudo" className="profile-form-label">Changer son pseudo</label>
                     <div className="edition-mode">
                       {isFailEdit ? oldValuePseudo : pseudo}
-                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditMode}>
+                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePseudo}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
                     </div>
                     <div className="requirements">Votre pseudo doit contenir au moins 3 caractères.</div>
                   </div>
                 )}
-                {isInEditMode && (
+                {isInEditModePseudo && (
                   <div className="profile-form-container">
                     <label htmlFor="nom" className="profile-form-label">Nom</label>
                     <div className="edition-mode open">
@@ -200,17 +215,17 @@ const Profile = ({
             <form action="#0" className="profile-form redaction">
             <p className="profile-form-subtitle">Présentation</p>
             {/* PRESENTATION */}
-              {!isInEditMode && (
+              {!isInEditModePresentation && (
                 <div className="profile-form-container">
                   <div className="edition-mode presentation">
                     {isFailEdit ? oldValuePresentation : presentation}
                   </div>
-                  <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditMode}>
+                  <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePresentation}>
                       <span className="edition-mode-icon"><FaRegEdit /></span>
                   </button>
                 </div>
               )}
-             {isInEditMode && (
+             {isInEditModePresentation && (
               <div className="profile-form-container">
                 <div className="edition-mode open">
                   <textarea
@@ -235,7 +250,7 @@ const Profile = ({
             <p className="profile-form-subtitle">Questions</p>
             {/* QUESTIONS */}
             {questions.map((question) => (
-              <div className="profile-form-quizz">
+              <div key={question.id} className="profile-form-quizz">
                 <p className="profile-form-quizz-question">{question.question}</p>
                 <div>
                   <input
@@ -293,8 +308,14 @@ Profile.propTypes = {
   lastname: PropTypes.string,
   pseudo: PropTypes.string,
   presentation: PropTypes.string,
-  isInEditMode: PropTypes.bool.isRequired,
-  changeEditMode: PropTypes.func.isRequired,
+  isInEditModeFirstname: PropTypes.bool.isRequired,
+  isInEditModeLastname: PropTypes.bool.isRequired,
+  isInEditModePseudo: PropTypes.bool.isRequired,
+  isInEditModePresentation: PropTypes.bool.isRequired,
+  changeEditModeFirstname: PropTypes.func.isRequired,
+  changeEditModeLastname: PropTypes.func.isRequired,
+  changeEditModePseudo: PropTypes.func.isRequired,
+  changeEditModePresentation: PropTypes.func.isRequired,
   changeInputProfile: PropTypes.func.isRequired,
   updateInputValueFirstname: PropTypes.func.isRequired,
   updateInputValueLastname: PropTypes.func.isRequired,
