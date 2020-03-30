@@ -208,7 +208,6 @@ router.delete('/user/:id/delete', (req, res) => {
    */
 router.post('/connect', (req, res) => {
   const { email, password } = req.body;
-  const tokenList = {};
   User.query()
     .where('email', email)
     .select('id', 'email', 'password')
@@ -230,20 +229,11 @@ router.post('/connect', (req, res) => {
           algorithm: 'RS256',
         };
         const token = jwt.sign({ user }, privateKEY, signOptions);
-        const refreshToken = jwt.sign({ user }, privateKEY, { expiresIn: process.env.REFRESHTOKENLIFE });
         // == Token
         res.cookie('userToken', token, {
           expires: new Date(Date.now() + 900000),
           // secure: true, if https enabled
-          maxAge: 1296000000,
-          secure: false,
-          httpOnly: true,
-        });
-        // == Refresh Token
-        res.cookie('refreshToken', refreshToken, {
-          expires: new Date(Date.now() + 900000),
-          // secure: true, if https enabled
-          maxAge: 1296000000,
+          // maxAge: 1296000000,
           secure: false,
           httpOnly: true,
         });
@@ -256,9 +246,7 @@ router.post('/connect', (req, res) => {
         const response = {
           status: 'Logged in',
           token,
-          refreshToken,
         };
-        tokenList[refreshToken] = response;
         res.status(200).send(response).redirect('/profile');
       }
     })
@@ -268,34 +256,24 @@ router.post('/connect', (req, res) => {
     }));
 });
 
-//
-router.get('/token', withAuth, (req, res) => {
-  const tokenList = {};
-  // refresh the damn token
-  const postData = req.cookies;
-  const postBody = req.body;
-  // console.log(postData.refreshToken in tokenList);
-  // if refresh token exists
-  if (postData.refreshToken) {
-    const user = {
-      email: postBody.email,
-    };
-    const token = jwt.sign({ user }, privateKEY, { expiresIn: process.env.TOKENLIFE });
-    const response = {
-      token,
-    };
-    // update the token in the list
-    tokenList[postData.refreshToken] = token;
-    res.status(200).json(response);
-    // console.log(tokenList);
-    // console.log(response);
-  }
-  else {
-    res.status(404).send('Invalid request');
-  }
+/**
+   * LOGOUT - Route to connect a user
+   * @param {object} req
+   * @param {object} res
+   * @returns string
+   */
+router.get('/logout', (req, res) => {
+  res.clearCookie('userToken');
+  res.send('logout').redirect('/checkToken');
 });
 
-
+/**
+   * CHECK-TOKEN - Route to connect a user
+   * @func checktoken
+   * @param {object} req
+   * @param {object} res
+   * @returns string
+   */
 router.get('/checkToken', withAuth, (req, res) => {
   res.sendStatus(200);
 });

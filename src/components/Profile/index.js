@@ -26,6 +26,7 @@ const Profile = ({
   collapse1,
   collapse2,
   collapse3,
+  getLogout,
 }) => {
   // == fonctionnalities of the component
 
@@ -42,6 +43,10 @@ const Profile = ({
   const handleToggle3 = (event) => {
     const { id } = event.target;
     toggle3(id);
+  };
+
+  const handleLogout = () => {
+    getLogout();
   };
 
   const Accordion1 = ({ title, children, id }) => (
@@ -101,7 +106,6 @@ const Profile = ({
     </div>
   );
 
-
   // == Appel des fonctions venant du reducer
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -126,7 +130,7 @@ const Profile = ({
         </div>
         <div className="profile-wrapper">
           <div className="logout-container">
-            <button type="submit" className="logout-container-input">
+            <button type="submit" onClick={handleLogout} className="logout-container-input">
               <span className="logout-container-input-arrow"><IoIosLogOut /></span>
               <p className="logout-container-text"> déconnexion</p>
             </button>
@@ -277,7 +281,7 @@ const Profile = ({
         </div>
         <div className="profile-wrapper">
           <div className="logout-container">
-            <button type="submit" className="logout-container-input">
+            <button type="submit" onClick={handleLogout} className="logout-container-input">
               <span className="logout-container-input-arrow"><IoIosLogOut /></span>
               <p className="logout-container-text"> déconnexion</p>
             </button>
@@ -481,4 +485,5 @@ Profile.propTypes = {
   toggle2: PropTypes.func.isRequired,
   collapse3: PropTypes.bool.isRequired,
   toggle3: PropTypes.func.isRequired,
+  handleLogout: PropTypes.func.isRequired,
 };

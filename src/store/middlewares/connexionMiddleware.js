@@ -10,6 +10,8 @@ import {
   showHome,
   stopLoading,
   errorMessage,
+  GET_LOGOUT,
+  showLogout,
 } from 'src/store/reducers/forms/connexion';
 
 const connexionMiddleware = (store) => (next) => (action) => {
@@ -85,8 +87,32 @@ const connexionMiddleware = (store) => (next) => (action) => {
             throw error;
           }
         })
-        .catch((err) => {
+        .catch((err) =>
           // console.error(err);
+          isConnected)
+        .finally(() => {
+          const actionStopLoading = stopLoading();
+          store.dispatch(actionStopLoading);
+        });
+      break;
+    }
+    case GET_LOGOUT: {
+      const state = store.getState();
+      const { isConnected } = state.connexion;
+      axios.defaults.withCredentials = true;
+      axios.get('http://localhost:3000/api/logout')
+        .then((res) => {
+          if (res.status === 200) {
+            const save = showLogout(res.data);
+            store.dispatch(save);
+          }
+          else {
+            const error = new Error(res.error);
+            throw error;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
           return isConnected;
         })
         .finally(() => {

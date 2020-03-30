@@ -11,6 +11,7 @@ import {
   toggle2,
   toggle3,
 } from 'src/store/reducers/profile';
+import { getLogout } from 'src/store/reducers/forms/connexion';
 
 
 const mapStateToProps = (state) => ({
@@ -22,6 +23,7 @@ const mapStateToProps = (state) => ({
   collapse1: state.profile.collapse1,
   collapse2: state.profile.collapse2,
   collapse3: state.profile.collapse3,
+  isConnected: state.connexion.isConnected,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -42,6 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   toggle3: (id) => {
     dispatch(toggle3(id));
+  },
+  getLogout: () => {
+    dispatch(getLogout());
   },
 });
 
