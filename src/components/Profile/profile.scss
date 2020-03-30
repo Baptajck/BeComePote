@@ -94,10 +94,10 @@
   Set up of the logout section
   */
   // logout container
-  button[type="submit"]{
-    display: flex;
-    flex-flow: column;
-   }
+  // button[type="submit"]{
+  //   display: flex;
+  //   flex-flow: column;
+  //  }
 
   .logout {
     &-container{
@@ -120,6 +120,12 @@
         border: none;
         background: none;
         text-align: center;
+        margin: 5rem auto;
+        background-color: red;
+        padding: 1rem;
+        color: white;
+        font-size: 28px;
+        border-radius: 2em;
 
         // Logout icon
         &-arrow{
@@ -208,9 +214,25 @@
 
   // Layout of the form before inputs
   .profile-form {
-  
-    width: 80%;
-    margin: 0 auto;
+    width: 90%;
+    margin: 2rem auto;
+    border: 1px solid $color-black;
+    border-radius: 2em;
+    padding: 2rem;
+    box-shadow: 0px 0px 5px 0px #eee;
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      align-content: space-between;
+    }
+
+    &-subtitle {
+      margin-bottom: 1.3rem;
+      font-style: italic;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
 
     // General form container
     &-container {
@@ -295,8 +317,7 @@
     margin-left: auto;
     line-height: 2.5rem;
     transition: all .4s ease-in;
-    display: flex;
-    justify-content: space-between;
+    text-align: left;
     border-bottom: 0.1rem solid #fff;
 
     // If edition mode is active
@@ -306,11 +327,8 @@
     }
 
     &.presentation {
-      line-height: 1;
-      border: none;
-      display: block;
-      text-align: left;
-      width: 100%;
+      line-height: 1.5rem;
+      overflow-wrap: break-word;
     }
 
     // Input area
@@ -325,15 +343,14 @@
       background-color: rgba(119, 93, 165, 0);
       border: none;
       outline: 0;
-      // display: flex;
-      // width: 100%;
-      // justify-content: flex-end;
-      // vertical-align: middle;
+      width: 10%;
+      float: right;
+      margin-top: .6rem;
     }
 
     // Icons to edit, check or cancel the edition action
     &-icon {
-    font-size: 1em;
+    font-size: 1.1rem;
     color: $color-black;
     }
   }
@@ -341,7 +358,7 @@
   // Presentation accordion element
   // Section title
   .redaction {
-    width: 100%;
+    // width: 100%;
     line-height: 0;
   }
   // Textarea of the presentation section
@@ -351,12 +368,12 @@
 
   // Questionnaire accordion element
     .profile-form-quizz {
-    width: 100%;
+    // width: 100%;
     text-align: left;
     margin: 0 0 1.5em 0;
 
     &-container {
-      width: 90%;
+      // width: 90%;
     }
 
     &-question {

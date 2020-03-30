@@ -6,10 +6,14 @@ import Profile from 'src/components/Profile';
 import {
   changeInputProfile,
   changeEditMode,
-  updateInputValue,
-  toggle1,
-  toggle2,
-  toggle3,
+  updateInputValueFirstname,
+  updateInputValueLastname,
+  updateInputValuePseudo,
+  updateInputValuePresentation,
+  closeFirstname,
+  closeLastname,
+  closePseudo,
+  closePresentation,
 } from 'src/store/reducers/profile';
 import { getLogout } from 'src/store/reducers/forms/connexion';
 
@@ -20,10 +24,12 @@ const mapStateToProps = (state) => ({
   pseudo: state.profile.pseudo,
   presentation: state.profile.presentation,
   isInEditMode: state.profile.isInEditMode,
-  collapse1: state.profile.collapse1,
-  collapse2: state.profile.collapse2,
-  collapse3: state.profile.collapse3,
+  isFailEdit: state.profile.isFailEdit,
   isConnected: state.connexion.isConnected,
+  oldValueFirstname: state.profile.oldValueFirstname,
+  oldValueLastname: state.profile.oldValueLastname,
+  oldValuePseudo: state.profile.oldValuePseudo,
+  oldValuePresentation: state.profile.oldValuePresentation,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -33,18 +39,33 @@ const mapDispatchToProps = (dispatch) => ({
   changeEditMode: () => {
     dispatch(changeEditMode());
   },
-  updateInputValue: () => {
-    dispatch(updateInputValue());
+  // saved button
+  updateInputValueFirstname: () => {
+    dispatch(updateInputValueFirstname());
   },
-  toggle1: (id) => {
-    dispatch(toggle1(id));
+  updateInputValueLastname: () => {
+    dispatch(updateInputValueLastname());
   },
-  toggle2: (id) => {
-    dispatch(toggle2(id));
+  updateInputValuePseudo: () => {
+    dispatch(updateInputValuePseudo());
   },
-  toggle3: (id) => {
-    dispatch(toggle3(id));
+  updateInputValuePresentation: () => {
+    dispatch(updateInputValuePresentation());
   },
+  // closed button
+  closeFirstname: () => {
+    dispatch(closeFirstname());
+  },
+  closeLastname: () => {
+    dispatch(closeLastname());
+  },
+  closePseudo: () => {
+    dispatch(closePseudo());
+  },
+  closePresentation: () => {
+    dispatch(closePresentation());
+  },
+  // Deconnexion
   getLogout: () => {
     dispatch(getLogout());
   },

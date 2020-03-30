@@ -233,7 +233,7 @@ router.post('/connect', (req, res) => {
         res.cookie('userToken', token, {
           expires: new Date(Date.now() + 900000),
           // secure: true, if https enabled
-          // maxAge: 1296000000,
+          maxAge: 1296000000,
           secure: false,
           httpOnly: true,
         });
