@@ -52,6 +52,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         loading: true,
         isConnected: true,
+        auth: { tokens: action.user },
       };
     case STOP_LOADING:
       return {

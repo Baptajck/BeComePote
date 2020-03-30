@@ -1,5 +1,46 @@
-.test {
-  text-align: center;
-  margin-top: 8rem;
-  font-size: 3em;
-}
+/*
+*
+* Message List
+*
+*/
+// == Container message
+.messageList {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  scroll-behavior: smooth;
+
+    // container des messages reçus/envoyés
+    &-content {
+      border-radius: 1rem;
+      display: inline-block;
+      position: relative;
+      width: 50%;
+      margin-left: auto;
+
+      &:before {
+        content: " ";
+        position: absolute;
+        left: 2rem;
+        bottom: 100%;
+        border-bottom: 10px solid blue;
+        border-right: 10px solid transparent;
+      }
+
+      &-text {
+        background: blue;
+        color: white;
+        padding: 1rem;
+
+        &:before {
+          left: auto;
+          right: 2rem;
+          border-bottom-color: blue;
+          border-left: 15px solid transparent;
+          border-right: 0;
+        }
+      }
+    }
+  }
+

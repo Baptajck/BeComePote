@@ -1,19 +1,27 @@
 // == Import : npm
 import { connect } from 'react-redux';
-
 // == Import : local
 import Profile from 'src/components/Profile';
-
 // Action Creators
 import {
-  changeInputProfile, changeEditMode, updateInputValue, close,
+  changeInputProfile,
+  changeEditMode,
+  updateInputValue,
+  toggle1,
+  toggle2,
+  toggle3,
 } from 'src/store/reducers/profile';
+
 
 const mapStateToProps = (state) => ({
   firstname: state.profile.firstname,
+  lastname: state.profile.lastname,
+  pseudo: state.profile.pseudo,
+  presentation: state.profile.presentation,
   isInEditMode: state.profile.isInEditMode,
-  currentValue: state.profile.currentValue,
-  isFailEdit: state.profile.isFailEdit,
+  collapse1: state.profile.collapse1,
+  collapse2: state.profile.collapse2,
+  collapse3: state.profile.collapse3,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -26,8 +34,14 @@ const mapDispatchToProps = (dispatch) => ({
   updateInputValue: () => {
     dispatch(updateInputValue());
   },
-  close: () => {
-    dispatch(close());
+  toggle1: (id) => {
+    dispatch(toggle1(id));
+  },
+  toggle2: (id) => {
+    dispatch(toggle2(id));
+  },
+  toggle3: (id) => {
+    dispatch(toggle3(id));
   },
 });
 

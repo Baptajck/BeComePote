@@ -231,6 +231,7 @@ router.post('/connect', (req, res) => {
         };
         const token = jwt.sign({ user }, privateKEY, signOptions);
         const refreshToken = jwt.sign({ user }, privateKEY, { expiresIn: process.env.REFRESHTOKENLIFE });
+        // == Token
         res.cookie('userToken', token, {
           expires: new Date(Date.now() + 900000),
           // secure: true, if https enabled
@@ -238,7 +239,7 @@ router.post('/connect', (req, res) => {
           secure: false,
           httpOnly: true,
         });
-
+        // == Refresh Token
         res.cookie('refreshToken', refreshToken, {
           expires: new Date(Date.now() + 900000),
           // secure: true, if https enabled
@@ -268,7 +269,7 @@ router.post('/connect', (req, res) => {
 });
 
 //
-router.post('/token', (req, res) => {
+router.get('/token', withAuth, (req, res) => {
   const tokenList = {};
   // refresh the damn token
   const postData = req.cookies;
@@ -279,7 +280,6 @@ router.post('/token', (req, res) => {
     const user = {
       email: postBody.email,
     };
-    console.log('je suis user', user);
     const token = jwt.sign({ user }, privateKEY, { expiresIn: process.env.TOKENLIFE });
     const response = {
       token,

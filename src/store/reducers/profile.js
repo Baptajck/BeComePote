@@ -1,19 +1,27 @@
 // == Initial State
 const initialState = {
   firstname: 'Fanny',
+  lastname: 'Ardent',
+  pseudo: 'Fanfan',
+  presentation: 'Présentez-vous en quelques mots ...',
   isInEditMode: false,
-  isFailEdit: false,
-  currentValue: '',
+  collapse1: true,
+  collapse2: true,
+  collapse3: true,
 };
 
 // == Types
 const CHANGE_INPUT_PROFILE = 'CHANGE_INPUT_PROFILE';
 const CHANGE_EDIT_MODE = 'CHANGE_EDIT_MODE';
 const UPDATE_INPUT_VALUE = 'UPDATE_INPUT_VALUE';
-const CLOSE = 'CLOSE';
+const COLLAPSE1 = 'COLLAPSE1';
+const COLLAPSE2 = 'COLLAPSE2';
+const COLLAPSE3 = 'COLLAPSE3';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
+  // console.log(state);
+  // console.log(action);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {
@@ -24,21 +32,29 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isInEditMode: !state.isInEditMode,
-        isFailEdit: false,
       };
     case UPDATE_INPUT_VALUE:
       return {
         ...state,
         isInEditMode: false,
-        currentValue: state.firstname,
-        isFailEdit: false,
       };
-    case CLOSE:
+    case COLLAPSE1:
       return {
         ...state,
-        isInEditMode: !state.isInEditMode,
-        isFailEdit: true,
-        firstname: state.currentValue,
+        collapse1: !state.collapse1,
+        [action.id]: state.collapse,
+      };
+    case COLLAPSE2:
+      return {
+        ...state,
+        collapse2: !state.collapse2,
+        [action.id]: state.collapse,
+      };
+    case COLLAPSE3:
+      return {
+        ...state,
+        collapse3: !state.collapse3,
+        [action.id]: state.collapse,
       };
     default:
       return state;
@@ -52,6 +68,7 @@ export const changeInputProfile = (name, value) => ({
   value,
 });
 
+
 export const changeEditMode = () => ({
   type: CHANGE_EDIT_MODE,
 });
@@ -60,12 +77,21 @@ export const updateInputValue = () => ({
   type: UPDATE_INPUT_VALUE,
 });
 
-export const close = () => ({
-  type: CLOSE,
+export const toggle1 = (id) => ({
+  type: COLLAPSE1,
+  id,
 });
 
-// == Selectors
+export const toggle2 = (id) => ({
+  type: COLLAPSE2,
+  id,
+});
 
+export const toggle3 = (id) => ({
+  type: COLLAPSE3,
+  id,
+});
+// == Selectors
 
 // == Export
 export default reducer;
