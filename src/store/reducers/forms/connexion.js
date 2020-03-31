@@ -24,6 +24,8 @@ const PASSWORD_VISIBILITY = 'PASSWORD_VISIBILITY';
 const PASSWORD_CONFIRM_VISIBILITY = 'PASSWORD_CONFIRM_VISIBILITY';
 const ERROR_MESSAGE = 'ERROR_MESSAGE';
 const STOP_LOADING = 'STOP_LOADING';
+export const GET_LOGOUT = 'GET_LOGOUT';
+export const SHOW_LOGOUT = 'SHOW_LOGOUT';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -52,6 +54,12 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         loading: true,
         isConnected: true,
+        // auth: { tokens: action.user },
+      };
+    case SHOW_LOGOUT:
+      return {
+        ...state,
+        isConnected: false,
       };
     case STOP_LOADING:
       return {
@@ -139,6 +147,15 @@ export const confirmPasswordVisibility = () => ({
 export const errorMessage = (error) => ({
   type: ERROR_MESSAGE,
   error,
+});
+
+// == Logout
+export const showLogout = () => ({
+  type: SHOW_LOGOUT,
+});
+
+export const getLogout = () => ({
+  type: GET_LOGOUT,
 });
 
 // == Export

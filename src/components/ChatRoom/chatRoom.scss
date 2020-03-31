@@ -1,5 +1,165 @@
-.test {
-  text-align: center;
-  margin-top: 8rem;
-  font-size: 3em;
+@import 'src/styles/vars';
+
+@media screen and (min-width: 300px) {
+
+/*
+*
+* ChatRoom Page Layout
+*
+*/
+// == Container message
+  .chatroom {
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-header {
+      background-color: $color-black;
+      display: flex;
+      flex-direction: row;
+      padding: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      &-arrow {
+        font-size: 3em;
+        color: #fff;
+        position: absolute;
+        left: 0;
+        margin-left: 2.5%;
+      }
+
+      &-image {
+        height: 15%;
+        width: 15%;
+        border-radius: 50%;
+        border: 0.25em solid rgba(255, 255, 255, 1);
+      }
+
+      &-title {
+
+        color: #fff;
+        text-align: center;
+        font-size: 1.1em;
+        text-transform: uppercase;
+        line-height: 1.3em;
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  /*
+  *
+  * Message List
+  *
+  */
+  // == Container message
+  .messageList {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 1.5rem;
+    scroll-behavior: smooth;
+    margin-bottom: 12rem;
+
+
+    // container des messages reçus/envoyés
+    &-content {
+      display: flex;
+      flex-flow: column;
+      position: relative;
+      width: 100%;
+      margin-left: auto;
+      margin-top: 1.5rem;
+
+      &-sender {
+        margin-bottom: 0.5rem;
+        font-size: 0.8rem;
+        font-style: italic;
+        opacity: 0.6;
+      }
+
+      &-text {
+        background-color: $color-black;
+        color: white;
+        padding: 1rem;
+        border-radius: 1em;
+        width: 65%;
+        line-height: 1.6em;
+        float: left;
+      }
+
+      &-date {
+        color: #292929;
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin: 0.7rem;
+        float: left;
+      }
+    }
+  }
+
+    // container envoyés de l'utilisateur
+  .me {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .messageList-content-text.me {
+    background-color: #f7862f;
+    color: #292929;
+    font-weight: 600;
+  }
+
+
+  /*
+  *
+  * Reply Bar
+  *
+  */
+  // == Container message
+  .chatroom-reply {
+
+    &-container {
+      background-color: #f7862f;
+      height: 4.5rem;
+      margin-top:1.5rem;
+      position: fixed;
+      bottom: 0;
+      margin-bottom: 5rem;
+      width: 100%;
+      border-bottom: 2px solid #f7862f;
+    }
+
+    &-form {
+      line-height: 2.5rem;
+      padding: 1rem;
+      border-top: 0.05rem solid #292929;
+    }
+
+    &-input {
+      width: 85%;
+      line-height: 2rem;
+      margin-left: 2%;
+    }
+
+    &-button {
+      background-color: #f7862f;
+      border: none;
+      float: right;
+      margin-right: 2%;
+      margin-left:1%;
+    }
+
+    &-icon {
+      background-color: #f7862f;
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 2.5rem;
+    }
+  }
 }

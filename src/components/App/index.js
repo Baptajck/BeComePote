@@ -11,17 +11,18 @@ import './app.scss';
 // == STATIC
 import ScrollToTop from 'src/components/ScrollToTop';
 import HomePage from 'src/components/HomePage';
-import Profile from 'src/components/Profile';
 import ChatRoom from 'src/components/ChatRoom';
 import Search from 'src/components/Search';
 import Error404 from 'src/components/Error404';
 import Spinner from 'src/components/Spinner';
+import Navigation from 'src/components/Navigation';
 
 // == CONTAINERS
 import SignUp from 'src/containers/forms/signUp';
 import SignIn from 'src/containers/forms/signIn';
 import ForgottenPassword from 'src/containers/forms/forgottenPassword';
 import NewPassword from 'src/containers/forms/newPassword';
+import Profile from 'src/containers/profile';
 
 // == Composant
 class App extends React.Component {
@@ -95,6 +96,7 @@ class App extends React.Component {
                 <Route path="/search">
                   <Search />
                 </Route>
+                <Navigation />
               </>
             )}
             <Route>

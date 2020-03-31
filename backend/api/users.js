@@ -208,8 +208,6 @@ router.delete('/user/:id/delete', (req, res) => {
    */
 router.post('/connect', (req, res) => {
   const { email, password } = req.body;
-  // const privateKEY = fs.readFileSync('key/private.key', 'utf8');
-  // const publicKEY = fs.readFileSync('key/public.key', 'utf8');
   User.query()
     .where('email', email)
     .select('id', 'email', 'password')
@@ -231,6 +229,7 @@ router.post('/connect', (req, res) => {
           algorithm: 'RS256',
         };
         const token = jwt.sign({ user }, privateKEY, signOptions);
+        // == Token
         res.cookie('userToken', token, {
           expires: new Date(Date.now() + 900000),
           // secure: true, if https enabled
@@ -239,25 +238,16 @@ router.post('/connect', (req, res) => {
           httpOnly: true,
         });
 
-        // TODO CHECK ENCRYPTION KEY AND IF COOKIE IS EMPTY ERR.MESSAGE DISPLAYS
-        // Check if encryption key is correct
-        // const verifyOptions = {
-        //   issuer: 'becomepote',
-        //   subject: 'information utilisateur',
-        //   audience: 'http://becomepote.fr',
-        //   expiresIn: '24h',
-        //   notBefore: '60s',
-        //   algorithm: ['RS256'],
-        // };
-        // const verifyToken = jwt.verify(token, publicKEY, verifyOptions);
         if (token.length === 0) {
           res.json(token);
           res.status(401).send({ message: 'You need to login to access this page.' });
         }
-        res.status(200).send({
-          message: 'Vous êtes connecté',
+        // TODO Refresh token
+        const response = {
+          status: 'Logged in',
           token,
-        }).redirect('/profile');
+        };
+        res.status(200).send(response).redirect('/profile');
       }
     })
     .catch((err) => res.status(500).send({
@@ -266,7 +256,24 @@ router.post('/connect', (req, res) => {
     }));
 });
 
+/**
+   * LOGOUT - Route to connect a user
+   * @param {object} req
+   * @param {object} res
+   * @returns string
+   */
+router.get('/logout', (req, res) => {
+  res.clearCookie('userToken');
+  res.send('logout').redirect('/checkToken');
+});
 
+/**
+   * CHECK-TOKEN - Route to connect a user
+   * @func checktoken
+   * @param {object} req
+   * @param {object} res
+   * @returns string
+   */
 router.get('/checkToken', withAuth, (req, res) => {
   res.sendStatus(200);
 });
