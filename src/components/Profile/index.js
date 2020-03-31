@@ -265,7 +265,7 @@ const Profile = ({
                   <input
                     type="radio"
                     id={question.response2}
-                    name="choix1"
+                    name="choix2"
                     value={question.response2}
                   />
                   <label className="profile-form-quizz-answer" htmlFor={question.response2}>{question.response2}</label>
@@ -274,7 +274,7 @@ const Profile = ({
                   <input
                     type="radio"
                     id={question.response3}
-                    name="choix1"
+                    name="choix3"
                     value={question.response3}
                   />
                   <label className="profile-form-quizz-answer" htmlFor={question.response3}>{question.response3}</label>
