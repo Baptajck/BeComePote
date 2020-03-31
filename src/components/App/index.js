@@ -2,7 +2,7 @@
 // == Import : npm
 import React from 'react';
 import {
-  Switch, Route, Redirect, withRouter,
+  Switch, Route, Redirect,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -74,7 +74,7 @@ class App extends React.Component {
               <ForgottenPassword />
             </Route>
             <Route exact path="/connect">
-              {isConnected ? <Redirect to="/profile" /> : <SignIn />}
+              {isConnected ? <Redirect to="/chatroom" /> : <SignIn />}
             </Route>
             <Route exact path="/create">
               {isConnected ? <Redirect to="/profile" /> : <SignUp />}
@@ -87,13 +87,13 @@ class App extends React.Component {
             </Route>
             {isConnected && (
               <>
-                <Route path="/profile">
+                <Route exact path="/profile">
                   <Profile />
                 </Route>
-                <Route path="/chatroom">
+                <Route exact path="/chatroom">
                   <ChatRoom />
                 </Route>
-                <Route path="/search">
+                <Route exact path="/search">
                   <Search />
                 </Route>
                 <Navigation />
@@ -115,4 +115,4 @@ App.propTypes = {
 };
 
 // == Export
-export default withRouter(App);
+export default App;

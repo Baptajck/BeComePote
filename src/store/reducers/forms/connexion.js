@@ -54,12 +54,12 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         loading: true,
         isConnected: true,
-        // auth: { tokens: action.user },
       };
     case SHOW_LOGOUT:
       return {
         ...state,
         isConnected: false,
+        loading: true,
       };
     case STOP_LOADING:
       return {

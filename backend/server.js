@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const session = require('express-session');
 
 const app = express();
 const {
@@ -17,6 +18,17 @@ app.use(
     extended: false,
   }),
 );
+
+// SESSION
+app.use(session({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: true,
+    maxAge: 60000,
+  },
+}));
 
 // COOKIE
 app.use(cookieParser());
