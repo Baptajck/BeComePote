@@ -1,5 +1,4 @@
 node_modules/
-dist/
 .vs/
 .vs-code/
 .env
