@@ -44,6 +44,7 @@ const Profile = ({
   // Logout
   const handleLogout = () => {
     getLogout();
+    window.location.pathname = '/connect';
   };
   // closed button
   const closeActionFirstname = () => {

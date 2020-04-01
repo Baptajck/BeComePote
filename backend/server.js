@@ -22,11 +22,13 @@ app.use(
 // SESSION
 app.use(session({
   secret: process.env.SECRET,
+  name: 'myCookie',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
-    maxAge: 60000,
+    secure: false,
+    httpOnly: false,
+    maxAge: 365 * 24 * 60 * 60 * 1000,
   },
 }));
 

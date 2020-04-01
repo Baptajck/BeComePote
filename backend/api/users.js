@@ -193,21 +193,9 @@ router.post('/connect', (req, res) => {
    * @returns string
    */
 router.get('/logout', (req, res) => {
-  // res.clearCookie('userToken');
-  // res.send('logout');
-  const sessionData = req.session;
-  console.log('Logout', sessionData);
-  sessionData.destroy((err) => {
-    if (err) {
-      const msg = 'Error destroying session';
-      res.json(msg);
-    }
-    else {
-      const msg = 'Session destroy successfully';
-      console.log(msg);
-      res.json(msg);
-    }
-  });
+  req.session.destroy();
+  res.clearCookie('myCookie');
+  res.send({ result: 'OK', message: 'Session destroyed' });
 });
 
 /**
@@ -215,7 +203,7 @@ router.get('/logout', (req, res) => {
    * @func checktoken
    * @param {object} req
    * @param {object} res
-   * @returns string
+   * @returns {object}
    */
 router.get('/checkToken', withAuth, (req, res) => {
   res.json(req.session.user);
