@@ -3,6 +3,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+// const slugify = require('slugify');
 
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -17,15 +18,18 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Replaces all characters chosen by another
+const replaceAll = (string, search, replace) => string.split(search).join(replace);
+
 // Generation of the Password Reset URL with token and dynamic ID User
-const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${token}`;
-// const getPasswordResetURL = (user, token) => 'http://gamebook.tech';
+const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${replaceAll(token, '.', '-')}`;
+// const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${token.replace('.', '-').replace('.', '-')}`;
 
 
 // Generating a hashedToken to set the timestamp on reset password link valid for an hour
-const usePasswordHashToMakeToken = ({ password: passwordHash, id: userId, created_at }) => {
-  const secret = `${passwordHash}-${created_at}`;
-  const token = jwt.sign({ userId }, secret, {
+const usePasswordHashToMakeToken = (userId) => {
+  // const secret = `${passwordHash}-${created_at}`;
+  const token = jwt.sign({ userId }, process.env.SECRET, {
     expiresIn: 3600, // 1 hour
   });
   return token;
@@ -306,7 +310,10 @@ router.post('/user/:email', (req, res, next) => {
           from, to, subject, html,
         };
       };
-      const token = usePasswordHashToMakeToken(user);
+      const token = usePasswordHashToMakeToken(user[0].id);
+      // console.log('mail', user[0].id);
+      // const test = bcrypt.hashSync(String(user[0].id), 10);
+      // console.log('mail Bcrypt', test);
       const url = getPasswordResetURL(user[0], token);
       const emailTemplate = resetPasswordTemplate(url);
 
@@ -333,31 +340,30 @@ router.post('/user/:email', (req, res, next) => {
 // TODO Route pour être raccord avec celle envoyé dans le mail !!
 // Grants access with token to the form to change the user's password
 router.post('/new_password_reset/:userId/:token', (req, res) => {
-  const { userId, token } = req.params;
+  const { token } = req.params;
+  const { userIdToken } = req.params;
   const { password } = req.body;
-
   User.query()
-    .findById({ id: userId })
+    .where('id', userIdToken)
     .then((user) => {
-      const secret = `${user.password}-${user.created_at}`;
-      const payload = jwt.decode(token, secret);
-      if (payload.userId === user.id) {
-        bcrypt.genSalt(10, (err, salt) => {
-          if (err) return;
-          bcrypt.hashSync(password, salt, (hash) => {
-            if (err) return;
-            // User.findOneAndUpdate({ id: userId }, { password: hash })
-            User.query()
-              .findById({
-                id: userId,
-              })
-              .patch({
-                password: hash,
-              })
-              .then(() => res.status(202).json('New password is accepted'))
-              .catch(() => res.status(500).json(err));
-          });
-        });
+      const oldToken = replaceAll(token, '-', '.');
+      const payload = jwt.decode(oldToken, process.env.SECRET);
+      const hash = bcrypt.hashSync(password, 10);
+      const t = bcrypt.compareSync(payload.userIdToken, user[0].id);
+      console.log(t);
+      if (payload.userIdToken === user[0].id) {
+        User.query()
+          .where(
+            'id', userIdToken,
+          )
+          .patch({
+            password: hash,
+          })
+          .then(() => res.status(202).json('New password is accepted'))
+          .catch(() => res.status(500).json());
+      }
+      else {
+        res.status(404).json('L\'id du user n\'est pas le même que celui du token');
       }
     })
     .catch(() => {
