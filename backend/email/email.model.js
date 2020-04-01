@@ -22,8 +22,7 @@ const transporter = nodemailer.createTransport({
 const replaceAll = (string, search, replace) => string.split(search).join(replace);
 
 // Generation of the Password Reset URL with token and dynamic ID User
-const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${replaceAll(token, '.', '-')}`;
-// const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${token.replace('.', '-').replace('.', '-')}`;
+const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${replaceAll(token, '.', '$')}`;
 
 
 // Generating a hashedToken to set the timestamp on reset password link valid for an hour
@@ -311,9 +310,6 @@ router.post('/user/:email', (req, res, next) => {
         };
       };
       const token = usePasswordHashToMakeToken(user[0].id);
-      // console.log('mail', user[0].id);
-      // const test = bcrypt.hashSync(String(user[0].id), 10);
-      // console.log('mail Bcrypt', test);
       const url = getPasswordResetURL(user[0], token);
       const emailTemplate = resetPasswordTemplate(url);
 
@@ -341,20 +337,23 @@ router.post('/user/:email', (req, res, next) => {
 // Grants access with token to the form to change the user's password
 router.post('/new_password_reset/:userId/:token', (req, res) => {
   const { token } = req.params;
-  const { userIdToken } = req.params;
+  const userId = Number(req.params.userId);
   const { password } = req.body;
+  console.log('1', userId);
+  console.log(token);
   User.query()
-    .where('id', userIdToken)
+    .where('id', userId)
     .then((user) => {
-      const oldToken = replaceAll(token, '-', '.');
+      const oldToken = replaceAll(token, '$', '.');
+      console.log('oldToken', oldToken);
+      console.log(jwt.decode(oldToken, process.env.SECRET));
       const payload = jwt.decode(oldToken, process.env.SECRET);
       const hash = bcrypt.hashSync(password, 10);
-      const t = bcrypt.compareSync(payload.userIdToken, user[0].id);
-      console.log(t);
-      if (payload.userIdToken === user[0].id) {
+      console.log('payload', payload);
+      if (payload.userId === user[0].id) {
         User.query()
           .where(
-            'id', userIdToken,
+            'id', userId,
           )
           .patch({
             password: hash,
@@ -370,6 +369,7 @@ router.post('/new_password_reset/:userId/:token', (req, res) => {
       res.status(404).json('Invalid user');
     });
 });
+
 
 module.exports = {
   router,

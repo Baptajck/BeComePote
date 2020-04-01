@@ -8,6 +8,7 @@ const initialState = {
 // == Types
 const CHANGE_INPUT_FORGOTTEN = 'CHANGE_INPUT_FORGOTTEN';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -33,6 +34,9 @@ export const changePassword = () => ({
   type: CHANGE_PASSWORD,
 });
 
+export const resetPassword = () => ({
+  type: RESET_PASSWORD,
+});
 
 // == Selectors
 
