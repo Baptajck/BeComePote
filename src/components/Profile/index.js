@@ -44,6 +44,7 @@ const Profile = ({
   // Logout
   const handleLogout = () => {
     getLogout();
+    window.location.pathname = '/connect';
   };
   // closed button
   const closeActionFirstname = () => {
@@ -283,9 +284,7 @@ const Profile = ({
             ))}
             </form>
               <div className="logout-container">
-                <button type="button" onClick={handleLogout} className="logout-container-input">
-                  <NavLink to="/connect" className="logout-container-text">déconnexion</NavLink>
-                </button>
+                  <NavLink to="/connect" onClick={handleLogout} className="logout-container-text logout-container-input">Déconnexion</NavLink>
               </div>
         </div>
       </div>

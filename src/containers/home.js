@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 
 // == Import : local
-import App from 'src/components/App';
+import App from 'src/components/App/index';
 
 // Action Creators
 import { getHome } from 'src/store/reducers/forms/connexion';

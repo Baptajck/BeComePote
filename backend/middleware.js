@@ -1,29 +1,16 @@
-/* eslint-disable no-console */
-const fs = require('fs');
-const jwt = require('jsonwebtoken');
+// /* eslint-disable no-console */
 
-// const secret = process.env.SECRET;
-const publicKEY = fs.readFileSync('key/public.key', 'utf8');
-
-
+// module.exports = withAuth;
 const withAuth = (req, res, next) => {
-  const token = req.cookies.userToken;
-  if (!token) {
-    res.status(401).send('Unauthorized: No token provided');
+  if (req.session && req.session.user) {
+    next();
   }
   else {
-    jwt.verify(token, publicKEY, (err, decoded) => {
-      if (err) {
-        res.status(401).send('Unauthorized: Invalid token');
-        // console.log(err);
-      }
-      else {
-        req.email = decoded.user[0].email;
-        // console.log(req.email);
-        next();
-      }
+    res.status(401).send({
+      message: 'No connected',
     });
   }
 };
+
 
 module.exports = withAuth;

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import {
   CREATE_USER,
@@ -55,7 +55,6 @@ const connexionMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log(response);
-          localStorage.setItem('token', response.data.token);
           const actionSaveUser = connectUserSignIn(response.data);
           store.dispatch(actionSaveUser);
         })
@@ -73,23 +72,18 @@ const connexionMiddleware = (store) => (next) => (action) => {
       break;
     }
     case GET_HOME: {
-      const state = store.getState();
-      const { isConnected } = state.connexion;
+      // const state = store.getState();
+      // const { isConnected } = state.connexion;
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/checkToken')
         .then((res) => {
-          if (res.status === 200) {
-            const save = showHome(res.data);
-            store.dispatch(save);
-          }
-          else {
-            const error = new Error(res.error);
-            throw error;
-          }
+          const save = showHome(res.data);
+          store.dispatch(save);
         })
-        .catch((err) =>
-          // console.error(err);
-          isConnected)
+        .catch((err) => (
+          // console.error('connexionMiddleware', err)
+          AxiosError
+        ))
         .finally(() => {
           const actionStopLoading = stopLoading();
           store.dispatch(actionStopLoading);
@@ -102,14 +96,9 @@ const connexionMiddleware = (store) => (next) => (action) => {
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/logout')
         .then((res) => {
-          if (res.status === 200) {
-            const save = showLogout(res.data);
-            store.dispatch(save);
-          }
-          else {
-            const error = new Error(res.error);
-            throw error;
-          }
+          console.log(res);
+          const save = showLogout(res.data);
+          store.dispatch(save);
         })
         .catch((err) => {
           console.error(err);

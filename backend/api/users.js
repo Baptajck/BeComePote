@@ -2,57 +2,9 @@
 /* eslint-disable no-console */
 const express = require('express');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
 const router = express.Router();
 const User = require('../Models/Users');
-const publicKEY = fs.readFileSync('key/public.key', 'utf8');
-const privateKEY = fs.readFileSync('key/private.key', 'utf8');
-
 const withAuth = require('../middleware');
-
-
-const checkToken = (req, res, next) => {
-  const header = req.headers.authorization;
-
-  if (typeof header !== 'undefined') {
-    const bearer = header.split(' ');
-    const token = bearer[1];
-
-    req.token = token;
-    next();
-  }
-  else {
-    // If header is undefined return Forbidden (403)
-    res.sendStatus(403);
-  }
-};
-
-/**
-   * RECUP TOKEN -
-   * @param {object} req
-   * @param {object} res
-   * @func checkToken
-   * @returns {object} user object
-   */
-router.get('/user/data', checkToken, (req, res) => {
-  // verify the JWT token generated for the user
-  jwt.verify(req.token, publicKEY, (err, authorizedData) => {
-    if (err) {
-      // If error send Forbidden (403)
-      console.log('ERROR: Could not connect to the protected route');
-      res.sendStatus(403);
-    }
-    else {
-      // If token is successfully verified, we can send the autorized data
-      res.json({
-        message: 'Successful log in',
-        authorizedData,
-      });
-      console.log('SUCCESS: Connected to protected route');
-    }
-  });
-});
 
 
 /**
@@ -64,14 +16,6 @@ router.get('/user/data', checkToken, (req, res) => {
    */
 router.post('/register', (req, res) => {
   const { pseudo, email, password } = req.body;
-  // const privateKEY = fs.readFileSync('key/private.key', 'utf8');
-  const signOptions = {
-    issuer: 'becomepote',
-    subject: 'information utilisateur',
-    audience: 'http://becompote.fr',
-    expiresIn: '24h',
-    algorithm: 'RS256',
-  };
   User.query()
     .where('email', email)
     .select('email')
@@ -90,17 +34,19 @@ router.post('/register', (req, res) => {
             password: bcrypt.hashSync(password, 10),
           })
           .then((newUser) => {
-            const token = jwt.sign({ newUser }, privateKEY, signOptions);
-            res.cookie('registerUserToken', token, {
-              expires: new Date(Date.now() + 86400),
-              secure: false, // set to true if your using https
-              httpOnly: true,
-            });
-            res.status(201).send({
-              message: 'Bravo ! Votre compte à été crée avec succès',
-              token,
-            });
-            res.json(token);
+            // SESSION
+            const userSession = {
+              id: newUser.id,
+              email: newUser.email,
+            };
+            req.session.newUser = userSession;
+            const { session } = req;
+            const response = {
+              status: 'Created account',
+              session,
+            };
+            res.status(201).send(response);
+            res.json(response);
           });
       }
     })
@@ -220,34 +166,18 @@ router.post('/connect', (req, res) => {
         res.status(401).send('Password is wrong');
       }
       else {
-        // Signature options of the encryption key
-        const signOptions = {
-          issuer: 'becomepote',
-          subject: 'information utilisateur',
-          audience: 'http://becomepote.fr',
-          expiresIn: '24h',
-          algorithm: 'RS256',
+        // SESSION
+        const userSession = {
+          id: user[0].id,
+          email: user[0].email,
         };
-        const token = jwt.sign({ user }, privateKEY, signOptions);
-        // == Token
-        res.cookie('userToken', token, {
-          expires: new Date(Date.now() + 900000),
-          // secure: true, if https enabled
-          maxAge: 1296000000,
-          secure: false,
-          httpOnly: true,
-        });
-
-        if (token.length === 0) {
-          res.json(token);
-          res.status(401).send({ message: 'You need to login to access this page.' });
-        }
-        // TODO Refresh token
+        req.session.user = userSession;
+        const { session } = req;
         const response = {
           status: 'Logged in',
-          token,
+          session,
         };
-        res.status(200).send(response).redirect('/profile');
+        res.status(200).send(response);
       }
     })
     .catch((err) => res.status(500).send({
@@ -263,8 +193,9 @@ router.post('/connect', (req, res) => {
    * @returns string
    */
 router.get('/logout', (req, res) => {
-  res.clearCookie('userToken');
-  res.send('logout').redirect('/checkToken');
+  req.session.destroy();
+  res.clearCookie('myCookie');
+  res.send({ result: 'OK', message: 'Session destroyed' });
 });
 
 /**
@@ -272,9 +203,10 @@ router.get('/logout', (req, res) => {
    * @func checktoken
    * @param {object} req
    * @param {object} res
-   * @returns string
+   * @returns {object}
    */
 router.get('/checkToken', withAuth, (req, res) => {
+  res.json(req.session.user);
   res.sendStatus(200);
 });
 
