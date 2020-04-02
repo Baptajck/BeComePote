@@ -2,7 +2,7 @@
 // == Import : npm
 import React, { useEffect } from 'react';
 import {
-  Switch, Route, Redirect,
+  Switch, Route, Redirect, useLocation,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -26,8 +26,9 @@ import Profile from 'src/containers/profile';
 
 // == Composant
 const App = ({ getHome, isConnected, loading }) => {
+  const { pathname } = useLocation();
   const changeTitle = () => {
-    switch (window.location.pathname) {
+    switch (pathname) {
       case '/forgottenPassword':
         document.title = 'Mot de passe oublié | BeComePote';
         break;
@@ -53,7 +54,7 @@ const App = ({ getHome, isConnected, loading }) => {
         document.title = 'BeComePote';
     }
   };
-  // TODO Fixer le bug de changeTitle()
+
   useEffect(() => {
     changeTitle();
   });
