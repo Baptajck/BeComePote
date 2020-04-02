@@ -9,6 +9,7 @@ import { changeInputForgotten, changePassword } from 'src/store/reducers/forms/f
 
 const mapStateToProps = (state) => ({
   email: state.forgottenPassword.email,
+  messageSend: state.forgottenPassword.messageSend,
 });
 
 const mapDispatchToProps = (dispatch) => ({

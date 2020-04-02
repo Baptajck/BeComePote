@@ -3,14 +3,14 @@ const initialState = {
   email: '',
   password: '',
   confirmPassword: '',
-  user2: [],
+  messageSend: '',
 };
 
 // == Types
 const CHANGE_INPUT_FORGOTTEN = 'CHANGE_INPUT_FORGOTTEN';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
-const TEST = 'TEST';
+const MESSAGE_SEND_MAIL = 'MESSAGE_SEND_MAIL';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -20,10 +20,10 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         [action.name]: action.value,
       };
-    case TEST:
+    case MESSAGE_SEND_MAIL:
       return {
         ...state,
-        user2: action.user2,
+        messageSend: action.messageSend,
       };
     default:
       return state;
@@ -35,6 +35,11 @@ export const changeInputForgotten = (name, value) => ({
   type: CHANGE_INPUT_FORGOTTEN,
   name,
   value,
+});
+
+export const messageSendMail = (messageSend) => ({
+  type: MESSAGE_SEND_MAIL,
+  messageSend,
 });
 
 export const changePassword = () => ({
