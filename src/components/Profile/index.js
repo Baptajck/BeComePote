@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // == Import : npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaRegCheckCircle, FaRegEdit, FaRegTimesCircle } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
@@ -40,6 +40,8 @@ const Profile = ({
   closePseudo,
   closePresentation,
   isFailEdit,
+  getProfile,
+  profile,
 }) => {
   // Logout
   const handleLogout = () => {
@@ -97,6 +99,10 @@ const Profile = ({
     changeEditModePresentation();
   };
 
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <div className="profile-layout">
       <div className="profile-container">
@@ -113,7 +119,7 @@ const Profile = ({
                   <div className="profile-form-container">
                     <label htmlFor="prénom" className="profile-form-label">Prénom</label>
                     <div className="edition-mode">
-                      {isFailEdit ? oldValueFirstname : firstname}
+                      {/* isFailEdit ? oldValueFirstname : firstname */} {profile.firstname}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeFirstname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -147,7 +153,7 @@ const Profile = ({
                   <div className="profile-form-container">
                     <label htmlFor="nom" className="profile-form-label">Nom</label>
                     <div className="edition-mode">
-                      {isFailEdit ? oldValueLastname : lastname}
+                      {/* isFailEdit ? oldValueLastname : lastname */} {profile.lastname}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeLastname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -181,7 +187,7 @@ const Profile = ({
                   <div className="profile-form-container">
                     <label htmlFor="pseudo" className="profile-form-label">Changer son pseudo</label>
                     <div className="edition-mode">
-                      {isFailEdit ? oldValuePseudo : pseudo}
+                      {/* isFailEdit ? oldValuePseudo : pseudo */} {profile.pseudo}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePseudo}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -191,7 +197,7 @@ const Profile = ({
                 )}
                 {isInEditModePseudo && (
                   <div className="profile-form-container">
-                    <label htmlFor="nom" className="profile-form-label">Nom</label>
+                    <label htmlFor="nom" className="profile-form-label">Changer son pseudo</label>
                     <div className="edition-mode open">
                       <input
                         type="text"
@@ -219,7 +225,7 @@ const Profile = ({
               {!isInEditModePresentation && (
                 <div className="profile-form-container">
                   <div className="edition-mode presentation">
-                    {isFailEdit ? oldValuePresentation : presentation}
+                    {/* isFailEdit ? oldValuePresentation : presentation */} {presentation}
                   </div>
                   <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePresentation}>
                       <span className="edition-mode-icon"><FaRegEdit /></span>

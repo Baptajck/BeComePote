@@ -17,6 +17,7 @@ import {
   closeLastname,
   closePseudo,
   closePresentation,
+  getProfile,
 } from 'src/store/reducers/profile';
 import { getLogout } from 'src/store/reducers/forms/connexion';
 
@@ -36,11 +37,15 @@ const mapStateToProps = (state) => ({
   oldValueLastname: state.profile.oldValueLastname,
   oldValuePseudo: state.profile.oldValuePseudo,
   oldValuePresentation: state.profile.oldValuePresentation,
+  profile: state.profile.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeInputProfile: (name, value) => {
     dispatch(changeInputProfile(name, value));
+  },
+  getProfile: () => {
+    dispatch(getProfile());
   },
   changeEditModeFirstname: () => {
     dispatch(changeEditModeFirstname());
