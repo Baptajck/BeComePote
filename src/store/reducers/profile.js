@@ -1,9 +1,9 @@
 // == Initial State
 const initialState = {
-  firstname: 'Fanny',
-  lastname: 'Ardent',
-  pseudo: 'Fanfan',
-  presentation: 'Présentez-vous en quelques mots ...',
+  firstname: '',
+  lastname: '',
+  pseudo: '',
+  presentation: '',
   isInEditModeFirstname: false,
   isInEditModeLastname: false,
   isInEditModePseudo: false,
@@ -13,6 +13,7 @@ const initialState = {
   oldValueLastname: '',
   oldValuePseudo: '',
   oldValuePresentation: '',
+  profile: [],
 };
 
 // == Types
@@ -29,17 +30,23 @@ const CLOSE_FIRSTNAME = 'CLOSE_FIRSTNAME';
 const CLOSE_LASTNAME = 'CLOSE_LASTNAME';
 const CLOSE_PSEUDO = 'CLOSE_PSEUDO';
 const CLOSE_PRESENTATION = 'CLOSE_PRESENTATION';
+// == Récupération du back
+export const GET_PROFILE = 'GET_PROFILE';
+const SHOW_PROFILE = 'SHOW_PROFILE';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
-  // console.log(state);
-  // console.log(action);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {
         ...state,
         [action.name]: action.value,
         isFailEdit: false,
+      };
+    case SHOW_PROFILE:
+      return {
+        ...state,
+        profile: action.profile[0],
       };
     // Changement de vision
     case CHANGE_EDIT_MODE_FIRSTNAME:
@@ -134,6 +141,15 @@ export const changeInputProfile = (name, value) => ({
   type: CHANGE_INPUT_PROFILE,
   name,
   value,
+});
+
+export const getProfile = () => ({
+  type: GET_PROFILE,
+});
+
+export const showProfile = (profile) => ({
+  type: SHOW_PROFILE,
+  profile,
 });
 
 export const changeEditModeFirstname = () => ({

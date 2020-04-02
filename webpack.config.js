@@ -8,7 +8,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 // Config pour le devServer
-const host = 'localhost';
+const host = '18.222.237.95';
 const port = 8080;
 
 const devMode = process.env.NODE_ENV !== 'production';

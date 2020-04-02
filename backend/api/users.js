@@ -81,7 +81,8 @@ router.get('/users', (req, res) => {
    * @returns {[object]} user/:id array
    */
 router.get('/user/:id', (req, res) => {
-  const id = Number(req.params.id);
+  // const id = Number(req.params.id);
+  const id = Number(req.session.user.id);
   User.query()
     .where('id', id)
     .then((user) => {
