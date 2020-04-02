@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { CHANGE_PASSWORD, RESET_PASSWORD } from 'src/store/reducers/forms/forgottenPassword';
+import { CHANGE_PASSWORD, RESET_PASSWORD, messageSendMail } from 'src/store/reducers/forms/forgottenPassword';
 
 // const { PORT_BACK, HOST } = process.env;
 function resetPassword(store, userId, token) {
@@ -21,12 +21,15 @@ const passwordMiddleware = (store) => (next) => (action) => {
     case CHANGE_PASSWORD: {
       const state = store.getState();
       const { email } = state.forgottenPassword;
-      axios.defaults.withCredentials = true;
+      // axios.defaults.withCredentials = true;
       axios.post(`http://localhost:3000/email/user/${email}`, {
         email,
-      })
+      }, { credentials: 'true' })
         .then((response) => {
           console.log(response);
+          const messageSend = messageSendMail(response.data);
+          console.log(messageSend);
+          store.dispatch(messageSend);
         })
         .catch((error) => {
           console.error(error);

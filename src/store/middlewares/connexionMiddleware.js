@@ -14,6 +14,7 @@ import {
   showLogout,
 } from 'src/store/reducers/forms/connexion';
 
+
 const connexionMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case CREATE_USER: {
@@ -80,8 +81,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
           const save = showHome(res.data);
           store.dispatch(save);
         })
-        .catch((err) => (
-          // console.error('connexionMiddleware', err)
+        .catch(() => (
           AxiosError
         ))
         .finally(() => {
