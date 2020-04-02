@@ -17,24 +17,26 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Replaces all characters chosen by another
+const replaceAll = (string, search, replace) => string.split(search).join(replace);
+
 // Generation of the Password Reset URL with token and dynamic ID User
-const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${token}`;
-// const getPasswordResetURL = (user, token) => 'http://gamebook.tech';
+const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${replaceAll(token, '.', '$')}`;
 
 
 // Generating a hashedToken to set the timestamp on reset password link valid for an hour
-const usePasswordHashToMakeToken = ({ password: passwordHash, id: userId, created_at }) => {
-  const secret = `${passwordHash}-${created_at}`;
-  const token = jwt.sign({ userId }, secret, {
+const usePasswordHashToMakeToken = (userId) => {
+  const token = jwt.sign({ userId }, process.env.SECRET, {
     expiresIn: 3600, // 1 hour
   });
   return token;
 };
 
 /**
-   * CREATE - Sends an email to the User following his password request through our Gmail account
+   * SEND MAIL - Sends an email to the User following his password request through our Gmail account
    * @param {object} req
    * @param {object} res
+   * @param {object} next
    * @returns {object} user object
    */
 router.post('/user/:email', (req, res, next) => {
@@ -306,7 +308,7 @@ router.post('/user/:email', (req, res, next) => {
           from, to, subject, html,
         };
       };
-      const token = usePasswordHashToMakeToken(user);
+      const token = usePasswordHashToMakeToken(user[0].id);
       const url = getPasswordResetURL(user[0], token);
       const emailTemplate = resetPasswordTemplate(url);
 
@@ -330,40 +332,43 @@ router.post('/user/:email', (req, res, next) => {
     });
 });
 
-// TODO Route pour être raccord avec celle envoyé dans le mail !!
+/**
+   * CHANGE PASSWORD - Changes the User's password in our database throughout the form he's completed
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} object
+   */
 // Grants access with token to the form to change the user's password
-router.post('/new_password_reset/:userId/:token', (req, res) => {
-  const { userId, token } = req.params;
+router.post('/newPasswordReset/:userId/:token', (req, res) => {
+  const { token } = req.params;
+  const userId = Number(req.params.userId);
   const { password } = req.body;
-
   User.query()
-    .findById({ id: userId })
+    .where('id', userId)
     .then((user) => {
-      const secret = `${user.password}-${user.created_at}`;
-      const payload = jwt.decode(token, secret);
-      if (payload.userId === user.id) {
-        bcrypt.genSalt(10, (err, salt) => {
-          if (err) return;
-          bcrypt.hashSync(password, salt, (hash) => {
-            if (err) return;
-            // User.findOneAndUpdate({ id: userId }, { password: hash })
-            User.query()
-              .findById({
-                id: userId,
-              })
-              .patch({
-                password: hash,
-              })
-              .then(() => res.status(202).json('New password is accepted'))
-              .catch(() => res.status(500).json(err));
-          });
-        });
+      const oldToken = replaceAll(token, '$', '.');
+      const payload = jwt.decode(oldToken, process.env.SECRET);
+      const hash = bcrypt.hashSync(password, 10);
+      if (payload.userId === user[0].id) {
+        User.query()
+          .where(
+            'id', userId,
+          )
+          .patch({
+            password: hash,
+          })
+          .then(() => res.status(202).json('New password is accepted'))
+          .catch(() => res.status(500).json());
+      }
+      else {
+        res.status(404).json('L\'id du user n\'est pas le même que celui du token');
       }
     })
     .catch(() => {
       res.status(404).json('Invalid user');
     });
 });
+
 
 module.exports = {
   router,

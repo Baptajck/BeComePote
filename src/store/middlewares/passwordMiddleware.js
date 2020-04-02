@@ -1,8 +1,19 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { CHANGE_PASSWORD } from 'src/store/reducers/forms/forgottenPassword';
+import { CHANGE_PASSWORD, RESET_PASSWORD } from 'src/store/reducers/forms/forgottenPassword';
 
 // const { PORT_BACK, HOST } = process.env;
+function resetPassword(store, userId, token) {
+  const state = store.getState();
+  const { password } = state.forgottenPassword;
+  axios.post(`http://localhost:3000/email/newPasswordReset/${userId}/${token}`, { password }, { credentials: 'true' })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 
 const passwordMiddleware = (store) => (next) => (action) => {
   // console.log('Je suis le middleware: ', action);
@@ -20,6 +31,10 @@ const passwordMiddleware = (store) => (next) => (action) => {
         .catch((error) => {
           console.error(error);
         });
+      break;
+    }
+    case RESET_PASSWORD: {
+      resetPassword(store, action.userId, action.token);
       break;
     }
     default:

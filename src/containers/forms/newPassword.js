@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import NewPassword from 'src/components/NewPassword';
 
 // Action Creators
-import { changeInputForgotten, password, confirmPassword } from 'src/store/reducers/forms/forgottenPassword';
+import { changeInputForgotten, resetPassword } from 'src/store/reducers/forms/forgottenPassword';
 
 const mapStateToProps = (state) => ({
   password: state.forgottenPassword.password,
@@ -15,6 +15,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   changeValue: (name, value) => {
     dispatch(changeInputForgotten(name, value));
+  },
+  resetPassword: (userId, token) => {
+    dispatch(resetPassword(userId, token));
   },
 });
 

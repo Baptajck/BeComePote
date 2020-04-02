@@ -10,7 +10,7 @@ import './newPassword.scss';
 import logo from './Logo_BeComePote_v4.png';
 
 const NewPassword = ({
-  password, confirmPassword, changeValue,
+  password, confirmPassword, changeValue, resetPassword,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,11 +26,24 @@ const NewPassword = ({
     t.pattern = RegExp.escape(value);
   };
 
-  document.title = 'Changer son mot de passe | BeComePote';
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  // };
+  const handleSubmit = (event) => {
+    const userId = () => {
+      const url = document.location.pathname;
+      const a = url.split('/');
+      const n = Number(a[2]);
+      return n;
+    };
+    const token = () => {
+      const url = document.location.pathname;
+      const a = url.split('/');
+      const n = a[3];
+      return n;
+    };
+    event.preventDefault();
+    resetPassword(userId(), token());
+  };
+
 
   return (
     <div className="newPassword-container">
@@ -38,7 +51,7 @@ const NewPassword = ({
         <img src={logo} alt="Logo" className="newPassword-logo" />
         <h1 className="newPassword-subtitle">Changer son mot de passe</h1>
         <p className="newPassword-description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat officiis nostrum consequatur iure, a eos aliquid alias voluptas adipisci. Itaque, molestiae? Esse omnis rerum nobis in temporibus tempora deserunt fuga.</p>
-        <form action="#0" className="newPassword-form">
+        <form action="#0" className="newPassword-form" onSubmit={handleSubmit}>
           <div className="newPassword-form-container">
             <input
               type="password"
@@ -87,6 +100,7 @@ const NewPassword = ({
 
 NewPassword.propTypes = {
   changeValue: PropTypes.func.isRequired,
+  resetPassword: PropTypes.func.isRequired,
   password: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
 };
