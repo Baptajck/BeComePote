@@ -16,8 +16,8 @@ const mapDispatchToProps = (dispatch) => ({
   changeValue: (name, value) => {
     dispatch(changeInputForgotten(name, value));
   },
-  resetPassword: () => {
-    dispatch(resetPassword());
+  resetPassword: (userId, token) => {
+    dispatch(resetPassword(userId, token));
   },
 });
 

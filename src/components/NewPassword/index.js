@@ -26,16 +26,24 @@ const NewPassword = ({
     t.pattern = RegExp.escape(value);
   };
 
+
   const handleSubmit = (event) => {
-    const { value } = event.target;
+    const userId = () => {
+      const url = document.location.pathname;
+      const a = url.split('/');
+      const n = Number(a[2]);
+      return n;
+    };
+    const token = () => {
+      const url = document.location.pathname;
+      const a = url.split('/');
+      const n = a[3];
+      return n;
+    };
     event.preventDefault();
-    resetPassword(value);
+    resetPassword(userId(), token());
   };
 
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  // };
 
   return (
     <div className="newPassword-container">
@@ -92,6 +100,7 @@ const NewPassword = ({
 
 NewPassword.propTypes = {
   changeValue: PropTypes.func.isRequired,
+  resetPassword: PropTypes.func.isRequired,
   password: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
 };

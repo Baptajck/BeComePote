@@ -3,7 +3,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-// const slugify = require('slugify');
 
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -27,7 +26,6 @@ const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/
 
 // Generating a hashedToken to set the timestamp on reset password link valid for an hour
 const usePasswordHashToMakeToken = (userId) => {
-  // const secret = `${passwordHash}-${created_at}`;
   const token = jwt.sign({ userId }, process.env.SECRET, {
     expiresIn: 3600, // 1 hour
   });
@@ -35,9 +33,10 @@ const usePasswordHashToMakeToken = (userId) => {
 };
 
 /**
-   * CREATE - Sends an email to the User following his password request through our Gmail account
+   * SEND MAIL - Sends an email to the User following his password request through our Gmail account
    * @param {object} req
    * @param {object} res
+   * @param {object} next
    * @returns {object} user object
    */
 router.post('/user/:email', (req, res, next) => {
@@ -333,23 +332,23 @@ router.post('/user/:email', (req, res, next) => {
     });
 });
 
-// TODO Route pour être raccord avec celle envoyé dans le mail !!
+/**
+   * CHANGE PASSWORD - Changes the User's password in our database throughout the form he's completed
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} object
+   */
 // Grants access with token to the form to change the user's password
-router.post('/new_password_reset/:userId/:token', (req, res) => {
+router.post('/newPasswordReset/:userId/:token', (req, res) => {
   const { token } = req.params;
   const userId = Number(req.params.userId);
   const { password } = req.body;
-  console.log('1', userId);
-  console.log(token);
   User.query()
     .where('id', userId)
     .then((user) => {
       const oldToken = replaceAll(token, '$', '.');
-      console.log('oldToken', oldToken);
-      console.log(jwt.decode(oldToken, process.env.SECRET));
       const payload = jwt.decode(oldToken, process.env.SECRET);
       const hash = bcrypt.hashSync(password, 10);
-      console.log('payload', payload);
       if (payload.userId === user[0].id) {
         User.query()
           .where(
