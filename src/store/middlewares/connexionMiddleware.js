@@ -55,7 +55,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           const actionSaveUser = connectUserSignIn(response.data);
           store.dispatch(actionSaveUser);
         })

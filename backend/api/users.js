@@ -102,7 +102,8 @@ router.get('/user/:id', (req, res) => {
    * @returns {Boolean} return True or False
    */
 router.patch('/user/:id/edit', (req, res) => {
-  const id = Number(req.params.id);
+  // const id = Number(req.params.id);
+  const id = Number(req.session.user.id);
   const {
     firstname, lastname, pseudo, email, avatar, age, presentation,
   } = req.body;

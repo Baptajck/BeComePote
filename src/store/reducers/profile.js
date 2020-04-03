@@ -1,9 +1,10 @@
 // == Initial State
 const initialState = {
-  firstname: '',
-  lastname: '',
-  pseudo: '',
-  presentation: '',
+  // id: 0,
+  // firstname: '',
+  // lastname: '',
+  // pseudo: '',
+  // presentation: '',
   isInEditModeFirstname: false,
   isInEditModeLastname: false,
   isInEditModePseudo: false,
@@ -13,7 +14,7 @@ const initialState = {
   oldValueLastname: '',
   oldValuePseudo: '',
   oldValuePresentation: '',
-  profile: [],
+  // profile: [],
 };
 
 // == Types
@@ -33,6 +34,7 @@ const CLOSE_PRESENTATION = 'CLOSE_PRESENTATION';
 // == Récupération du back
 export const GET_PROFILE = 'GET_PROFILE';
 const SHOW_PROFILE = 'SHOW_PROFILE';
+export const EDIT_PROFILE = 'EDIT_PROFILE';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -46,7 +48,7 @@ const reducer = (state = initialState, action = {}) => {
     case SHOW_PROFILE:
       return {
         ...state,
-        profile: action.profile[0],
+        ...action.profile[0],
       };
     // Changement de vision
     case CHANGE_EDIT_MODE_FIRSTNAME:
@@ -142,7 +144,7 @@ export const changeInputProfile = (name, value) => ({
   name,
   value,
 });
-
+// == Récupération des data du back
 export const getProfile = () => ({
   type: GET_PROFILE,
 });
@@ -150,6 +152,11 @@ export const getProfile = () => ({
 export const showProfile = (profile) => ({
   type: SHOW_PROFILE,
   profile,
+});
+
+// == Pouvoir éditer son profil
+export const editProfile = () => ({
+  type: EDIT_PROFILE,
 });
 
 export const changeEditModeFirstname = () => ({

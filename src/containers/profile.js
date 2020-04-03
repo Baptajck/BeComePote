@@ -18,6 +18,7 @@ import {
   closePseudo,
   closePresentation,
   getProfile,
+  editProfile,
 } from 'src/store/reducers/profile';
 import { getLogout } from 'src/store/reducers/forms/connexion';
 
@@ -37,7 +38,6 @@ const mapStateToProps = (state) => ({
   oldValueLastname: state.profile.oldValueLastname,
   oldValuePseudo: state.profile.oldValuePseudo,
   oldValuePresentation: state.profile.oldValuePresentation,
-  profile: state.profile.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -46,6 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getProfile: () => {
     dispatch(getProfile());
+  },
+  editProfile: () => {
+    dispatch(editProfile());
   },
   changeEditModeFirstname: () => {
     dispatch(changeEditModeFirstname());
@@ -90,7 +93,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getLogout());
   },
 });
-
 // Container
 const ProfileContainer = connect(
   mapStateToProps,

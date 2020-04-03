@@ -13,6 +13,12 @@ import questions from 'src/data/questions';
 
 // == Component
 const Profile = ({
+  // profile: {
+  //   firstname,
+  //   lastname,
+  //   pseudo,
+  //   presentation,
+  // },
   firstname,
   lastname,
   pseudo,
@@ -41,8 +47,12 @@ const Profile = ({
   closePresentation,
   isFailEdit,
   getProfile,
-  profile,
+  editProfile,
 }) => {
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   // Logout
   const handleLogout = () => {
     getLogout();
@@ -65,18 +75,26 @@ const Profile = ({
     closePresentation();
   };
 
+  // const handleEditProfile = () => {
+  //   editProfile();
+  // };
+
   // saved button
   const handleUpdateInputValueFirstname = () => {
     updateInputValueFirstname();
+    editProfile();
   };
   const handleUpdateInputValueLastname = () => {
     updateInputValueLastname();
+    editProfile();
   };
   const handleUpdateInputValuePseudo = () => {
     updateInputValuePseudo();
+    editProfile();
   };
   const handleUpdateInputValuePresentation = () => {
     updateInputValuePresentation();
+    editProfile();
   };
 
   // Champs contrôlés
@@ -99,10 +117,6 @@ const Profile = ({
     changeEditModePresentation();
   };
 
-  useEffect(() => {
-    getProfile();
-  }, []);
-
   return (
     <div className="profile-layout">
       <div className="profile-container">
@@ -119,7 +133,7 @@ const Profile = ({
                   <div className="profile-form-container">
                     <label htmlFor="prénom" className="profile-form-label">Prénom</label>
                     <div className="edition-mode">
-                      {/* isFailEdit ? oldValueFirstname : firstname */} {profile.firstname}
+                      {isFailEdit ? oldValueFirstname : firstname} {/* firstname */}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeFirstname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -153,7 +167,7 @@ const Profile = ({
                   <div className="profile-form-container">
                     <label htmlFor="nom" className="profile-form-label">Nom</label>
                     <div className="edition-mode">
-                      {/* isFailEdit ? oldValueLastname : lastname */} {profile.lastname}
+                      {isFailEdit ? oldValueLastname : lastname} {/* lastname */}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeLastname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -185,9 +199,9 @@ const Profile = ({
                 {/* CHANGER SON PSEUDO */}
                 {!isInEditModePseudo && (
                   <div className="profile-form-container">
-                    <label htmlFor="pseudo" className="profile-form-label">Changer son pseudo</label>
+                    <label htmlFor="pseudo" className="profile-form-label">Pseudo</label>
                     <div className="edition-mode">
-                      {/* isFailEdit ? oldValuePseudo : pseudo */} {profile.pseudo}
+                      {isFailEdit ? oldValuePseudo : pseudo} {/* pseudo */}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePseudo}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -225,7 +239,7 @@ const Profile = ({
               {!isInEditModePresentation && (
                 <div className="profile-form-container">
                   <div className="edition-mode presentation">
-                    {/* isFailEdit ? oldValuePresentation : presentation */} {presentation}
+                    {isFailEdit ? oldValuePresentation : presentation} {/* presentation */}
                   </div>
                   <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePresentation}>
                       <span className="edition-mode-icon"><FaRegEdit /></span>
