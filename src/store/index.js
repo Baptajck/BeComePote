@@ -5,6 +5,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import reducer from 'src/store/reducers';
 import connexionMiddleware from './middlewares/connexionMiddleware';
 import passwordMiddleware from './middlewares/passwordMiddleware';
+import profileMiddleware from './middlewares/profileMiddleware';
 
 // == Store
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -13,6 +14,7 @@ const enhancers = composeEnhancers(
   applyMiddleware(
     connexionMiddleware,
     passwordMiddleware,
+    profileMiddleware,
   ),
 );
 

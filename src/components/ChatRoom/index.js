@@ -9,13 +9,13 @@ import MessageList from './MessageList';
 
 // == Composant
 const ChatRoom = () => {
-  const chatZone = useRef(null);
+  // const chatZone = useRef(null);
 
-  useEffect(
-    () => {
-      chatZone.current.scrollBy(0, chatZone.current.scrollHeight);
-    },
-  );
+  // useEffect(
+  //   () => {
+  //     chatZone.current.scrollBy(0, chatZone.current.scrollHeight);
+  //   },
+  // );
 
   return (
     <div className="chatroom">
@@ -25,7 +25,7 @@ const ChatRoom = () => {
           <img src="https://i.imgur.com/HgoCwpu.png" title="chatroom header" alt="header" className="chatroom-header-image" />
           <h1 className="chatroom-header-title">Chat avec Fanny</h1>
         </div>
-        <div className="chatroom-messages-container" ref={chatZone}>
+        <div className="chatroom-messages-container">
           <MessageList />
         </div>
         <div className="chatroom-reply-container">

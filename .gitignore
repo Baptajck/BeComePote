@@ -3,6 +3,7 @@ node_modules/
 .vs-code/
 .env
 key/
+dist/
 
 .DS_Store
 Thumbs.db
