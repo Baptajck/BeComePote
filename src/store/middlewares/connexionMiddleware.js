@@ -16,6 +16,7 @@ import {
 
 
 const connexionMiddleware = (store) => (next) => (action) => {
+  console.log('Middleware Connexion', action);
   switch (action.type) {
     case CREATE_USER: {
       const state = store.getState();
@@ -23,9 +24,10 @@ const connexionMiddleware = (store) => (next) => (action) => {
         pseudo, email, password, confirmPassword,
       } = state.connexion;
       if (password === confirmPassword) {
+        axios.defaults.withCredentials = true;
         axios.post('http://localhost:3000/api/register', {
           pseudo, email, password,
-        }, { credentials: 'true' })
+        })
           .then((response) => {
             const save = saveUserSignUp(response.data);
             store.dispatch(save);
@@ -47,12 +49,12 @@ const connexionMiddleware = (store) => (next) => (action) => {
     case CONNECT_USER: {
       const state = store.getState();
       const { email, password } = state.connexion;
+      axios.defaults.withCredentials = true;
       axios.post('http://localhost:3000/api/connect', {
         email,
         password,
-      }, { credentials: 'true' })
+      })
         .then((response) => {
-          console.log('connexion', response.data);
           const actionSaveUser = connectUserSignIn(response.data);
           store.dispatch(actionSaveUser);
         })
@@ -69,7 +71,8 @@ const connexionMiddleware = (store) => (next) => (action) => {
       break;
     }
     case GET_HOME: {
-      axios.get('http://localhost:3000/api/checkToken', { credentials: 'true' })
+      axios.defaults.withCredentials = true;
+      axios.get('http://localhost:3000/api/checkToken')
         .then((res) => {
           const save = showHome(res.data);
           store.dispatch(save);
@@ -86,7 +89,8 @@ const connexionMiddleware = (store) => (next) => (action) => {
     case GET_LOGOUT: {
       const state = store.getState();
       const { isConnected } = state.connexion;
-      axios.get('http://localhost:3000/api/logout', { credentials: 'true' })
+      axios.defaults.withCredentials = true;
+      axios.get('http://localhost:3000/api/logout')
         .then((res) => {
           console.log(res);
           const save = showLogout(res.data);
