@@ -1,10 +1,5 @@
 // == Initial State
 const initialState = {
-  // id: 0,
-  // firstname: '',
-  // lastname: '',
-  // pseudo: '',
-  // presentation: '',
   isInEditModeFirstname: false,
   isInEditModeLastname: false,
   isInEditModePseudo: false,
@@ -14,7 +9,6 @@ const initialState = {
   oldValueLastname: '',
   oldValuePseudo: '',
   oldValuePresentation: '',
-  // profile: [],
 };
 
 // == Types
@@ -34,7 +28,10 @@ const CLOSE_PRESENTATION = 'CLOSE_PRESENTATION';
 // == Récupération du back
 export const GET_PROFILE = 'GET_PROFILE';
 const SHOW_PROFILE = 'SHOW_PROFILE';
+// == Edit son profil
 export const EDIT_PROFILE = 'EDIT_PROFILE';
+// == Delete son profil
+export const DELETE_PROFILE = 'DELETE_PROFILE';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -133,6 +130,7 @@ const reducer = (state = initialState, action = {}) => {
         isFailEdit: false,
         presentation: state.oldValuePresentation,
       };
+
     default:
       return state;
   }
@@ -159,6 +157,12 @@ export const editProfile = () => ({
   type: EDIT_PROFILE,
 });
 
+// == Pouvoir supprimer son profil
+export const deleteProfile = () => ({
+  type: DELETE_PROFILE,
+});
+
+// == Autres
 export const changeEditModeFirstname = () => ({
   type: CHANGE_EDIT_MODE_FIRSTNAME,
 });

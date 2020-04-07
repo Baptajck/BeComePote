@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
               id: newUser.id,
               email: newUser.email,
             };
-            req.session.newUser = userSession;
+            req.session.user = userSession;
             const { session } = req;
             const response = {
               status: 'Created account',
@@ -80,8 +80,7 @@ router.get('/users', (req, res) => {
    * @param {object} res
    * @returns {[object]} user/:id array
    */
-router.get('/user/:id', (req, res) => {
-  // const id = Number(req.params.id);
+router.get('/user', (req, res) => {
   const id = Number(req.session.user.id);
   User.query()
     .where('id', id)
@@ -101,8 +100,7 @@ router.get('/user/:id', (req, res) => {
    * @param {object} res
    * @returns {Boolean} return True or False
    */
-router.patch('/user/:id/edit', (req, res) => {
-  // const id = Number(req.params.id);
+router.patch('/user/edit', (req, res) => {
   const id = Number(req.session.user.id);
   const {
     firstname, lastname, pseudo, email, avatar, age, presentation,
@@ -134,12 +132,13 @@ router.patch('/user/:id/edit', (req, res) => {
    * @param {object} res
    * @returns {Boolean} return True or False
    */
-router.delete('/user/:id/delete', (req, res) => {
-  const id = Number(req.params.id);
+router.delete('/user/delete', (req, res) => {
+  const id = Number(req.session.user.id);
   User.query()
     .deleteById(id)
-    .then((user) => {
-      res.json(user);
+    .then(() => {
+      req.session.destroy();
+      res.clearCookie('myCookie');
       res.status(200).send('Success, your profile has been deleted!');
     })
     .catch((err) => res.status(500).send({

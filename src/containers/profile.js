@@ -19,6 +19,7 @@ import {
   closePresentation,
   getProfile,
   editProfile,
+  deleteProfile,
 } from 'src/store/reducers/profile';
 import { getLogout } from 'src/store/reducers/forms/connexion';
 
@@ -49,6 +50,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   editProfile: () => {
     dispatch(editProfile());
+  },
+  deleteProfile: () => {
+    dispatch(deleteProfile());
   },
   changeEditModeFirstname: () => {
     dispatch(changeEditModeFirstname());
