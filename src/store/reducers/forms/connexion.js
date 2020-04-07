@@ -26,6 +26,7 @@ const ERROR_MESSAGE = 'ERROR_MESSAGE';
 const STOP_LOADING = 'STOP_LOADING';
 export const GET_LOGOUT = 'GET_LOGOUT';
 export const SHOW_LOGOUT = 'SHOW_LOGOUT';
+export const SHOW_DELETE_PROFILE = 'SHOW_DELETE_PROFILE';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -80,6 +81,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         error: action.error,
+      };
+    case SHOW_DELETE_PROFILE:
+      return {
+        ...state,
+        isConnected: false,
       };
     default:
       return state;
@@ -158,5 +164,8 @@ export const getLogout = () => ({
   type: GET_LOGOUT,
 });
 
+export const showDeleteProfile = () => ({
+  type: SHOW_DELETE_PROFILE,
+});
 // == Export
 export default reducer;

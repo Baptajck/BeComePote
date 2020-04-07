@@ -1,55 +1,57 @@
 /* eslint-disable no-console */
-import axios from 'axios';
-import { GET_PROFILE, showProfile } from 'src/store/reducers/profile';
-
-// const getProfile = (store, userId) => {
-//   const state = store.getState();
-//   const {
-//     firstname, lastname, pseudo, presentation,
-//   } = state.forgottenPassword;
-//   const { user } = state.connexion;
-//   const userId = user.session.user.id;
-//   axios.get(`http://localhost:3000/user/${userId}`, {
-//     firstname,
-//     lastname,
-//     pseudo,
-//     presentation,
-//   }, { credentials: 'true' })
-//     .then((response) => {
-//       console.log(response);
-//       const save = showProfile(response.data);
-//       store.dispatch(save);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// };
+import axios, { AxiosError } from 'axios';
+import {
+  GET_PROFILE, showProfile, EDIT_PROFILE, DELETE_PROFILE,
+} from 'src/store/reducers/profile';
+import { showDeleteProfile } from 'src/store/reducers/forms/connexion';
 
 const profileMiddleware = (store) => (next) => (action) => {
-  // console.log('Je suis le middleware: ', action);
   switch (action.type) {
     case GET_PROFILE: {
       const state = store.getState();
       const {
         firstname, lastname, pseudo, presentation,
       } = state.forgottenPassword;
-      const { user } = state.connexion;
-      const userId = user.session.user.id;
-      axios.get(`http://localhost:3000/api/user/${userId}`, {
+      axios.get('http://localhost:3000/api/user', {
         firstname,
         lastname,
         pseudo,
         presentation,
       }, { credentials: 'true' })
         .then((response) => {
-          console.log(response);
           const save = showProfile(response.data);
           store.dispatch(save);
         })
-        .catch((error) => {
-          console.error(error);
-          console.log(error.response);
-        });
+        .catch(() => (
+          AxiosError
+        ));
+      break;
+    }
+    case EDIT_PROFILE: {
+      const state = store.getState();
+      const {
+        firstname, lastname, pseudo, presentation,
+      } = state.profile;
+      axios.patch('http://localhost:3000/api/user/edit', {
+        firstname,
+        lastname,
+        pseudo,
+        presentation,
+      }, { credentials: 'true' })
+        .then(() => {})
+        .catch(() => (
+          AxiosError
+        ));
+      break;
+    }
+    case DELETE_PROFILE: {
+      axios.delete('http://localhost:3000/api/user/delete', { credentials: 'true' })
+        .then(() => {
+          store.dispatch(showDeleteProfile());
+        })
+        .catch(() => (
+          AxiosError
+        ));
       break;
     }
     default:

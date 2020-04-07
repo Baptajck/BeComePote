@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-fragments */
 /* eslint-disable no-console */
 // == Import : npm
 import React, { useEffect } from 'react';
@@ -70,40 +71,40 @@ const App = ({ getHome, isConnected, loading }) => {
       {loading && (<Spinner />)}
       <ScrollToTop />
       {!loading && (
-      <Switch>
-        <Route exact path="/forgottenPassword">
-          <ForgottenPassword />
-        </Route>
-        <Route exact path="/connect">
-          {isConnected ? <Redirect to="/chatroom" /> : <SignIn />}
-        </Route>
-        <Route exact path="/create">
-          {isConnected ? <Redirect to="/profile" /> : <SignUp />}
-        </Route>
-        <Route exact path="/newPassword/:userId/:token">
-          <NewPassword />
-        </Route>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        {isConnected && (
-        <>
-          <Route exact path="/profile">
-            <Profile />
+        <Switch>
+          {/* Pages Non-Connectées */}
+          <Route path="/forgottenPassword">
+            <ForgottenPassword />
           </Route>
-          <Route exact path="/chatroom">
-            <ChatRoom />
+          <Route path="/connect">
+            {isConnected ? <Redirect to="/chatroom" /> : <SignIn />}
           </Route>
-          <Route exact path="/search">
-            <Search />
+          <Route path="/create">
+            {isConnected ? <Redirect to="/profile" /> : <SignUp />}
           </Route>
-          <Navigation />
-        </>
-        )}
-        <Route>
-          <Error404 />
-        </Route>
-      </Switch>
+          <Route path="/newPassword/:userId/:token">
+            <NewPassword />
+          </Route>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          {/* Pages Connectées */}
+          <Route path="/profile">
+            {isConnected ? <Profile /> : <Redirect to="/" />}
+            <Navigation />
+          </Route>
+          <Route path="/chatroom">
+            {isConnected ? <ChatRoom /> : <Redirect to="/" />}
+            <Navigation />
+          </Route>
+          <Route path="/search">
+            {isConnected ? <Search /> : <Redirect to="/" />}
+            <Navigation />
+          </Route>
+          <Route path="*">
+            <Error404 />
+          </Route>
+        </Switch>
       )}
     </div>
   );

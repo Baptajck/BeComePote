@@ -41,12 +41,17 @@ const Profile = ({
   closePresentation,
   isFailEdit,
   getProfile,
-  profile,
+  editProfile,
+  deleteProfile,
 }) => {
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+
   // Logout
   const handleLogout = () => {
     getLogout();
-    window.location.pathname = '/connect';
   };
   // closed button
   const closeActionFirstname = () => {
@@ -68,15 +73,19 @@ const Profile = ({
   // saved button
   const handleUpdateInputValueFirstname = () => {
     updateInputValueFirstname();
+    editProfile();
   };
   const handleUpdateInputValueLastname = () => {
     updateInputValueLastname();
+    editProfile();
   };
   const handleUpdateInputValuePseudo = () => {
     updateInputValuePseudo();
+    editProfile();
   };
   const handleUpdateInputValuePresentation = () => {
     updateInputValuePresentation();
+    editProfile();
   };
 
   // Champs contrôlés
@@ -99,9 +108,11 @@ const Profile = ({
     changeEditModePresentation();
   };
 
-  useEffect(() => {
-    getProfile();
-  }, []);
+  // Supprimer le profil
+  const handleDeleteProfile = () => {
+    deleteProfile();
+    // getLogout();
+  };
 
   return (
     <div className="profile-layout">
@@ -119,7 +130,7 @@ const Profile = ({
                   <div className="profile-form-container">
                     <label htmlFor="prénom" className="profile-form-label">Prénom</label>
                     <div className="edition-mode">
-                      {/* isFailEdit ? oldValueFirstname : firstname */} {profile.firstname}
+                      {isFailEdit ? oldValueFirstname : firstname} {/* firstname */}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeFirstname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -153,7 +164,7 @@ const Profile = ({
                   <div className="profile-form-container">
                     <label htmlFor="nom" className="profile-form-label">Nom</label>
                     <div className="edition-mode">
-                      {/* isFailEdit ? oldValueLastname : lastname */} {profile.lastname}
+                      {isFailEdit ? oldValueLastname : lastname} {/* lastname */}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeLastname}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -185,9 +196,9 @@ const Profile = ({
                 {/* CHANGER SON PSEUDO */}
                 {!isInEditModePseudo && (
                   <div className="profile-form-container">
-                    <label htmlFor="pseudo" className="profile-form-label">Changer son pseudo</label>
+                    <label htmlFor="pseudo" className="profile-form-label">Pseudo</label>
                     <div className="edition-mode">
-                      {/* isFailEdit ? oldValuePseudo : pseudo */} {profile.pseudo}
+                      {isFailEdit ? oldValuePseudo : pseudo} {/* pseudo */}
                       <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePseudo}>
                         <span className="edition-mode-icon"><FaRegEdit /></span>
                       </button>
@@ -225,7 +236,7 @@ const Profile = ({
               {!isInEditModePresentation && (
                 <div className="profile-form-container">
                   <div className="edition-mode presentation">
-                    {/* isFailEdit ? oldValuePresentation : presentation */} {presentation}
+                    {isFailEdit ? oldValuePresentation : presentation} {/* presentation */}
                   </div>
                   <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePresentation}>
                       <span className="edition-mode-icon"><FaRegEdit /></span>
@@ -263,7 +274,7 @@ const Profile = ({
                   <input
                     type="radio"
                     id={question.response1}
-                    name="choix1"
+                    name={`${question.response}${question.id}`}
                     value={question.response1}
                   />
                   <label className="profile-form-quizz-answer" htmlFor={question.response1}>{question.response1}</label>
@@ -272,7 +283,7 @@ const Profile = ({
                   <input
                     type="radio"
                     id={question.response2}
-                    name="choix2"
+                    name={`${question.response}${question.id}`}
                     value={question.response2}
                   />
                   <label className="profile-form-quizz-answer" htmlFor={question.response2}>{question.response2}</label>
@@ -281,7 +292,7 @@ const Profile = ({
                   <input
                     type="radio"
                     id={question.response3}
-                    name="choix3"
+                    name={`${question.response}${question.id}`}
                     value={question.response3}
                   />
                   <label className="profile-form-quizz-answer" htmlFor={question.response3}>{question.response3}</label>
@@ -291,6 +302,9 @@ const Profile = ({
             </form>
               <div className="logout-container">
                   <NavLink to="/connect" onClick={handleLogout} className="logout-container-text logout-container-input">Déconnexion</NavLink>
+              </div>
+              <div className="logout-container">
+                  <NavLink to="/create" onClick={handleDeleteProfile} className="logout-container-text logout-container-input">Supprimer son profil</NavLink>
               </div>
         </div>
       </div>
@@ -326,6 +340,8 @@ Profile.propTypes = {
   updateInputValueLastname: PropTypes.func.isRequired,
   updateInputValuePseudo: PropTypes.func.isRequired,
   getLogout: PropTypes.func.isRequired,
+  editProfile: PropTypes.func.isRequired,
+  deleteProfile: PropTypes.func.isRequired,
   oldValueFirstname: PropTypes.string.isRequired,
   oldValueLastname: PropTypes.string.isRequired,
   oldValuePseudo: PropTypes.string.isRequired,
