@@ -10,6 +10,7 @@ import { NavLink } from 'react-router-dom';
 // == Import : local
 import './profile.scss';
 import questions from 'src/data/questions';
+import Tabs from 'src/utils/Tabs/Tabs';
 
 // == Component
 const Profile = ({
@@ -122,9 +123,9 @@ const Profile = ({
         </div>
         <div className="profile-wrapper">
           <h1 className="profile-title">Mon profil</h1>
+          <Tabs>
+            <div className="profile-form-info" label="Informations">
             <form action="#0" className="profile-form">
-              <div className="profile-form-info">
-              <p className="profile-form-subtitle">Mes informations personnelles</p>
                 {/* PRENOM */}
                 {!isInEditModeFirstname && (
                   <div className="profile-form-container">
@@ -228,10 +229,10 @@ const Profile = ({
                     </div>
                   </div>
                 )}
-              </div>
             </form>
+            </div>
+            <div className="divrofile-form-subtitle" label="Présentation">
             <form action="#0" className="profile-form redaction">
-            <p className="profile-form-subtitle">Présentation</p>
             {/* PRESENTATION */}
               {!isInEditModePresentation && (
                 <div className="profile-form-container">
@@ -264,8 +265,9 @@ const Profile = ({
               </div>
              )}
             </form>
+            </div>
+            <div className="profile-form-subtitle" label="Questions">
             <form action="#0" className="profile-form profile-form-quizz-container">
-            <p className="profile-form-subtitle">Questions</p>
             {/* QUESTIONS */}
             {questions.map((question) => (
               <div key={question.id} className="profile-form-quizz">
@@ -300,6 +302,8 @@ const Profile = ({
               </div>
             ))}
             </form>
+            </div>
+          </Tabs>
               <div className="logout-container">
                   <NavLink to="/connect" onClick={handleLogout} className="logout-container-text logout-container-input">Déconnexion</NavLink>
               </div>
