@@ -12,12 +12,13 @@ const profileMiddleware = (store) => (next) => (action) => {
       const {
         firstname, lastname, pseudo, presentation,
       } = state.forgottenPassword;
+      axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/user', {
         firstname,
         lastname,
         pseudo,
         presentation,
-      }, { credentials: 'true' })
+      })
         .then((response) => {
           const save = showProfile(response.data);
           store.dispatch(save);
@@ -32,12 +33,13 @@ const profileMiddleware = (store) => (next) => (action) => {
       const {
         firstname, lastname, pseudo, presentation,
       } = state.profile;
+      axios.defaults.withCredentials = true;
       axios.patch('http://localhost:3000/api/user/edit', {
         firstname,
         lastname,
         pseudo,
         presentation,
-      }, { credentials: 'true' })
+      })
         .then(() => {})
         .catch(() => (
           AxiosError
@@ -45,7 +47,8 @@ const profileMiddleware = (store) => (next) => (action) => {
       break;
     }
     case DELETE_PROFILE: {
-      axios.delete('http://localhost:3000/api/user/delete', { credentials: 'true' })
+      axios.defaults.withCredentials = true;
+      axios.delete('http://localhost:3000/api/user/delete')
         .then(() => {
           store.dispatch(showDeleteProfile());
         })

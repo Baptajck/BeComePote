@@ -26,13 +26,12 @@ const passwordMiddleware = (store) => (next) => (action) => {
         email,
       }, { credentials: 'true' })
         .then((response) => {
-          console.log(response);
-          const messageSend = messageSendMail(response.data);
-          console.log(messageSend);
-          store.dispatch(messageSend);
+          store.dispatch(messageSendMail(response.data));
+          // const messageSend = messageSendMail(response.data);
+          // store.dispatch(messageSend);
         })
         .catch((error) => {
-          console.error(error);
+          store.dispatch(messageSendMail(error.response.data));
         });
       break;
     }
