@@ -12,6 +12,7 @@ import './app.scss';
 // == STATIC
 import ScrollToTop from 'src/components/ScrollToTop';
 import HomePage from 'src/components/HomePage';
+import ChatRoomGroup from 'src/components/ChatRoomGroup';
 import ChatRoom from 'src/components/ChatRoom';
 import Search from 'src/components/Search';
 import Error404 from 'src/components/Error404';
@@ -93,7 +94,11 @@ const App = ({ getHome, isConnected, loading }) => {
             {isConnected ? <Profile /> : <Redirect to="/" />}
             <Navigation />
           </Route>
-          <Route path="/chatroom">
+          <Route exact path="/chatroom">
+            {isConnected ? <ChatRoomGroup /> : <Redirect to="/" />}
+            <Navigation />
+          </Route>
+          <Route exact path="/chatroom/:id/:pseudo">
             {isConnected ? <ChatRoom /> : <Redirect to="/" />}
             <Navigation />
           </Route>

@@ -5,6 +5,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaRegCheckCircle, FaRegEdit, FaRegTimesCircle } from 'react-icons/fa';
+import { FiLogOut } from 'react-icons/fi';
+import { MdDeleteForever } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
 // == Import : local
@@ -124,7 +126,8 @@ const Profile = ({
         <div className="profile-wrapper">
           <h1 className="profile-title">Mon profil</h1>
           <Tabs>
-            <div className="profile-form-info" label="Informations">
+          <div label="Informations">
+            <div className="profile-form-info">
             <form action="#0" className="profile-form">
                 {/* PRENOM */}
                 {!isInEditModeFirstname && (
@@ -229,13 +232,10 @@ const Profile = ({
                     </div>
                   </div>
                 )}
-            </form>
-            </div>
-            <div className="divrofile-form-subtitle" label="Présentation">
-            <form action="#0" className="profile-form redaction">
-            {/* PRESENTATION */}
-              {!isInEditModePresentation && (
+                <hr className="profile-hr" />
+                {!isInEditModePresentation && (
                 <div className="profile-form-container">
+                  <label htmlFor="presentation" className="profile-form-label profile-label-presentation">Présentation</label>
                   <div className="edition-mode presentation">
                     {isFailEdit ? oldValuePresentation : presentation} {/* presentation */}
                   </div>
@@ -243,29 +243,30 @@ const Profile = ({
                       <span className="edition-mode-icon"><FaRegEdit /></span>
                   </button>
                 </div>
-              )}
-             {isInEditModePresentation && (
-              <div className="profile-form-container">
-                <div className="edition-mode open">
-                  <textarea
-                    type="text"
-                    rows="8"
-                    className="edition-mode-text"
-                    name="presentation"
-                    value={isFailEdit ? oldValuePresentation : presentation}
-                    onChange={handleChange}
-                  />
-                  <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValuePresentation}>
-                    <span className="edition-mode-icon"><FaRegCheckCircle /></span>
-                  </button>
-                  <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionPresentation}>
-                      <span className="edition-mode-icon"><FaRegTimesCircle /></span>
-                  </button>
-                </div>
-              </div>
-             )}
+                )}
+                {isInEditModePresentation && (
+                  <div className="profile-form-container">
+                    <div className="edition-mode open">
+                      <textarea
+                        type="text"
+                        rows="8"
+                        className="edition-mode-text"
+                        name="presentation"
+                        value={isFailEdit ? oldValuePresentation : presentation}
+                        onChange={handleChange}
+                      />
+                      <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValuePresentation}>
+                        <span className="edition-mode-icon"><FaRegCheckCircle /></span>
+                      </button>
+                      <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionPresentation}>
+                          <span className="edition-mode-icon"><FaRegTimesCircle /></span>
+                      </button>
+                    </div>
+                  </div>
+                )}
             </form>
             </div>
+          </div>
             <div className="profile-form-subtitle" label="Questions">
             <form action="#0" className="profile-form profile-form-quizz-container">
             {/* QUESTIONS */}
@@ -305,10 +306,13 @@ const Profile = ({
             </div>
           </Tabs>
               <div className="logout-container">
-                  <NavLink to="/connect" onClick={handleLogout} className="logout-container-text logout-container-input">Déconnexion</NavLink>
+                  <NavLink to="/connect" onClick={handleLogout} className="logout-container-text logout-container-input">Déconnexion <FiLogOut /></NavLink>
               </div>
               <div className="logout-container">
-                  <NavLink to="/create" onClick={handleDeleteProfile} className="logout-container-text logout-container-input">Supprimer son profil</NavLink>
+                  <NavLink to="/create" onClick={handleDeleteProfile} className="logout-container-text logout-container-input">
+                    {/* <Prompt message="Voulez vous vraiment supprimer votre compte ?" /> */}
+                    Supprimer son compte <MdDeleteForever />
+                  </NavLink>
               </div>
         </div>
       </div>

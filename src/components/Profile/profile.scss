@@ -1,12 +1,27 @@
 @import 'src/styles/vars';
 
 @media screen and (min-width: 300px) {
+  /* 
+  Set up of the form section
+  */
+  // Error message for inputs
+  .requirements {
+    padding: 0 30px 0 50px;
+    max-height: 0;
+    transition: 0.28s;
+    overflow: hidden;
+    color: $color-red;
+    font-style: italic;
+
+    &-span {
+      font-size: 10px;
+    }
+  }
   /*
   Set up of the accordion general layout and behaviour
   */
-
   .tab-list {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 2px solid $color-orange;
     padding-left: 0;
   }
   
@@ -25,8 +40,11 @@
   
   .tab-list-active {
     background-color: white;
-    border: solid #ccc;
-    border-width: 1px 1px 0 1px;
+    border: 2px solid $color-orange;
+    border-width: 2px 2px 0 2px;
+    border-radius: 1em;
+    transform: scale(1.2);
+    margin: 0 1rem;
     opacity: 1;
   }
 
@@ -51,24 +69,17 @@
         background: none;
         text-align: center;
         margin: 5rem auto;
-        background-color: red;
+        background-color: $color-orange;
         padding: 1rem;
         color: white;
         font-size: 15px;
         border-radius: 2em;
 
-        // Logout icon
-        &-arrow{
-          background: linear-gradient(to left, #ee670d,#e9872b);
-          border-radius: 1em;
-          display: inline-block;
-          width: 2.6rem;
-          color: $color-white;
-          padding: 0.5rem;
-          font-size: 1.3em;
-          line-height: 0.9em;
-          margin-right: auto;
-          margin-left: auto;
+        & svg {
+          margin-left: .5rem;
+          display: inline;
+          vertical-align: text-top;
+          font-size: 1.1rem;
         }
       }
     }
@@ -78,6 +89,13 @@
   Set up of the profile section
   */
   .profile {
+    &-hr {
+      width: 30%;
+      color: $color-orange;
+    }
+    &-label-presentation {
+      line-height: 2.5rem;
+    }
     // Container for the full profile page
     &-layout{
       background-color: $color-white;  
@@ -125,36 +143,29 @@
     }
   }
 
-  /* 
-  Set up of the form section
-  */
-  // Error message for inputs
-  .requirements {
-    padding: 0 30px 0 50px;
-    max-height: 0;
-    transition: 0.28s;
-    overflow: hidden;
-    color: $color-red;
-    font-style: italic;
-
-    &-span {
-      font-size: 10px;
-    }
-  }
 
   // Layout of the form before inputs
   .profile-form {
-    width: 90%;
-    margin: 2rem auto;
-    border: 1px solid $color-black;
-    border-radius: 1em;
+    // width: 90%; 
+    margin: 0 auto;
+    // border: 1px solid $color-orange-light;
+    // border-radius: 1em;
     padding: 2rem;
-    box-shadow: 0px 0px 5px 0px #eee;
+    // box-shadow: 0px 0px 5px 0px #eee;
 
     &-info {
       display: flex;
       flex-direction: column;
       align-content: space-between;
+      border-left: 2px solid $color-orange;
+      border-right: 2px solid $color-orange;
+      border-bottom: 2px solid $color-orange;
+    }
+
+    &-quizz-container {
+      border-left: 2px solid $color-orange;
+      border-right: 2px solid $color-orange;
+      border-bottom: 2px solid $color-orange;
     }
 
     &-subtitle {
@@ -259,6 +270,8 @@
     &.presentation {
       line-height: 1.5rem;
       overflow-wrap: break-word;
+      width: 90%;
+      display: inline-block;
     }
 
     // Input area
@@ -266,6 +279,11 @@
       font: inherit;
       line-height: 1.5em;
       width: 75%;
+      padding-left: 0.2rem;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-bottom-color: $color-orange-light;
     }
 
     // Icon container
@@ -301,10 +319,6 @@
     // width: 100%;
     text-align: left;
     margin: 0 0 1.5em 0;
-
-    &-container {
-      // width: 90%;
-    }
 
     &-question {
       font-size: 1em;
