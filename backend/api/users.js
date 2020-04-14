@@ -22,6 +22,7 @@ router.post('/register', (req, res) => {
     .then((user) => {
       if (user.length > 0) {
         res.status(409).send('Email already exist');
+        return;
       }
       if (!email || !password || !pseudo) {
         res.status(400).send({ message: 'One or more values are missing for creating account' });
@@ -161,6 +162,7 @@ router.post('/connect', (req, res) => {
     .then((user) => {
       if (!user.length > 0) {
         res.status(401).send('Email is wrong');
+        return;
       }
       const passwordIsValid = bcrypt.compareSync(password, user[0].password);
       if (!passwordIsValid) {

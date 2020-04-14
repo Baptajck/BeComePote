@@ -2,25 +2,63 @@ const questions = [
   {
     id: 1,
     question: 'Quitte à choisir, vous préféreriez être ?',
-    response1: 'Une pizza',
-    response2: 'Une quiche',
-    response3: 'Un hot dog',
+    response: [
+      'Une pizza',
+      'Une quiche',
+      'Un Hot Dog',
+    ],
   },
 
   {
     id: 2,
     question: 'Vite choissisez un mot, le temps presse !',
-    response1: 'Emerillonné',
-    response2: 'Mirliflore',
-    response3: 'Emberlucoter',
+    response: [
+      'Une pizza',
+      'Une quiche',
+      'Un Hot Dog',
+    ],
   },
 
   {
     id: 3,
     question: 'Oh non ! Un méchant à l\'horizon, transformation en ?',
-    response1: 'Force rouge',
-    response2: 'Force jaune',
-    response3: 'force noire',
+    response: [
+      'Une pizza',
+      'Une quiche',
+      'Un Hot Dog',
+      'prout',
+      'jeu',
+    ],
+  },
+
+  {
+    id: 4,
+    question: 'Si vous deviez vous décrire rapidement, cela serait...',
+    response: [
+      'Une pizza',
+      'Une quiche',
+      'Un Hot Dog',
+    ],
+  },
+
+  {
+    id: 5,
+    question: 'le luxe ultime lors de votre séjour sur une ile déserte est de...',
+    response: [
+      'Une pizza',
+      'Une quiche',
+      'Un Hot Dog',
+    ],
+  },
+
+  {
+    id: 6,
+    question: 'Vous êtes sur becomepote.fr pour...',
+    response: [
+      'Une pizza',
+      'Une quiche',
+      'Un Hot Dog',
+    ],
   },
 ];
 

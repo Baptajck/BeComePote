@@ -3,7 +3,6 @@
 // module.exports = withAuth;
 const withAuth = (req, res, next) => {
   if (req.session && req.session.user) {
-  // if (req.session) {
     next();
   }
   else {

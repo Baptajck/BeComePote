@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -11,7 +13,7 @@ import { NavLink } from 'react-router-dom';
 
 // == Import : local
 import './profile.scss';
-import questions from 'src/data/questions';
+// import questions from 'src/data/questions';
 import Tabs from 'src/utils/Tabs/Tabs';
 
 // == Component
@@ -19,38 +21,50 @@ const Profile = ({
   firstname,
   lastname,
   pseudo,
+  age,
   presentation,
+  updated_at,
+  created_at,
   isInEditModeFirstname,
   isInEditModeLastname,
   isInEditModePseudo,
+  isInEditModeAge,
   isInEditModePresentation,
   changeEditModeFirstname,
   changeEditModeLastname,
   changeEditModePseudo,
+  changeEditModeAge,
   changeEditModePresentation,
   changeInputProfile,
   updateInputValueFirstname,
   updateInputValueLastname,
   updateInputValuePseudo,
+  updateInputValueAge,
   updateInputValuePresentation,
   getLogout,
   oldValueFirstname,
   oldValueLastname,
   oldValuePseudo,
+  oldValueAge,
   oldValuePresentation,
   closeFirstname,
   closeLastname,
   closePseudo,
+  closeAge,
   closePresentation,
   isFailEdit,
   getProfile,
   editProfile,
   deleteProfile,
+  getQuestions,
+  questions,
 }) => {
   useEffect(() => {
     getProfile();
+    getQuestions();
   }, []);
 
+  console.log(questions);
 
   // Logout
   const handleLogout = () => {
@@ -69,6 +83,10 @@ const Profile = ({
     closePseudo();
   };
 
+  const closeActionAge = () => {
+    closeAge();
+  };
+
   const closeActionPresentation = () => {
     closePresentation();
   };
@@ -84,6 +102,10 @@ const Profile = ({
   };
   const handleUpdateInputValuePseudo = () => {
     updateInputValuePseudo();
+    editProfile();
+  };
+  const handleUpdateInputValueAge = () => {
+    updateInputValueAge();
     editProfile();
   };
   const handleUpdateInputValuePresentation = () => {
@@ -107,14 +129,35 @@ const Profile = ({
   const handleChangeEditModePseudo = () => {
     changeEditModePseudo();
   };
+  const handleChangeEditModeAge = () => {
+    changeEditModeAge();
+  };
   const handleChangeEditModePresentation = () => {
     changeEditModePresentation();
+  };
+
+  // == Age
+  const submitBday = (event) => {
+    const { name, value } = event.target;
+    const Bdate = value;
+    const Bday = new Date(Bdate);
+    const ageNow = Math.trunc(((Date.now() - Bday) / (31557600000)));
+    changeInputProfile(name, String(ageNow));
+  };
+
+  const formatDate = (reviewDate) => {
+    const options = {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    };
+    const timestamp = Date.parse(reviewDate);
+    const timestampToDate = new Date(timestamp);
+    const reviewDateFormated = timestampToDate.toLocaleDateString('fr-FR', options);
+    return reviewDateFormated;
   };
 
   // Supprimer le profil
   const handleDeleteProfile = () => {
     deleteProfile();
-    // getLogout();
   };
 
   return (
@@ -126,7 +169,7 @@ const Profile = ({
         <div className="profile-wrapper">
           <h1 className="profile-title">Mon profil</h1>
           <Tabs>
-          <div label="Informations">
+          <div label="Infos">
             <div className="profile-form-info">
             <form action="#0" className="profile-form">
                 {/* PRENOM */}
@@ -232,6 +275,37 @@ const Profile = ({
                     </div>
                   </div>
                 )}
+                {/* AGE */}
+                {!isInEditModeAge && (
+                  <div className="profile-form-container">
+                    <label htmlFor="age" className="profile-form-label">Age</label>
+                    <div className="edition-mode">
+                      {isFailEdit ? oldValueAge : age}
+                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeAge}>
+                        <span className="edition-mode-icon"><FaRegEdit /></span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {isInEditModeAge && (
+                  <div className="profile-form-container">
+                    <label htmlFor="age" className="profile-form-label">Change son âge</label>
+                    <div className="edition-mode open">
+                      <input
+                        type="date"
+                        className="edition-mode-text"
+                        name="age"
+                        onChange={submitBday}
+                      />
+                      <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValueAge}>
+                        <span className="edition-mode-icon"><FaRegCheckCircle /></span>
+                      </button>
+                      <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionAge}>
+                        <span className="edition-mode-icon"><FaRegTimesCircle /></span>
+                      </button>
+                    </div>
+                  </div>
+                )}
                 <hr className="profile-hr" />
                 {!isInEditModePresentation && (
                 <div className="profile-form-container">
@@ -264,56 +338,56 @@ const Profile = ({
                     </div>
                   </div>
                 )}
+          <p className="profile-modification">Création du compte : <span className="profile-modification-span">{formatDate(created_at)}</span></p>
+          {updated_at === null ? '' : <p className="profile-modification">Dernière modification : <span className="profile-modification-span">{formatDate(updated_at)}</span></p>}
             </form>
             </div>
           </div>
             <div className="profile-form-subtitle" label="Questions">
             <form action="#0" className="profile-form profile-form-quizz-container">
             {/* QUESTIONS */}
-            {questions.map((question) => (
-              <div key={question.id} className="profile-form-quizz">
-                <p className="profile-form-quizz-question">{question.question}</p>
-                <div>
-                  <input
-                    type="radio"
-                    id={question.response1}
-                    name={`${question.response}${question.id}`}
-                    value={question.response1}
-                  />
-                  <label className="profile-form-quizz-answer" htmlFor={question.response1}>{question.response1}</label>
+              <div className="profile-select">
+              {questions.map(({ id, question_content, response }) => (
+                <div key={id} className="profile-form-quizz">
+                  <label htmlfort="question" className="profile-form-quizz-question">{question_content}</label>
+                    <select id="question" className="select" defaultValue="DEFAULT">
+                      <option className="profile-select-option" value="DEFAULT" disabled> </option>
+                      {response.map(({ id, choice_content }) => (
+                        <option
+                          key={id}
+                          id={id}
+                          value={choice_content}
+                          className="profile-select-option"
+                        >
+                          {choice_content}
+                        </option>
+                      ))}
+                    </select>
                 </div>
-                <div>
-                  <input
-                    type="radio"
-                    id={question.response2}
-                    name={`${question.response}${question.id}`}
-                    value={question.response2}
-                  />
-                  <label className="profile-form-quizz-answer" htmlFor={question.response2}>{question.response2}</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id={question.response3}
-                    name={`${question.response}${question.id}`}
-                    value={question.response3}
-                  />
-                  <label className="profile-form-quizz-answer" htmlFor={question.response3}>{question.response3}</label>
-                </div>
+              ))}
+              <div className="logout-container">
+                  <button type="button" className="profile-select-button">Sauvegarder</button>
               </div>
-            ))}
+              </div>
             </form>
             </div>
+              <div label="Compte">
+               <div className="profile-form-button">
+                  <div className="profile-form-button-container">
+                  <p className="profile-form-button-title">Tu veux te déconnecter ?</p>
+                      <NavLink to="/connect" onClick={handleLogout} className="profile-form-button-button">Déconnexion <FiLogOut /></NavLink>
+                  </div>
+                  <hr className="profile-hr" />
+                  <div className="profile-form-button-container">
+                  <p className="profile-form-button-title">Tu veux supprimer ton compte ?</p>
+                      <NavLink to="/create" onClick={handleDeleteProfile} className="profile-form-button-button">
+                        {/* <Prompt message="Voulez vous vraiment supprimer votre compte ?" /> */}
+                        Supprimer son compte <MdDeleteForever />
+                      </NavLink>
+                  </div>
+               </div>
+              </div>
           </Tabs>
-              <div className="logout-container">
-                  <NavLink to="/connect" onClick={handleLogout} className="logout-container-text logout-container-input">Déconnexion <FiLogOut /></NavLink>
-              </div>
-              <div className="logout-container">
-                  <NavLink to="/create" onClick={handleDeleteProfile} className="logout-container-text logout-container-input">
-                    {/* <Prompt message="Voulez vous vraiment supprimer votre compte ?" /> */}
-                    Supprimer son compte <MdDeleteForever />
-                  </NavLink>
-              </div>
         </div>
       </div>
     </div>

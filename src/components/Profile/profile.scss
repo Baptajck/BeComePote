@@ -47,48 +47,65 @@
     margin: 0 1rem;
     opacity: 1;
   }
-
-  .logout {
-    &-container{
-      margin-right: auto;
-      margin-left: auto;
-      margin-top: 2rem;
-      padding-bottom: 1rem;
-
-      // Text on the button
-      &-text {
-        text-align: center;
-        margin-top: 0.5rem;
-        font-size: 0.65em;
-        text-transform: uppercase;
-      }
-
-      // Button
-      &-input{
-        border: none;
-        background: none;
-        text-align: center;
-        margin: 5rem auto;
-        background-color: $color-orange;
-        padding: 1rem;
-        color: white;
-        font-size: 15px;
-        border-radius: 2em;
-
-        & svg {
-          margin-left: .5rem;
-          display: inline;
-          vertical-align: text-top;
-          font-size: 1.1rem;
-        }
-      }
-    }
-  }
   
   /*
   Set up of the profile section
   */
   .profile {
+    &-modification {
+      text-align: right;
+      font-size: 10px;
+      margin: 1rem 0;
+
+      &-span {
+        opacity: .7;
+      }
+    }
+    &-select{
+      font-size: 13px;
+      background: #fff;
+      border-radius: 1em;
+      position: relative;
+
+      &-button {
+        border: none;
+        background: none;
+        text-align: center;
+        margin: 0 auto;
+        background-color: $color-orange;
+        padding: 1rem;
+        color: white;
+        font-size: 15px;
+        border-radius: 2em;
+      }
+    }
+    
+    &-select .select{
+      width: 100%;
+      margin: 1rem auto;
+      padding: .5rem .1rem;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: url('arrow.png') no-repeat;
+      background-position: 100% center;
+    }
+    
+    &-select .select select{
+      background: transparent;
+      line-height: 1;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      font-size: 1em;
+    }
+    
     &-hr {
       width: 30%;
       color: $color-orange;
@@ -146,12 +163,8 @@
 
   // Layout of the form before inputs
   .profile-form {
-    // width: 90%; 
     margin: 0 auto;
-    // border: 1px solid $color-orange-light;
-    // border-radius: 1em;
     padding: 2rem;
-    // box-shadow: 0px 0px 5px 0px #eee;
 
     &-info {
       display: flex;
@@ -168,6 +181,45 @@
       border-bottom: 2px solid $color-orange;
     }
 
+    &-button {
+      border-left: 2px solid $color-orange;
+      border-right: 2px solid $color-orange;
+      border-bottom: 2px solid $color-orange;
+      display: flex;
+      flex-direction: column;
+      
+      &-title {
+        margin: 1rem auto;
+      }
+
+      &-container {
+        margin: 2rem auto;
+        padding: .5rem 0;
+      }
+
+      &-button {
+        border: none;
+        background: none;
+        margin: 0 auto;
+        background-color: $color-orange;
+        padding: 1rem;
+        color: white;
+        font-size: 15px;
+        border-radius: 2em;
+        display: inline-block;
+        text-align: center;
+        margin-top: 0.5rem;
+        text-transform: uppercase;
+
+        & svg {
+        margin-left: .5rem;
+        display: inline;
+        vertical-align: text-top;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
     &-subtitle {
       margin-bottom: 1.3rem;
       font-style: italic;
@@ -178,6 +230,9 @@
     // General form container
     &-container {
       margin: 1rem 0rem 1.7rem;
+      &:nth-child(4) {
+        margin-bottom: 5rem;
+      }
     }
 
     // Title of inputs
@@ -316,21 +371,10 @@
 
   // Questionnaire accordion element
     .profile-form-quizz {
-    // width: 100%;
-    text-align: left;
-    margin: 0 0 1.5em 0;
-
-    &-question {
-      font-size: 1em;
-      line-height: 1.3em;
-      margin: 1.5em 0 0.2em 0;
-      color: $color-black;
-    }
-
-    &-answer {
-      color: $color-fullBlack;
-      line-height: 1.3em;
-    }
+      border: 1px solid $color-orange-light;
+      border-radius: 1em;
+      padding: 1rem;
+      margin: 1rem auto;
   }
 }
 
