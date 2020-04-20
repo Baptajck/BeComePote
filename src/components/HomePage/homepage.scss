@@ -69,6 +69,12 @@
 
       &-button {
         margin-bottom: 0.4rem;
+        width: 60%;
+        margin-left: auto;
+
+        &:hover {
+          color: $color-blue;
+        }
 
         &-arrow {
           background: linear-gradient(to left, #ee670d,#e9872b);

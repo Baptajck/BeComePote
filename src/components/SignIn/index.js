@@ -32,8 +32,8 @@ const SignIn = ({
       <div className="signIn">
         <h1 className="signIn-title">Salut !</h1>
         <p className="signIn-subtitle">Connecte toi pour chercher de nouveaux amis sur <strong className="BeComePote">BeComePote</strong>&nbsp;!</p>
-        {error === 'Email is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Ce compte BeComePote n'existe pas, entre un autre compte ou <NavLink to="/create" className="signIn-error--link"> obtiens-en un nouveau</NavLink></span></p> : <p> </p>}
-        {error === 'Password is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Ton mot de passe est incorrect. Si tu as oublié ton mot de passe,<NavLink to="/forgottenPassword" className="signIn-error--link"> redéfinit-le ici</NavLink></span></p> : <p> </p>}
+        {error === 'Email is wrong' ? <p className="signIn-error"><span className="signIn-error--message">Ce compte BeComePote n'existe pas, entre un autre compte ou <NavLink to="/create" className="signIn-error--link"> obtiens-en un nouveau</NavLink></span></p> : <p> </p>}
+        {error === 'Password is wrong' ? <p className="signIn-error"><span className="signIn-error--message">Ton mot de passe est incorrect. Si tu as oublié ton mot de passe,<NavLink to="/forgottenPassword" className="signIn-error--link"> redéfinit-le ici</NavLink></span></p> : <p> </p>}
         <form className="signIn-form" onSubmit={handleSubmit}>
           <div className="signIn-form-container">
             <input

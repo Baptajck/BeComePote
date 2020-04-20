@@ -19,17 +19,16 @@
   }
 
   button[type="submit"] {
-    font-family: 'Comfortaa', cursive;
-    display: block;
-    width: 100%;
-    color: $color-black;
-    border: 0;
-    font-size: 1.1em;
-    text-align: right;
-
-    &:hover {
-      color: $color-blue;
-    }
+    color: #fff;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    align-items: center;
+    width: 70%;
+    background: linear-gradient(to left, #ee670d, #e9872b);
+    border-radius: 2em;
   }
 
   .signIn {
@@ -53,17 +52,16 @@
 
     &-error {
       color: red;
-      margin: 10px 22px;
-      font-size: 14px;
-      padding: 1rem;
-      border-radius: 2em;
+      text-align: justify;
+      line-height: 1.3rem;
+      font-size: .8rem;
+      width: 80%;
+      margin: 0 auto;
       transition: .3s;
-
-      &--message {
-        margin-left: .3rem;
-        display: inline;
-        vertical-align: text-top;
-      }
+      background-color: pink;
+      padding: 1rem;
+      border-radius: 1em;
+      border: 1px solid #f5c6cb;
 
       &--link {
         color: blue;
@@ -188,23 +186,29 @@
           text-align: right;
           border: none;
           background: none;
-          font-size: 1.4em;
+          font-size: 1.2em;
 
           &-icon {
             display: flex;
-            justify-content: flex-end;
+            justify-content: center;
+            margin-top: 5rem;
+            color: #fff;
           }
 
           &-arrow {
-            background: linear-gradient(to left, #ee670d,#e9872b);
-            border-radius: 2em;
-            display: inline-block;
-            margin-left: 0.5rem;
-            vertical-align: middle;
+            // background: linear-gradient(to left, #ee670d,#e9872b);
+            // border-radius: 2em;
+            // display: inline-block;
+            // margin-left: 0.5rem;
+            // vertical-align: middle;
+            // width: 3rem;
+            // text-align: center;
+            // color: $color-white;
+            // padding: 0.5rem;
+            display: flex;
+            justify-content: flex-end;
+            padding: .5rem;
             width: 3rem;
-            text-align: center;
-            color: $color-white;
-            padding: 0.5rem;
           }
         }
       }
@@ -227,6 +231,10 @@
 }
 
 @media screen and (min-width: 768px) {
+  button[type="submit"] {
+    width: 50%;
+  }
+
   .signIn {
     width: 70%;
     border: 1px solid $color-gray-light;

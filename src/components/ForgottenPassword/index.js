@@ -32,8 +32,8 @@ const ForgottenPassword = ({
         <img src={logo} alt="Logo" className="forgotten-logo" />
         <h1 className="forgotten-subtitle">Mot de passe oublié</h1>
         <p className="forgotten-description">Vous ne vous rappelez plus de votre mot de passe!&nbsp;? Indiquez-nous votre email (qui correspond à votre nom d'utilisateur) pour générer un nouveau mot de passe.</p>
-        {messageSend === 'No user with that email' ? <p className="forgotten-error"><IoMdCloseCircle /> <span className="forgotten-error--message">Désolé nous ne connaissons pas cet email</span></p> : ''}
-        {messageSend === 'Email to reset password has been sent to user.' ? <p className="forgotten-sendMail"><FaThumbsUp /> <span className="forgotten-sendMail--message">Ton email a bien été envoyé, cela peut prendre quelques minutes</span></p> : ''}
+        {messageSend === 'No user with that email' ? <p className="forgotten-error"><span className="forgotten-error--message">Désolé nous ne connaissons pas cet email</span></p> : ''}
+        {messageSend === 'Email to reset password has been sent to user.' ? <p className="forgotten-sendMail"> <span className="forgotten-sendMail--message">Ton email a bien été envoyé, cela peut prendre quelques minutes</span></p> : ''}
         <form className="forgotten-form" onSubmit={handleSubmit}>
           <div className="forgotten-form-container">
             <input

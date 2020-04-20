@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // == Import NPM
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
+import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import { FiLock } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 
@@ -10,7 +12,15 @@ import './newPassword.scss';
 import logo from './Logo_BeComePote_v4.png';
 
 const NewPassword = ({
-  password, confirmPassword, changeValue, resetPassword,
+  password,
+  confirmPassword,
+  changeValue,
+  resetPassword,
+  messageSend,
+  newPasswordVisibility,
+  newConfirmPasswordVisibility,
+  isNewPasswordShown,
+  isNewConfirmPasswordShown,
 }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,6 +36,13 @@ const NewPassword = ({
     t.pattern = RegExp.escape(value);
   };
 
+  const toggleNewPasswordVisiblity = () => {
+    newPasswordVisibility();
+  };
+
+  const toggleNewConfirmPasswordVisiblity = () => {
+    newConfirmPasswordVisibility();
+  };
 
   const handleSubmit = (event) => {
     const userId = () => {
@@ -50,11 +67,12 @@ const NewPassword = ({
       <div className="newPassword">
         <img src={logo} alt="Logo" className="newPassword-logo" />
         <h1 className="newPassword-subtitle">Changer son mot de passe</h1>
-        <p className="newPassword-description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat officiis nostrum consequatur iure, a eos aliquid alias voluptas adipisci. Itaque, molestiae? Esse omnis rerum nobis in temporibus tempora deserunt fuga.</p>
+        <p className="newPassword-description">Veuillez rentrer un nouveau mot de passe et de le confirmer dans les champs ci-dessous</p>
+        {messageSend === 'New password is accepted' ? <p className="newPassword-description-message">Ton mot de passe a bien été changé, tu peux retourner sur la page <NavLink to="/connect" className="newPassword-description-message-link">se connecter</NavLink> pour continuer ton aventure</p> : ''}
         <form action="#0" className="newPassword-form" onSubmit={handleSubmit}>
           <div className="newPassword-form-container">
             <input
-              type="password"
+              type={isNewPasswordShown ? 'text' : 'password'}
               title="Veuillez insérer votre nouveau mot de passe"
               id="password"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
@@ -67,11 +85,11 @@ const NewPassword = ({
               placeholder=" "
             />
             <label htmlFor="password" className="newPassword-form-label"><span className="newPassword-form-label-icon"><FiLock className="newPassword-form-label-icon" /></span> Mot de passe</label>
-            <div className="requirements">Votre mot de passe doit contenir au moins 6 caractères: au moins un en majuscule, un en minuscule et un chiffre.</div>
+            <div className="newPassword-password-icon" onClick={toggleNewPasswordVisiblity}>{isNewPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
           </div>
           <div className="newPassword-form-container">
             <input
-              type="password"
+              type={isNewConfirmPasswordShown ? 'text' : 'password'}
               title="Veuillez insérer le nouveau mot de passe pour une confirmation"
               onChange={handleChange}
               id="confirmPassword"
@@ -83,6 +101,7 @@ const NewPassword = ({
               placeholder=" "
             />
             <label htmlFor="confirmPassword" className="newPassword-form-label"><span className="newPassword-form-label-icon"><FiLock className="newPassword-form-label-icon" /></span> Confirme ton mot de passe</label>
+            <div className="newPassword-password-icon" onClick={toggleNewConfirmPasswordVisiblity}>{isNewConfirmPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
             <div className="requirements">Vos mots de passe ne correspondent pas.</div>
           </div>
           <div className="newPassword-form-input-send-icon">
@@ -102,6 +121,7 @@ NewPassword.propTypes = {
   changeValue: PropTypes.func.isRequired,
   resetPassword: PropTypes.func.isRequired,
   password: PropTypes.string.isRequired,
+  messageSend: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
 };
 

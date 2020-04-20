@@ -1,7 +1,5 @@
 const { Model } = require('objection');
 const knex = require('../connexion');
-const Selected = require('./Selected');
-const Choices = require('./Choices');
 
 // Database connection
 Model.knex(knex);
@@ -9,31 +7,6 @@ Model.knex(knex);
 class User extends Model {
   static get tableName() {
     return 'users';
-  }
-
-  static get relationMappings() {
-    return {
-      choice: {
-        relation: Model.HasManyRelation,
-        modelClass: Selected,
-        join: {
-          from: 'users.id',
-          to: 'selected.user_id',
-        },
-      },
-      user: {
-        relation: Model.ManyToManyRelation,
-        modelClass: Choices,
-        join: {
-          from: 'choices.id',
-          through: {
-            from: 'selected.user_id',
-            to: 'selected.choice_id',
-          },
-          to: 'users.id',
-        },
-      },
-    };
   }
 
   static get jsonSchema() {

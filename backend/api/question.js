@@ -2,7 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const Questions = require('../Models/Questions');
-const Users = require('../Models/Users');
+// const Users = require('../Models/Users');
+const Selected = require('../Models/Selected');
 
 /**
   * ALL_QUESTIONS - Route for accessing all questions and choices with a relation mapping
@@ -30,21 +31,172 @@ router.get('/allQuestions', (req, res) => {
   * @returns {object} user object
   */
 router.get('/selectedResponse', (req, res) => {
-  const id = Number(req.session.user.id);
-  Users.query()
-    .withGraphJoined('user', 'choice')
-    .select('choice_content')
-    .where('users.id', id)
-    .then((select) => {
-      res.json(select);
-      res.status(200).send('All the questions and choices have been successful listed!');
+  const userId = Number(req.session.user.id);
+  const options = {
+    relate: true,
+    unrelate: true,
+    insertMissing: true,
+    update: true,
+  };
+
+  Selected.query()
+    .where('user_id', userId)
+    // .select('id')
+    .then((t) => {
+      const test = t.id;
+      console.log(test);
+      Selected.query()
+        .upsertGraph([
+          {
+            id: test,
+            choice_id: [
+              (2),
+            ],
+            user_id: [
+              (userId),
+            ],
+          },
+          {
+            id: test,
+            choice_id: [
+              (6),
+            ],
+            user_id: [
+              (userId),
+            ],
+          },
+          {
+            id: test,
+            choice_id: [
+              (9),
+            ],
+            user_id: [
+              (userId),
+            ],
+          },
+        ], options);
+      res.json({
+        t,
+        message: 'Je suis T',
+      });
+    })
+    .then((p) => {
+      res.json({
+        p,
+        message: 'Je suis P',
+      });
+      Selected.query()
+        .upsertGraph([
+          {
+            // id: p[0].id,
+            choice_id: [
+              (2),
+            ],
+            user_id: [
+              (userId),
+            ],
+          },
+          {
+            // id: p[1].id,
+            choice_id: [
+              (6),
+            ],
+            user_id: [
+              (userId),
+            ],
+          },
+          {
+            // id: p[2].id,
+            choice_id: [
+              (9),
+            ],
+            user_id: [
+              (userId),
+            ],
+          },
+        ], options);
     })
     .catch((err) => res.status(500).send({
       message:
-          err.message || 'An error has occurred while producing the listing.',
+        err.message || 'An error has occurred while producing the listing.',
     }));
 });
+// .then((select) => {
+//   res.json({
+//     select,
+//     message: 'Je suis SELECT',
+//   });
+//   res.status(200).send('All the questions and choices have been successful listed!');
+// })
+// .catch((err) => res.status(500).send({
+//   message:
+//     err.message || 'An error has occurred while producing the listing.',
+// }));
+// })
+// .catch((err) => res.status(500).send({
+//   message:
+//       err.message || 'An error has occurred while producing the listing.',
+// }));
+// });
 
 module.exports = {
   router,
 };
+
+
+// router.get('/selectedResponse', (req, res) => {
+//   const id = Number(req.session.user.id);
+//   Selected.query()
+//     .withGraphJoined('choice')
+//     .select('question_id')
+//     .where('user_id', id)
+//     .then((select) => {
+//       if (Array.select.isEmpty()) {
+//         Selected.query()
+//           .insert({
+
+//           });
+//       }
+//       if (select !== []) {
+//         Selected.query()
+//           .patch({
+
+//           });
+//       }
+//       res.json(select);
+//       res.status(200).send('All the questions and choices have been successful listed!');
+//     })
+//     .catch((err) => res.status(500).send({
+//       message:
+//           err.message || 'An error has occurred while producing the listing.',
+//     }));
+// });
+
+
+// Selected.query()
+//   .upsertGraph([
+//     {
+//       choice_id: [
+//         (2),
+//       ],
+//       user_id: [
+//         (userId),
+//       ],
+//     },
+//     {
+//       choice_id: [
+//         (6),
+//       ],
+//       user_id: [
+//         (userId),
+//       ],
+//     },
+//     {
+//       choice_id: [
+//         (9),
+//       ],
+//       user_id: [
+//         (userId),
+//       ],
+//     },
+//   ], options);

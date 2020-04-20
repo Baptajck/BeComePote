@@ -6,9 +6,11 @@ import { CHANGE_PASSWORD, RESET_PASSWORD, messageSendMail } from 'src/store/redu
 function resetPassword(store, userId, token) {
   const state = store.getState();
   const { password } = state.forgottenPassword;
-  axios.post(`http://localhost:3000/email/newPasswordReset/${userId}/${token}`, { password }, { credentials: 'true' })
+  axios.defaults.withCredentials = true;
+  axios.post(`http://localhost:3000/email/newPasswordReset/${userId}/${token}`, { password })
     .then((response) => {
       console.log(response);
+      store.dispatch(messageSendMail(response.data));
     })
     .catch((error) => {
       console.error(error);
@@ -21,10 +23,10 @@ const passwordMiddleware = (store) => (next) => (action) => {
     case CHANGE_PASSWORD: {
       const state = store.getState();
       const { email } = state.forgottenPassword;
-      // axios.defaults.withCredentials = true;
+      axios.defaults.withCredentials = true;
       axios.post(`http://localhost:3000/email/user/${email}`, {
         email,
-      }, { credentials: 'true' })
+      })
         .then((response) => {
           store.dispatch(messageSendMail(response.data));
           // const messageSend = messageSendMail(response.data);
