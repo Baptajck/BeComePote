@@ -43,78 +43,26 @@ router.get('/selectedResponse', (req, res) => {
     .where('user_id', userId)
     // .select('id')
     .then((t) => {
-      const test = t.id;
-      console.log(test);
+      // const test = t.id;
+      // console.log(test);
       Selected.query()
         .upsertGraph([
           {
-            id: test,
+            id: 116,
             choice_id: [
-              (2),
+              (1),
             ],
             user_id: [
               (userId),
             ],
           },
-          {
-            id: test,
-            choice_id: [
-              (6),
-            ],
-            user_id: [
-              (userId),
-            ],
-          },
-          {
-            id: test,
-            choice_id: [
-              (9),
-            ],
-            user_id: [
-              (userId),
-            ],
-          },
-        ], options);
-      res.json({
-        t,
-        message: 'Je suis T',
-      });
-    })
-    .then((p) => {
-      res.json({
-        p,
-        message: 'Je suis P',
-      });
-      Selected.query()
-        .upsertGraph([
-          {
-            // id: p[0].id,
-            choice_id: [
-              (2),
-            ],
-            user_id: [
-              (userId),
-            ],
-          },
-          {
-            // id: p[1].id,
-            choice_id: [
-              (6),
-            ],
-            user_id: [
-              (userId),
-            ],
-          },
-          {
-            // id: p[2].id,
-            choice_id: [
-              (9),
-            ],
-            user_id: [
-              (userId),
-            ],
-          },
-        ], options);
+        ], options)
+        .then((p) => {
+          res.json({
+            p,
+            message: 'Je suis P',
+          });
+        });
     })
     .catch((err) => res.status(500).send({
       message:
