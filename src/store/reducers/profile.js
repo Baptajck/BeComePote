@@ -12,6 +12,9 @@ const initialState = {
   oldValueAge: '',
   oldValuePresentation: '',
   questions: [],
+  testBody1: 0,
+  testBody2: 0,
+  testBody3: 0,
 };
 
 // == Types
@@ -41,6 +44,10 @@ export const DELETE_PROFILE = 'DELETE_PROFILE';
 // == Récupération des questions
 export const GET_QUESTIONS = 'GET_QUESTIONS';
 const SHOW_QUESTIONS = 'SHOW_QUESTIONS';
+// == Gestions des réponse aux questions
+export const SUBMIT_QUESTIONS = 'SUBMIT_QUESTIONS';
+const SHOW_RESPONSES = 'SHOW_RESPONSES';
+const GET_ID_OPTIONS = 'GET_ID_OPTIONS';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -164,7 +171,16 @@ const reducer = (state = initialState, action = {}) => {
         isFailEdit: false,
         presentation: state.oldValuePresentation,
       };
-
+    case SHOW_RESPONSES:
+      return {
+        ...state,
+        responses: action.responses,
+      };
+    case GET_ID_OPTIONS:
+      return {
+        ...state,
+        [action.name]: action.id,
+      };
     default:
       return state;
   }
@@ -192,6 +208,22 @@ export const getProfile = () => ({
 export const showProfile = (profile) => ({
   type: SHOW_PROFILE,
   profile,
+});
+
+// == Tout concernant les questionsexport
+export const getIdOptions = (name, id) => ({
+  type: GET_ID_OPTIONS,
+  name,
+  id,
+});
+
+export const submitQuestions = () => ({
+  type: SUBMIT_QUESTIONS,
+});
+
+export const showResponses = (responses) => ({
+  type: SHOW_RESPONSES,
+  responses,
 });
 
 // == Pouvoir éditer son profil

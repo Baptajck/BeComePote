@@ -5,6 +5,7 @@ import Profile from 'src/components/Profile';
 // Action Creators
 import {
   changeInputProfile,
+  getIdOptions,
   changeEditModeFirstname,
   changeEditModeLastname,
   changeEditModePseudo,
@@ -24,6 +25,7 @@ import {
   editProfile,
   deleteProfile,
   getQuestions,
+  submitQuestions,
 } from 'src/store/reducers/profile';
 import { getLogout } from 'src/store/reducers/forms/connexion';
 
@@ -49,14 +51,21 @@ const mapStateToProps = (state) => ({
   oldValueAge: state.profile.oldValueAge,
   oldValuePresentation: state.profile.oldValuePresentation,
   questions: state.profile.questions,
+  // responses: state.profile.responses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeInputProfile: (name, value) => {
     dispatch(changeInputProfile(name, value));
   },
+  getIdOptions: (name, value) => {
+    dispatch(getIdOptions(name, value));
+  },
   getQuestions: () => {
     dispatch(getQuestions());
+  },
+  submitQuestions: () => {
+    dispatch(submitQuestions());
   },
   getProfile: () => {
     dispatch(getProfile());

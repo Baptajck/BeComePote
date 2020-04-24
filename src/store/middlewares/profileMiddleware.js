@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
 import axios, { AxiosError } from 'axios';
 import {
-  GET_PROFILE, showProfile, EDIT_PROFILE, DELETE_PROFILE, GET_QUESTIONS, showQuestions,
+  GET_PROFILE,
+  showProfile,
+  EDIT_PROFILE,
+  DELETE_PROFILE,
+  GET_QUESTIONS,
+  showQuestions,
+  SUBMIT_QUESTIONS,
+  showResponses,
 } from 'src/store/reducers/profile';
 import { showDeleteProfile } from 'src/store/reducers/forms/connexion';
 
@@ -73,6 +80,27 @@ const profileMiddleware = (store) => (next) => (action) => {
         .catch(() => (
           AxiosError
         ));
+      break;
+    }
+    case SUBMIT_QUESTIONS: {
+      const state = store.getState();
+      const { testBody1, testBody2, testBody3 } = state.profile;
+      axios.defaults.withCredentials = true;
+      axios.post('http://localhost:3000/api/addResponses', {
+        testBody1,
+        testBody2,
+        testBody3,
+      })
+        .then((response) => {
+          console.log('Je suis le middleware profil: ', response);
+          const save = showResponses(response.data);
+          store.dispatch(save);
+        })
+        .catch((err) => {
+          console.log('je suis error profil', err);
+          // const actionError = errorMessage(error.response.data);
+          // store.dispatch(actionError);
+        });
       break;
     }
     default:

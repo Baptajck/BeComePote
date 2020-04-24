@@ -1,8 +1,8 @@
+/* eslint-disable no-console */
 const express = require('express');
 
 const router = express.Router();
 const Questions = require('../Models/Questions');
-// const Users = require('../Models/Users');
 const Selected = require('../Models/Selected');
 
 /**
@@ -30,8 +30,9 @@ router.get('/allQuestions', (req, res) => {
   * @param {object} res
   * @returns {object} user object
   */
-router.get('/selectedResponse', (req, res) => {
+router.post('/addResponses', (req, res) => {
   const userId = Number(req.session.user.id);
+  const { testBody1, testBody2, testBody3 } = req.body;
   const options = {
     relate: true,
     unrelate: true,
@@ -39,112 +40,70 @@ router.get('/selectedResponse', (req, res) => {
     update: true,
   };
 
+  const firstChoice = {
+    choice_id: testBody1,
+    user_id: userId,
+  };
+  const secondChoice = {
+    choice_id: testBody2,
+    user_id: userId,
+  };
+  const thirdChoice = {
+    choice_id: testBody3,
+    user_id: userId,
+  };
+
   Selected.query()
+    .delete()
     .where('user_id', userId)
-    // .select('id')
-    .then((t) => {
-      // const test = t.id;
-      // console.log(test);
-      Selected.query()
-        .upsertGraph([
-          {
-            id: 116,
-            choice_id: [
-              (1),
-            ],
-            user_id: [
-              (userId),
-            ],
-          },
-        ], options)
-        .then((p) => {
-          res.json({
-            p,
-            message: 'Je suis P',
-          });
-        });
+    .then((result) => {
+      async function addChoice() {
+        const firstChoiceInserted = await Selected.query()
+          .upsertGraph(firstChoice, options);
+        const secondChoiceInserted = await Selected.query()
+          .upsertGraph(secondChoice, options);
+        const thirdChoiceInserted = await Selected.query()
+          .upsertGraph(thirdChoice, options);
+        return (firstChoiceInserted, secondChoiceInserted, thirdChoiceInserted);
+      }
+      res.json({
+        result,
+        message: 'Your three choices have been saved',
+      });
+      addChoice();
     })
     .catch((err) => res.status(500).send({
       message:
-        err.message || 'An error has occurred while producing the listing.',
+        err.message || 'An error has occurred while saving your choices.',
     }));
 });
-// .then((select) => {
-//   res.json({
-//     select,
-//     message: 'Je suis SELECT',
-//   });
-//   res.status(200).send('All the questions and choices have been successful listed!');
-// })
-// .catch((err) => res.status(500).send({
-//   message:
-//     err.message || 'An error has occurred while producing the listing.',
-// }));
-// })
-// .catch((err) => res.status(500).send({
-//   message:
-//       err.message || 'An error has occurred while producing the listing.',
-// }));
-// });
 
 module.exports = {
   router,
 };
 
 
-// router.get('/selectedResponse', (req, res) => {
-//   const id = Number(req.session.user.id);
+// router.post('/addResponses', (req, res) => {
+//   const userId = Number(req.session.user.id);
+//   const { testBody } = req.body;
+
 //   Selected.query()
-//     .withGraphJoined('choice')
-//     .select('question_id')
-//     .where('user_id', id)
-//     .then((select) => {
-//       if (Array.select.isEmpty()) {
+//     .delete()
+//     .where('user_id', userId)
+//     .then(() => {
+//       testBody.forEach((element) => {
 //         Selected.query()
-//           .insert({
-
-//           });
-//       }
-//       if (select !== []) {
-//         Selected.query()
-//           .patch({
-
-//           });
-//       }
-//       res.json(select);
-//       res.status(200).send('All the questions and choices have been successful listed!');
-//     })
-//     .catch((err) => res.status(500).send({
-//       message:
-//           err.message || 'An error has occurred while producing the listing.',
-//     }));
+//           .upsertGraph({
+//             choice_id: +element, // "+" confirms Interger format
+//             user_id: userId,
+//           })
+//           .then((result) => {
+//             res.json({ result, message: 'Your choices have been saved' });
+//           })
+//           .catch((err) => res.status(500).send({
+//             message:
+//               err.message || 'An error has occurred while saving your choices.',
+//           }));
+//       });
+//     });
 // });
-
-
-// Selected.query()
-//   .upsertGraph([
-//     {
-//       choice_id: [
-//         (2),
-//       ],
-//       user_id: [
-//         (userId),
-//       ],
-//     },
-//     {
-//       choice_id: [
-//         (6),
-//       ],
-//       user_id: [
-//         (userId),
-//       ],
-//     },
-//     {
-//       choice_id: [
-//         (9),
-//       ],
-//       user_id: [
-//         (userId),
-//       ],
-//     },
-//   ], options);

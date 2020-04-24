@@ -35,22 +35,22 @@ class Selected extends Model {
     };
   }
 
-  // static get jsonSchema() {
-  //   return {
-  //     type: 'object',
-  //     properties: {
-  //       // id: {
-  //       //   type: 'integer',
-  //       // },
-  //       // choice_id: {
-  //       //   type: 'integer',
-  //       // },
-  //       // user_id: {
-  //       //   type: 'integer',
-  //       // },
-  //     },
-  //   };
-  // }
+  static get jsonSchema() {
+    return {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+        },
+        choice_id: {
+          type: 'integer',
+        },
+        user_id: {
+          type: 'integer',
+        },
+      },
+    };
+  }
 }
 
 module.exports = Selected;

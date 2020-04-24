@@ -58,13 +58,28 @@ const Profile = ({
   deleteProfile,
   getQuestions,
   questions,
+  submitQuestions,
+  responses,
+  getIdOptions,
 }) => {
   useEffect(() => {
     getProfile();
     getQuestions();
   }, []);
 
-  console.log(questions);
+  console.log('Je suis les réponses venu du back: ', responses);
+
+  // Submit responses
+  const handleSubmitChoices = (event) => {
+    event.preventDefault();
+    submitQuestions();
+  };
+
+  const handleGetIdOptions = (event) => {
+    console.log('EVENT', event.target);
+    const { attributes, id } = event.target;
+    getIdOptions(attributes.name.value, +id);
+  };
 
   // Logout
   const handleLogout = () => {
@@ -344,7 +359,7 @@ const Profile = ({
             </div>
           </div>
             <div className="profile-form-subtitle" label="Questions">
-            <form action="#0" className="profile-form profile-form-quizz-container">
+            <form action="#0" className="profile-form profile-form-quizz-container" onSubmit={handleSubmitChoices}>
             {/* QUESTIONS */}
               <div className="profile-select">
               {questions.map(({ id, question_content, response }) => (
@@ -352,10 +367,12 @@ const Profile = ({
                   <label htmlfort="question" className="profile-form-quizz-question">{question_content}</label>
                     <select id="question" className="select" defaultValue="DEFAULT">
                       <option className="profile-select-option" value="DEFAULT" disabled> </option>
-                      {response.map(({ id, choice_content }) => (
+                      {response.map(({ id, choice_content, question_id }) => (
                         <option
                           key={id}
                           id={id}
+                          name={`testBody${question_id}`}
+                          onClick={handleGetIdOptions}
                           value={choice_content}
                           className="profile-select-option"
                         >
@@ -366,7 +383,7 @@ const Profile = ({
                 </div>
               ))}
               <div className="logout-container">
-                  <button type="button" className="profile-select-button">Sauvegarder</button>
+                  <button type="submit" className="profile-select-button">Sauvegarder</button>
               </div>
               </div>
             </form>
