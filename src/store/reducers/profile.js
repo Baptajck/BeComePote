@@ -12,9 +12,9 @@ const initialState = {
   oldValueAge: '',
   oldValuePresentation: '',
   questions: [],
-  testBody1: 0,
-  testBody2: 0,
-  testBody3: 0,
+  testBody1: +null,
+  testBody2: +null,
+  testBody3: +null,
 };
 
 // == Types
