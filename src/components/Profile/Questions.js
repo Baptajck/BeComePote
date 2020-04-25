@@ -1,15 +1,14 @@
 /* eslint-disable no-shadow */
-/* eslint-disable camelcase */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+/* eslint-disable camelcase */
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 
 const Questions = ({
-  questions, submitQuestions, getIdOptions,
+  questions, submitQuestions, getIdOptions, responses,
 }) => {
-  const handleSubmitChoices = (event) => {
-    event.preventDefault();
+  const handleSubmitChoices = () => {
     submitQuestions();
   };
 
@@ -18,9 +17,11 @@ const Questions = ({
     getIdOptions(attributes.name.value, +id);
   };
   return (
-    <>
+    // eslint-disable-next-line react/jsx-fragments
+    <Fragment>
       <form action="#0" className="profile-form profile-form-quizz-container" onSubmit={handleSubmitChoices}>
         {/* QUESTIONS */}
+        {responses.message === 'Your three choices have been saved' ? <p className="profile-message"> <span className="profile-message--message">Tes réponses ont bien été mises à jour</span></p> : '' }
         <div className="profile-select">
           {questions.map(({ id, question_content, response }) => (
             <div key={id} className="profile-form-quizz">
@@ -47,14 +48,19 @@ const Questions = ({
           </div>
         </div>
       </form>
-    </>
+    </Fragment>
   );
+};
+
+Questions.defaultProps = {
+  responses: {},
 };
 
 Questions.propTypes = {
   questions: PropTypes.array.isRequired,
   submitQuestions: PropTypes.func.isRequired,
   getIdOptions: PropTypes.func.isRequired,
+  responses: PropTypes.object,
 };
 
 export default Questions;

@@ -1,7 +1,4 @@
-/* eslint-disable no-shadow */
-/* eslint-disable camelcase */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FiLogOut } from 'react-icons/fi';
 import { MdDeleteForever } from 'react-icons/md';
@@ -13,7 +10,9 @@ const Account = ({
 }) => {
   // Logout
   const handleLogout = () => {
-    getLogout();
+    setTimeout(() => {
+      getLogout();
+    }, 500);
   };
 
   // Supprimer le profil
@@ -21,7 +20,7 @@ const Account = ({
     deleteProfile();
   };
   return (
-    <>
+    <Fragment>
       <div className="profile-form-button">
         <div className="profile-form-button-container">
           <p className="profile-form-button-title">Tu veux te déconnecter ?</p>
@@ -35,7 +34,7 @@ const Account = ({
           </NavLink>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

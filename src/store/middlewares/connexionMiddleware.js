@@ -16,7 +16,7 @@ import {
 
 
 const connexionMiddleware = (store) => (next) => (action) => {
-  console.log('Middleware Connexion', action);
+  // console.log('Middleware Connexion', action);
   switch (action.type) {
     case CREATE_USER: {
       const state = store.getState();

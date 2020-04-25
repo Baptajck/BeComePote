@@ -134,6 +134,7 @@
         border-radius: 2em;
         padding: 0.7rem 2.1rem;
         border: none;
+        -webkit-box-shadow: 0px 0px 5px 0px $color-grey-shadow;
         box-shadow: 0px 0px 5px 0px $color-grey-shadow;
 
         &:focus {
@@ -149,6 +150,7 @@
             font-size: 12px;
             color: $color-blue;
           }
+          -webkit-box-shadow: 0px 0px 5px 0px $color-blue;
           box-shadow: 0px 0px 5px 0px $color-blue;
           border-width: 3px;
           border-image-slice: 1;
@@ -170,6 +172,7 @@
         }
 
         &:invalid:not(:focus):not(:placeholder-shown) {
+          -webkit-box-shadow: 0px 0px 5px 0px $color-red;
           box-shadow: 0px 0px 5px 0px $color-red;
 
           & + label {
@@ -231,6 +234,7 @@
     border: 1px solid $color-gray-light;
     border-radius: 2em;
     padding: 2rem;
+    -webkit-box-shadow: 0px 0px 5px 0px $color-fullBlack;
     box-shadow: 0px 0px 5px 0px $color-fullBlack;
     background-color: $color-white;
     margin: 2rem auto;

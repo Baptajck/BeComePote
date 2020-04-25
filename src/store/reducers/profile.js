@@ -1,5 +1,6 @@
 // == Initial State
 const initialState = {
+  profile: {},
   isInEditModeFirstname: false,
   isInEditModeLastname: false,
   isInEditModePseudo: false,
@@ -55,7 +56,11 @@ const reducer = (state = initialState, action = {}) => {
     case CHANGE_INPUT_PROFILE:
       return {
         ...state,
-        [action.name]: action.value,
+        profile: {
+          ...state.profile,
+          [action.name]: action.value,
+        },
+        // [action.name]: action.value,
         isFailEdit: false,
       };
     case SHOW_QUESTIONS:
@@ -66,7 +71,8 @@ const reducer = (state = initialState, action = {}) => {
     case SHOW_PROFILE:
       return {
         ...state,
-        ...action.profile[0],
+        profile: action.profile[0],
+        // ...action.profile[0],
       };
     // Changement de vision
     case CHANGE_EDIT_MODE_FIRSTNAME:
@@ -99,40 +105,40 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isInEditModeFirstname: false,
-        firstname: state.firstname,
-        oldValueFirstname: state.firstname,
+        firstname: state.profile.firstname,
+        oldValueFirstname: state.profile.firstname,
         isFailEdit: false,
       };
     case UPDATE_INPUT_VALUE_LASTNAME:
       return {
         ...state,
         isInEditModeLastname: false,
-        lastname: state.lastname,
-        oldValueLastname: state.lastname,
+        lastname: state.profile.lastname,
+        oldValueLastname: state.profile.lastname,
         isFailEdit: false,
       };
     case UPDATE_INPUT_VALUE_PSEUDO:
       return {
         ...state,
         isInEditModePseudo: false,
-        pseudo: state.pseudo,
-        oldValuePseudo: state.pseudo,
+        pseudo: state.profile.pseudo,
+        oldValuePseudo: state.profile.pseudo,
         isFailEdit: false,
       };
     case UPDATE_INPUT_VALUE_AGE:
       return {
         ...state,
         isInEditModeAge: false,
-        age: state.age,
-        oldValueAge: state.age,
+        age: state.profile.age,
+        oldValueAge: state.profile.age,
         isFailEdit: false,
       };
     case UPDATE_INPUT_VALUE_PRESENTATION:
       return {
         ...state,
         isInEditModePresentation: false,
-        presentation: state.presentation,
-        oldValuePresentation: state.presentation,
+        presentation: state.profile.presentation,
+        oldValuePresentation: state.profile.presentation,
         isFailEdit: false,
       };
     // Button Close
@@ -141,35 +147,50 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         isInEditModeFirstname: !state.isInEditModeFirstname,
         isFailEdit: false,
-        firstname: state.oldValueFirstname,
+        profile: {
+          ...state.profile,
+          firstname: state.oldValueFirstname,
+        },
       };
     case CLOSE_LASTNAME:
       return {
         ...state,
         isInEditModeLastname: !state.isInEditModeLastname,
         isFailEdit: false,
-        lastname: state.oldValueLastname,
+        profile: {
+          ...state.profile,
+          lastname: state.oldValueLastname,
+        },
       };
     case CLOSE_PSEUDO:
       return {
         ...state,
         isInEditModePseudo: !state.isInEditModePseudo,
         isFailEdit: false,
-        pseudo: state.oldValuePseudo,
+        profile: {
+          ...state.profile,
+          pseudo: state.oldValuePseudo,
+        },
       };
     case CLOSE_AGE:
       return {
         ...state,
         isInEditModeAge: !state.isInEditModeAge,
         isFailEdit: false,
-        Age: state.oldValueAge,
+        profile: {
+          ...state.profile,
+          age: state.oldValueAge,
+        },
       };
     case CLOSE_PRESENTATION:
       return {
         ...state,
         isInEditModePresentation: !state.isInEditModePresentation,
         isFailEdit: false,
-        presentation: state.oldValuePresentation,
+        profile: {
+          ...state.profile,
+          presentation: state.oldValuePresentation,
+        },
       };
     case SHOW_RESPONSES:
       return {

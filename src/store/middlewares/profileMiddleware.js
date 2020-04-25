@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import axios, { AxiosError } from 'axios';
 import {
   GET_PROFILE,
@@ -15,18 +14,8 @@ import { showDeleteProfile } from 'src/store/reducers/forms/connexion';
 const profileMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case GET_PROFILE: {
-      const state = store.getState();
-      const {
-        firstname, lastname, pseudo, presentation, age,
-      } = state.forgottenPassword;
       axios.defaults.withCredentials = true;
-      axios.get('http://localhost:3000/api/user', {
-        firstname,
-        lastname,
-        pseudo,
-        age,
-        presentation,
-      })
+      axios.get('http://localhost:3000/api/user')
         .then((response) => {
           const save = showProfile(response.data);
           store.dispatch(save);
@@ -39,7 +28,9 @@ const profileMiddleware = (store) => (next) => (action) => {
     case EDIT_PROFILE: {
       const state = store.getState();
       const {
-        firstname, lastname, pseudo, presentation, age,
+        profile: {
+          firstname, lastname, pseudo, presentation, age,
+        },
       } = state.profile;
       axios.defaults.withCredentials = true;
       axios.patch('http://localhost:3000/api/user/edit', {
@@ -66,14 +57,9 @@ const profileMiddleware = (store) => (next) => (action) => {
         ));
       break;
     } case GET_QUESTIONS: {
-      // const state = store.getState();
-      // const {
-      //   firstname, lastname, pseudo, presentation, age,
-      // } = state.forgottenPassword;
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/allQuestions')
         .then((response) => {
-          console.log(response);
           const save = showQuestions(response.data);
           store.dispatch(save);
         })
@@ -92,15 +78,12 @@ const profileMiddleware = (store) => (next) => (action) => {
         testBody3,
       })
         .then((response) => {
-          console.log('Je suis le middleware profil: ', response);
           const save = showResponses(response.data);
           store.dispatch(save);
         })
-        .catch((err) => {
-          console.log('je suis error profil', err);
-          // const actionError = errorMessage(error.response.data);
-          // store.dispatch(actionError);
-        });
+        .catch(() => (
+          AxiosError
+        ));
       break;
     }
     default:

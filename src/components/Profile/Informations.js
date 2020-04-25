@@ -1,19 +1,27 @@
-/* eslint-disable no-shadow */
-/* eslint-disable camelcase */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+/* eslint-disable camelcase */
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { FaRegCheckCircle, FaRegEdit, FaRegTimesCircle } from 'react-icons/fa';
 
 const Informations = ({
-  firstname,
-  lastname,
-  pseudo,
-  age,
-  presentation,
-  updated_at,
-  created_at,
+  // firstname,
+  // lastname,
+  // pseudo,
+  // age,
+  // presentation,
+  // updated_at,
+  // created_at,
+  profile: {
+    firstname,
+    lastname,
+    pseudo,
+    age,
+    presentation,
+    updated_at,
+    created_at,
+  },
   isInEditModeFirstname,
   isInEditModeLastname,
   isInEditModePseudo,
@@ -43,7 +51,7 @@ const Informations = ({
   isFailEdit,
   editProfile,
 }) => {
-// closed button
+  // closed button
   const closeActionFirstname = () => {
     closeFirstname();
   };
@@ -129,7 +137,8 @@ const Informations = ({
   };
 
   return (
-    <>
+    // eslint-disable-next-line react/jsx-fragments
+    <Fragment>
       <form action="#0" className="profile-form">
         {!isInEditModeFirstname && (
           <div className="profile-form-container">
@@ -169,7 +178,7 @@ const Informations = ({
           <div className="profile-form-container">
             <label htmlFor="nom" className="profile-form-label">Nom</label>
             <div className="edition-mode">
-              {isFailEdit ? oldValueLastname : lastname} {/* lastname */}
+              {isFailEdit ? oldValueLastname : lastname}
               <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeLastname}>
                 <span className="edition-mode-icon"><FaRegEdit /></span>
               </button>
@@ -299,28 +308,32 @@ const Informations = ({
         <p className="profile-modification">Création du compte : <span className="profile-modification-span">{formatDate(created_at)}</span></p>
         {updated_at === null ? '' : <p className="profile-modification">Dernière modification : <span className="profile-modification-span">{formatDate(updated_at)}</span></p>}
       </form>
-    </>
+    </Fragment>
   );
 };
 
 Informations.defaultProps = {
-  firstname: '',
-  lastname: '',
-  pseudo: '',
-  presentation: '',
-  age: '',
-  updated_at: '',
-  created_at: '',
+  profile: {
+    firstname: '',
+    lastname: '',
+    pseudo: '',
+    presentation: '',
+    age: '',
+    updated_at: '',
+    created_at: '',
+  },
 };
 
 Informations.propTypes = {
-  firstname: PropTypes.string,
-  lastname: PropTypes.string,
-  pseudo: PropTypes.string,
-  presentation: PropTypes.string,
-  age: PropTypes.string,
-  updated_at: PropTypes.string,
-  created_at: PropTypes.string,
+  profile: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+    pseudo: PropTypes.string,
+    presentation: PropTypes.string,
+    age: PropTypes.string,
+    updated_at: PropTypes.string,
+    created_at: PropTypes.string,
+  }),
   isInEditModeAge: PropTypes.bool.isRequired,
   isInEditModeFirstname: PropTypes.bool.isRequired,
   isInEditModeLastname: PropTypes.bool.isRequired,

@@ -31,13 +31,14 @@ import { getLogout } from 'src/store/reducers/forms/connexion';
 
 
 const mapStateToProps = (state) => ({
-  firstname: state.profile.firstname,
-  lastname: state.profile.lastname,
-  pseudo: state.profile.pseudo,
-  age: state.profile.age,
-  created_at: state.profile.created_at,
-  updated_at: state.profile.updated_at,
-  presentation: state.profile.presentation,
+  profile: state.profile.profile,
+  firstname: state.profile.profile.firstname,
+  lastname: state.profile.profile.lastname,
+  pseudo: state.profile.profile.pseudo,
+  age: state.profile.profile.age,
+  created_at: state.profile.profile.created_at,
+  updated_at: state.profile.profile.updated_at,
+  presentation: state.profile.profile.presentation,
   isInEditModeFirstname: state.profile.isInEditModeFirstname,
   isInEditModeLastname: state.profile.isInEditModeLastname,
   isInEditModePseudo: state.profile.isInEditModePseudo,
@@ -51,15 +52,15 @@ const mapStateToProps = (state) => ({
   oldValueAge: state.profile.oldValueAge,
   oldValuePresentation: state.profile.oldValuePresentation,
   questions: state.profile.questions,
-  // responses: state.profile.responses,
+  responses: state.profile.responses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeInputProfile: (name, value) => {
     dispatch(changeInputProfile(name, value));
   },
-  getIdOptions: (name, value) => {
-    dispatch(getIdOptions(name, value));
+  getIdOptions: (name, id) => {
+    dispatch(getIdOptions(name, id));
   },
   getQuestions: () => {
     dispatch(getQuestions());
