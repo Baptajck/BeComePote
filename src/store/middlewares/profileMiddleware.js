@@ -11,6 +11,7 @@ import {
   showPromptCancel,
   GET_CHOICES,
   showChoices,
+  cancelMounted,
 } from 'src/store/reducers/profile';
 import { showDeleteProfile } from 'src/store/reducers/forms/connexion';
 
@@ -90,7 +91,10 @@ const profileMiddleware = (store) => (next) => (action) => {
         })
         .catch(() => (
           AxiosError
-        ));
+        ))
+        .finally(() => {
+          store.dispatch(cancelMounted());
+        });
       break;
     }
     case GET_CHOICES: {

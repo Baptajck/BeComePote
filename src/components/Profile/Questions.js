@@ -3,15 +3,21 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable camelcase */
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 
 const Questions = ({
-  questions, submitQuestions, getIdOptions, responses, choices,
+  questions, submitQuestions, getIdOptions, responses, choices, getChoices, mounted,
 }) => {
-  const handleSubmitChoices = (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    console.log('je suis useEffect BITCH');
+    if (mounted) {
+      getChoices();
+    }
+  }, [mounted]);
+  const handleSubmitChoices = () => {
+    // event.preventDefault();
     submitQuestions();
   };
 
@@ -22,14 +28,14 @@ const Questions = ({
 
   return (
     <Fragment>
-      <form action="#0" className="profile-form profile-form-quizz-container" onSubmit={handleSubmitChoices}>
+      <form action="#0" className="profile-form profile-form-quizz-container">
         {/* QUESTIONS */}
         {responses.message === 'Your three choices have been saved' ? <p className="profile-message"> <span className="profile-message--message">Tes réponses ont bien été mises à jour</span></p> : '' }
         <div className="profile-select">
           { choices.map(({ choice_content, id, question_id }) => (
             <div>
               <p>Votre réponse à la question {question_id} </p>
-              <option key={id} className="profile-select-option--default" value="DEFAULT" disabled>{choice_content}</option>
+              <p key={id} className="profile-select-p--default">{choice_content}</p>
             </div>
           )) }
           { questions.map(({ id, question_content, response }) => (
@@ -45,14 +51,15 @@ const Questions = ({
                     onClick={handleGetIdOptions}
                     value={choice_content}
                     className="profile-select-option"
+                    required
                   />
-                  <label>{choice_content}</label><br />
+                  <label htmlFor={id}>{choice_content}</label><br />
                 </div>
               ))}
             </div>
           )) }
           <div className="logout-container">
-            <button type="submit" className="profile-select-button">Sauvegarder</button>
+            <button type="button" onClick={handleSubmitChoices} className="profile-select-button">Sauvegarder</button>
           </div>
         </div>
       </form>

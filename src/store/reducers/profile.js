@@ -18,6 +18,7 @@ const initialState = {
   testBody2: +null,
   testBody3: +null,
   show: false,
+  mounted: false,
 };
 
 // == Types
@@ -57,6 +58,8 @@ export const SHOW_PROMPT_CANCEL = 'SHOW_PROMPT_CANCEL';
 // == Récupération des réponses
 export const GET_CHOICES = 'GET_CHOICES';
 const SHOW_CHOICES = 'SHOW_CHOICES';
+
+export const CANCEL_MOUNTED = 'CANCEL_MOUNTED';
 
 
 // == Reducer
@@ -219,7 +222,13 @@ const reducer = (state = initialState, action = {}) => {
     case SHOW_RESPONSES:
       return {
         ...state,
+        mounted: true,
         responses: action.responses,
+      };
+    case CANCEL_MOUNTED:
+      return {
+        ...state,
+        mounted: false,
       };
     case GET_ID_OPTIONS:
       return {
@@ -244,6 +253,10 @@ export const showChoices = (choices) => ({
   type: SHOW_CHOICES,
   choices,
 });
+export const cancelMounted = () => ({
+  type: CANCEL_MOUNTED,
+});
+// == Prompt
 export const showPrompt = () => ({
   type: SHOW_PROMPT,
 });

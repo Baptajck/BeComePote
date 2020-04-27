@@ -59,11 +59,13 @@ const Profile = ({
   showPromptCancel,
   choices,
   getChoices,
+  mounted,
 }) => {
   useEffect(() => {
     getProfile();
     getQuestions();
     getChoices();
+    console.log('je suis le deuxième BITCH');
   }, []);
 
   return (
@@ -114,6 +116,8 @@ const Profile = ({
             {/* QUESTIONS */}
             <div className="profile-form-subtitle" label="Questions">
               <Questions
+                mounted={mounted}
+                getChoices={getChoices}
                 choices={choices}
                 questions={questions}
                 getIdOptions={getIdOptions}

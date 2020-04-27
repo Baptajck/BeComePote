@@ -58,6 +58,7 @@ const mapStateToProps = (state) => ({
   responses: state.profile.responses,
   show: state.profile.show,
   choices: state.profile.choices,
+  mounted: state.profile.mounted,
 });
 
 const mapDispatchToProps = (dispatch) => ({
