@@ -12,10 +12,12 @@ const initialState = {
   oldValuePseudo: '',
   oldValueAge: '',
   oldValuePresentation: '',
-  questions: [],
+  questions: {},
+  choices: {},
   testBody1: +null,
   testBody2: +null,
   testBody3: +null,
+  show: false,
 };
 
 // == Types
@@ -49,6 +51,13 @@ const SHOW_QUESTIONS = 'SHOW_QUESTIONS';
 export const SUBMIT_QUESTIONS = 'SUBMIT_QUESTIONS';
 const SHOW_RESPONSES = 'SHOW_RESPONSES';
 const GET_ID_OPTIONS = 'GET_ID_OPTIONS';
+// == PROMPT
+const SHOW_PROMPT = 'SHOW_PROMPT';
+export const SHOW_PROMPT_CANCEL = 'SHOW_PROMPT_CANCEL';
+// == Récupération des réponses
+export const GET_CHOICES = 'GET_CHOICES';
+const SHOW_CHOICES = 'SHOW_CHOICES';
+
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
@@ -62,6 +71,21 @@ const reducer = (state = initialState, action = {}) => {
         },
         // [action.name]: action.value,
         isFailEdit: false,
+      };
+    case SHOW_CHOICES:
+      return {
+        ...state,
+        choices: action.choices,
+      };
+    case SHOW_PROMPT:
+      return {
+        ...state,
+        show: true,
+      };
+    case SHOW_PROMPT_CANCEL:
+      return {
+        ...state,
+        show: false,
       };
     case SHOW_QUESTIONS:
       return {
@@ -212,6 +236,19 @@ export const changeInputProfile = (name, value) => ({
   type: CHANGE_INPUT_PROFILE,
   name,
   value,
+});
+export const getChoices = () => ({
+  type: GET_CHOICES,
+});
+export const showChoices = (choices) => ({
+  type: SHOW_CHOICES,
+  choices,
+});
+export const showPrompt = () => ({
+  type: SHOW_PROMPT,
+});
+export const showPromptCancel = () => ({
+  type: SHOW_PROMPT_CANCEL,
 });
 // == Récupération des questions
 export const getQuestions = () => ({

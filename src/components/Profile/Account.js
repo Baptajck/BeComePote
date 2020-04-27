@@ -1,37 +1,52 @@
+/* eslint-disable react/jsx-fragments */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FiLogOut } from 'react-icons/fi';
 import { MdDeleteForever } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
-
+import CustomPrompt from './CustomPrompt';
 
 const Account = ({
-  getLogout, deleteProfile,
+  getLogout, deleteProfile, show, showPrompt, showPromptCancel,
 }) => {
+  const handlePrompt = (event) => {
+    event.preventDefault();
+    showPrompt();
+  };
   // Logout
   const handleLogout = () => {
     setTimeout(() => {
       getLogout();
     }, 500);
   };
-
-  // Supprimer le profil
-  const handleDeleteProfile = () => {
-    deleteProfile();
-  };
   return (
     <Fragment>
       <div className="profile-form-button">
         <div className="profile-form-button-container">
           <p className="profile-form-button-title">Tu veux te déconnecter ?</p>
-          <NavLink to="/connect" onClick={handleLogout} className="profile-form-button-button">Déconnexion <FiLogOut /></NavLink>
+          <button type="button" onClick={handleLogout} className={`profile-form-button-button ${show ? 'profile-disabled' : ''}`} disabled={show}>Déconnexion <FiLogOut /></button>
         </div>
         <hr className="profile-hr" />
+        <div className="profile-danger-zone">
+          <h2 className="profile-danger-zone-title">
+            Danger zone
+          </h2>
+        </div>
         <div className="profile-form-button-container">
           <p className="profile-form-button-title">Tu veux supprimer ton compte ?</p>
-          <NavLink to="/create" onClick={handleDeleteProfile} className="profile-form-button-button">
+          <CustomPrompt
+            show={show}
+            message="Es-tu sur de vouloir supprimer ton compte ?"
+            cancel={showPromptCancel}
+            deleteProfile={deleteProfile}
+          />
+          <button
+            type="button"
+            className={`profile-form-button-button ${show ? 'profile-disabled' : ''}`}
+            onClick={handlePrompt}
+          >
             Supprimer son compte <MdDeleteForever />
-          </NavLink>
+          </button>
         </div>
       </div>
     </Fragment>
@@ -40,7 +55,10 @@ const Account = ({
 
 
 Account.propTypes = {
+  show: PropTypes.bool.isRequired,
   getLogout: PropTypes.func.isRequired,
+  showPrompt: PropTypes.func.isRequired,
+  showPromptCancel: PropTypes.func.isRequired,
   deleteProfile: PropTypes.func.isRequired,
 };
 

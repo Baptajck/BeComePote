@@ -53,10 +53,17 @@ const Profile = ({
   submitQuestions,
   getIdOptions,
   responses,
+  show,
+  // == Prompt
+  showPrompt,
+  showPromptCancel,
+  choices,
+  getChoices,
 }) => {
   useEffect(() => {
     getProfile();
     getQuestions();
+    getChoices();
   }, []);
 
   return (
@@ -73,13 +80,6 @@ const Profile = ({
               <div className="profile-form-info">
                 <Informations
                   profile={profile}
-                  // firstname={firstname}
-                  // lastname={lastname}
-                  // pseudo={pseudo}
-                  // age={age}
-                  // presentation={presentation}
-                  // updated_at={updated_at}
-                  // created_at={created_at}
                   isInEditModeFirstname={isInEditModeFirstname}
                   isInEditModeLastname={isInEditModeLastname}
                   isInEditModePseudo={isInEditModePseudo}
@@ -114,6 +114,7 @@ const Profile = ({
             {/* QUESTIONS */}
             <div className="profile-form-subtitle" label="Questions">
               <Questions
+                choices={choices}
                 questions={questions}
                 getIdOptions={getIdOptions}
                 submitQuestions={submitQuestions}
@@ -123,10 +124,14 @@ const Profile = ({
             {/* COMPTE */}
             <div label="Compte">
               <Account
+                showPrompt={showPrompt}
+                showPromptCancel={showPromptCancel}
+                show={show}
                 getLogout={getLogout}
                 deleteProfile={deleteProfile}
               />
             </div>
+
           </Tabs>
         </div>
       </div>

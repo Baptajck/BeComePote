@@ -1,6 +1,71 @@
 @import 'src/styles/vars';
 
 @media screen and (min-width: 300px) {
+  .prompt {
+    z-index: 2;
+    width: 100%;
+    padding: 1.2rem;
+    max-width: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .3s;
+
+    &-1 {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,.16),0 1px 3px rgba(0,0,0,.13);
+    }
+
+    &-head {
+      padding: 10px 15px 10px 20px;
+      background-color: $color-blue;
+
+      &-title {
+        color: #fff;
+        position: relative;
+
+        &--span {
+          position: absolute;
+          right: 0;
+          cursor: pointer;
+          width: 30px;
+          height: 20px;
+        }
+      }
+    }
+
+    &-message {
+      padding: 20px;
+      background-color: #fff;
+    }
+
+    &-buttons {
+      padding: 1rem;
+      text-align: center;
+      background-color: #fff;
+
+      &-item {
+        &--cancel {
+          padding: .5rem;
+          color: red;
+          border-radius: .5rem;
+          margin-right: 1rem;
+          background-color: pink;
+          border: 1px solid #f5c6cb;
+        }
+        &--confirm {
+          padding: .5rem;
+          border-radius: .5rem;
+          margin-left: 1rem;
+          border: 1px solid #c3e6cb;
+          background-color: #d4edda;
+          color: #155724;
+        }
+      }
+    }
+  }
   /* 
   Set up of the form section
   */
@@ -52,6 +117,21 @@
   Set up of the profile section
   */
   .profile {
+    &-disabled {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+
+    &-danger-zone {
+      &-title {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        text-transform: uppercase;
+        font-style: italic;
+        letter-spacing: .2rem;
+        color: RGBA(255, 0, 0, 0.7);
+      }
+    }
     &-message {
       text-align: justify;
       line-height: 1.3rem;
@@ -94,31 +174,31 @@
       }
     }
     
-    &-select .select{
-      width: 100%;
-      margin: 1rem auto;
-      padding: .5rem .1rem;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      background: url('arrow.png') no-repeat;
-      background-position: 100% center;
-    }
+    // &-select .select{
+    //   width: 100%;
+    //   margin: 1rem auto;
+    //   padding: .5rem .1rem;
+    //   border-top: none;
+    //   border-left: none;
+    //   border-right: none;
+    //   -webkit-appearance: none;
+    //   -moz-appearance: none;
+    //   appearance: none;
+    //   background: url('arrow.png') no-repeat;
+    //   background-position: 100% center;
+    // }
     
-    &-select .select select{
-      background: transparent;
-      line-height: 1;
-      border: 0;
-      padding: 0;
-      border-radius: 0;
-      width: 100%;
-      position: relative;
-      z-index: 10;
-      font-size: 1em;
-    }
+    // &-select .select select{
+    //   background: transparent;
+    //   line-height: 1;
+    //   border: 0;
+    //   padding: 0;
+    //   border-radius: 0;
+    //   width: 100%;
+    //   position: relative;
+    //   z-index: 10;
+    //   font-size: 1em;
+    // }
     
     &-hr {
       width: 30%;
@@ -191,6 +271,12 @@
       border-bottom: 2px solid $color-orange;
     }
 
+    &-quizz-answers {
+      width: 100%;
+      text-align: left;
+      margin-left: 0.8rem;
+    }
+
     &-quizz-container {
       border-left: 2px solid $color-orange;
       border-right: 2px solid $color-orange;
@@ -209,7 +295,7 @@
       }
 
       &-container {
-        margin: 2rem auto;
+        margin: 1.5rem auto;
         padding: .5rem 0;
       }
 

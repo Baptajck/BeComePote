@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Questions = require('../Models/Questions');
 const Selected = require('../Models/Selected');
+const Choices = require('../Models/Choices');
 
 /**
   * ALL_QUESTIONS - Route for accessing all questions and choices with a relation mapping
@@ -78,9 +79,48 @@ router.post('/addResponses', (req, res) => {
     }));
 });
 
+/**
+  * SELECT RESPONSE - Route for accessing the user's answers in the profil tab
+  * @param {object} req
+  * @param {object} res
+  * @returns {object} user object
+  */
+router.get('/selectedResponse', (req, res) => {
+  const id = Number(req.session.user.id);
+  Choices.query()
+    .withGraphJoined('choice')
+    .join('questions', 'choices.question_id', 'questions.id')
+    .select('choice_content', 'question_id', 'question_content')
+    .where('user_id', id)
+    .then((select) => {
+      res.json(select);
+      res.status(200).send('All the questions and choices have been successful listed!');
+    })
+    .catch((err) => res.status(500).send({
+      message:
+          err.message || 'An error has occurred while producing the listing.',
+    }));
+});
+
 module.exports = {
   router,
 };
+
+
+// Selected.query()
+//     .withGraphJoined('choice')
+//     .where('selected.user_id', id)
+//     .join('questions')
+//      .select('choice_content', 'question_id', 'question_content', 'questions.id')
+//     .then((select) => {
+//       console.log(select);
+//       res.json(select);
+//       res.status(200).send('All the questions and choices have been successful listed!');
+//     })
+//     .catch((err) => res.status(500).send({
+//       message:
+//           err.message || 'An error has occurred while producing the listing.',
+//     }));
 
 
 // router.post('/addResponses', (req, res) => {

@@ -8,6 +8,9 @@ import {
   showQuestions,
   SUBMIT_QUESTIONS,
   showResponses,
+  showPromptCancel,
+  GET_CHOICES,
+  showChoices,
 } from 'src/store/reducers/profile';
 import { showDeleteProfile } from 'src/store/reducers/forms/connexion';
 
@@ -54,9 +57,13 @@ const profileMiddleware = (store) => (next) => (action) => {
         })
         .catch(() => (
           AxiosError
-        ));
+        ))
+        .finally(() => {
+          store.dispatch(showPromptCancel());
+        });
       break;
-    } case GET_QUESTIONS: {
+    }
+    case GET_QUESTIONS: {
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/allQuestions')
         .then((response) => {
@@ -79,6 +86,19 @@ const profileMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           const save = showResponses(response.data);
+          store.dispatch(save);
+        })
+        .catch(() => (
+          AxiosError
+        ));
+      break;
+    }
+    case GET_CHOICES: {
+      axios.defaults.withCredentials = true;
+      axios.get('http://localhost:3000/api/selectedResponse')
+        .then((response) => {
+          console.log(response);
+          const save = showChoices(response.data);
           store.dispatch(save);
         })
         .catch(() => (

@@ -1,6 +1,7 @@
 const { Model } = require('objection');
 const knex = require('../connexion');
 const Choices = require('./Choices');
+const Questions = require('./Questions');
 
 // Database connection
 Model.knex(knex);
@@ -18,18 +19,6 @@ class Selected extends Model {
         join: {
           from: 'selected.choice_id',
           to: 'choices.id',
-        },
-      },
-      user: {
-        relation: Model.ManyToManyRelation,
-        modelClass: Choices,
-        join: {
-          from: 'choices.id',
-          through: {
-            from: 'selected.choice_id',
-            to: 'selected.user_id',
-          },
-          to: 'users.id',
         },
       },
     };

@@ -26,6 +26,9 @@ import {
   deleteProfile,
   getQuestions,
   submitQuestions,
+  showPrompt,
+  showPromptCancel,
+  getChoices,
 } from 'src/store/reducers/profile';
 import { getLogout } from 'src/store/reducers/forms/connexion';
 
@@ -53,11 +56,22 @@ const mapStateToProps = (state) => ({
   oldValuePresentation: state.profile.oldValuePresentation,
   questions: state.profile.questions,
   responses: state.profile.responses,
+  show: state.profile.show,
+  choices: state.profile.choices,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeInputProfile: (name, value) => {
     dispatch(changeInputProfile(name, value));
+  },
+  getChoices: () => {
+    dispatch(getChoices());
+  },
+  showPrompt: () => {
+    dispatch(showPrompt());
+  },
+  showPromptCancel: () => {
+    dispatch(showPromptCancel());
   },
   getIdOptions: (name, id) => {
     dispatch(getIdOptions(name, id));
