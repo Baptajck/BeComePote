@@ -59,20 +59,22 @@ const Profile = ({
   showPromptCancel,
   choices,
   getChoices,
+  editProfileAvatar,
   mounted,
+  fileUpload,
+  test,
 }) => {
   useEffect(() => {
     getProfile();
     getQuestions();
     getChoices();
-    console.log('je suis le deuxième BITCH');
   }, []);
 
   return (
     <div className="profile-layout">
       <div className="profile-container">
         <div className="profile-container-image">
-          <img src="https://i.imgur.com/HgoCwpu.png" title="profile header" alt="header" className="profile-header" />
+          <img src={profile.avatar} title="profile header" alt="header" className="profile-header" />
         </div>
         <div className="profile-wrapper">
           <h1 className="profile-title">Mon profil</h1>
@@ -82,6 +84,8 @@ const Profile = ({
               <div className="profile-form-info">
                 <Informations
                   profile={profile}
+                  fileUpload={fileUpload}
+                  test={test}
                   isInEditModeFirstname={isInEditModeFirstname}
                   isInEditModeLastname={isInEditModeLastname}
                   isInEditModePseudo={isInEditModePseudo}
@@ -110,6 +114,7 @@ const Profile = ({
                   closePresentation={closePresentation}
                   isFailEdit={isFailEdit}
                   editProfile={editProfile}
+                  editProfileAvatar={editProfileAvatar}
                 />
               </div>
             </div>

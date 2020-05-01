@@ -29,6 +29,8 @@ import {
   showPrompt,
   showPromptCancel,
   getChoices,
+  editProfileAvatar,
+  test,
 } from 'src/store/reducers/profile';
 import { getLogout } from 'src/store/reducers/forms/connexion';
 
@@ -59,6 +61,7 @@ const mapStateToProps = (state) => ({
   show: state.profile.show,
   choices: state.profile.choices,
   mounted: state.profile.mounted,
+  fileUpload: state.profile.fileUpload,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -67,6 +70,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getChoices: () => {
     dispatch(getChoices());
+  },
+  test: (fileUpload) => {
+    dispatch(test(fileUpload));
+  },
+  editProfileAvatar: () => {
+    dispatch(editProfileAvatar());
   },
   showPrompt: () => {
     dispatch(showPrompt());

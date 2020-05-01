@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable camelcase */
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FaRegCheckCircle, FaRegEdit, FaRegTimesCircle } from 'react-icons/fa';
@@ -18,6 +18,7 @@ const Informations = ({
     lastname,
     pseudo,
     age,
+    avatar,
     presentation,
     updated_at,
     created_at,
@@ -50,6 +51,9 @@ const Informations = ({
   closePresentation,
   isFailEdit,
   editProfile,
+  editProfileAvatar,
+  fileUpload,
+  test,
 }) => {
   // closed button
   const closeActionFirstname = () => {
@@ -115,6 +119,25 @@ const Informations = ({
   };
   const handleChangeEditModePresentation = () => {
     changeEditModePresentation();
+  };
+
+  const handleFile = (e) => {
+    // test(event.target.files);
+    // const image = Array.from(e.target.files);
+
+    // const formData = new FormData();
+    // formData.append('image', e.target.files[0]);
+    // formData.append('name', 'Baptiste Yoyo');
+    test(e.target.files[0]);
+    // console.log(formData);
+    // test(files);
+    // changeInputProfile(name, event.target.files[0]);
+  };
+
+  const handleEditProfileAvatar = () => {
+    // console.log(event.target.files);
+    console.log('Je suis fileUpload du state: ', fileUpload);
+    editProfileAvatar();
   };
 
   // == Age
@@ -308,6 +331,17 @@ const Informations = ({
         <p className="profile-modification">Création du compte : <span className="profile-modification-span">{formatDate(created_at)}</span></p>
         {updated_at === null ? '' : <p className="profile-modification">Dernière modification : <span className="profile-modification-span">{formatDate(updated_at)}</span></p>}
       </form>
+      <hr className="profile-hr" />
+      {/* Avatar */}
+      <div className="profile-form-container">
+        <form>
+          <p className="profile-form-label profile-label-presentation">Avatar</p>
+          <div className="profile-container-avatar">
+            <input type="file" name="avatar" onChange={handleFile} className="profile-container-avatar-input" />
+            <button type="button" name="avatar" className="profile-container-avatar-button" onClick={handleEditProfileAvatar}>Changer mon avatar</button>
+          </div>
+        </form>
+      </div>
     </Fragment>
   );
 };

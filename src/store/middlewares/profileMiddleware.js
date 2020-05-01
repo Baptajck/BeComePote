@@ -3,6 +3,7 @@ import {
   GET_PROFILE,
   showProfile,
   EDIT_PROFILE,
+  EDIT_PROFILE_AVATAR,
   DELETE_PROFILE,
   GET_QUESTIONS,
   showQuestions,
@@ -47,6 +48,28 @@ const profileMiddleware = (store) => (next) => (action) => {
         .then(() => {})
         .catch(() => (
           AxiosError
+        ));
+      break;
+    }
+    case EDIT_PROFILE_AVATAR: {
+      const state = store.getState();
+      const {
+        fileUpload,
+      } = state.profile;
+
+      const formData = new FormData();
+      formData.append('image', fileUpload);
+      formData.append('name', 'Baptiste Yoyo');
+      axios.defaults.withCredentials = true;
+      axios.post('http://localhost:3000/api/uploads', {
+        formData,
+      })
+        .then((test) => {
+          console.log(test);
+        })
+        .catch((err) => (
+          console.log(err, fileUpload)
+          // AxiosError
         ));
       break;
     }

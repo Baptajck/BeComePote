@@ -19,6 +19,7 @@ const initialState = {
   testBody3: +null,
   show: false,
   mounted: false,
+  fileUpload: {},
 };
 
 // == Types
@@ -58,12 +59,16 @@ export const SHOW_PROMPT_CANCEL = 'SHOW_PROMPT_CANCEL';
 // == Récupération des réponses
 export const GET_CHOICES = 'GET_CHOICES';
 const SHOW_CHOICES = 'SHOW_CHOICES';
+// == Edit son avatar
+export const TEST = 'TEST';
+export const EDIT_PROFILE_AVATAR = 'EDIT_PROFILE_AVATAR';
 
 export const CANCEL_MOUNTED = 'CANCEL_MOUNTED';
 
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
+  console.log(action);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {
@@ -74,6 +79,11 @@ const reducer = (state = initialState, action = {}) => {
         },
         // [action.name]: action.value,
         isFailEdit: false,
+      };
+    case TEST:
+      return {
+        ...state,
+        fileUpload: action.fileUpload,
       };
     case SHOW_CHOICES:
       return {
@@ -246,6 +256,15 @@ export const changeInputProfile = (name, value) => ({
   name,
   value,
 });
+// == Pouvoir éditer son avatar
+export const editProfileAvatar = () => ({
+  type: EDIT_PROFILE_AVATAR,
+});
+export const test = (fileUpload) => ({
+  type: TEST,
+  fileUpload,
+});
+
 export const getChoices = () => ({
   type: GET_CHOICES,
 });

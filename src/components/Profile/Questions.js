@@ -11,13 +11,11 @@ const Questions = ({
   questions, submitQuestions, getIdOptions, responses, choices, getChoices, mounted,
 }) => {
   useEffect(() => {
-    console.log('je suis useEffect BITCH');
     if (mounted) {
       getChoices();
     }
   }, [mounted]);
   const handleSubmitChoices = () => {
-    // event.preventDefault();
     submitQuestions();
   };
 

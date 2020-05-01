@@ -25,7 +25,6 @@ app.use(
   }),
 );
 
-
 // BODYPARSER
 app.use(bodyParser.json());
 app.use(

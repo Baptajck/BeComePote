@@ -1,10 +1,80 @@
 /* eslint-disable import/newline-after-import */
 /* eslint-disable no-console */
+require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
 const User = require('../Models/Users');
 const withAuth = require('../middleware');
+
+// TEMPORARY STORAGE ON AWS
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename(req, file, cb) {
+    // console.log(file);
+    cb(null, file.originalname);
+  },
+});
+
+console.log(process.env.CLOUDINARY);
+// SEND FILE TO CLOUDINARY
+cloudinary.config({
+  cloud_name: process.env.HOST_CLOUD,
+  api_key: process.env.API_CLOUD,
+  api_secret: process.env.API_SECRET,
+});
+
+/**
+   * SEND CLOUDINARY - Route for creating a user account, checking if email
+   * already exist and using bcyrpt to hash password
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Image Cloudinary
+   */
+// Send to cloudinary
+router.post('/uploads', (req, res) => {
+  const userId = Number(req.session.user.id);
+  // const upload = multer({ storage }).single('image');
+  // upload(req, res, (err) => {
+  //   if (err) {
+  //     res.status(503).send({
+  //       message: 'Cannot reach AWS becomepote server',
+  //       err,
+  //     });
+  //     return;
+  //   }
+  //   // const { path } = req.file;
+
+  cloudinary.uploader.upload(req.file, {
+    ressource_type: 'image', public_id: `BeComePote_${userId}`, tags: 'BeComePote', folder: 'becomepote',
+  }, (error, result) => {
+    if (error) {
+      res.status(503).send({
+        message: 'Cannot reach Cloudinary server',
+        error,
+      });
+      return;
+    }
+    // Query update avatar user
+    User.query()
+      .findById(userId)
+      .patch({
+        avatar: result.secure_url,
+      })
+      .then(() => res.status(200).send({
+        message: 'Your avatar was successfully updated',
+      }))
+      .catch((errQuery) => res.status(500).send({
+        message:
+          errQuery.message || 'Your avatar has not been uploaded, an error occurred.',
+      }));
+  });
+});
+// });
 
 
 /**
