@@ -1,16 +1,27 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // == Import NPM
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import { FiLock } from 'react-icons/fi';
 import PropTypes from 'prop-types';
+import errorLink from 'src/utils/Errors';
 
 // == Import Local
 import './newPassword.scss';
 import logo from './Logo_BeComePote_v4.png';
 
+/**
+ * @param  {String} password - Le mot de passe du user
+ * @param  {String} confirmPassword - La confirmation du mot de passe
+ * @param  {Func} changeValue - Champ(s) contrôlé(s)
+ * @param  {Func} resetPassword - Changer son mot de passe
+ * @param  {String} messageSend - Reçois la réussite ou l'erreur
+ * @param  {Func} newPasswordVisibility - Change isNewPasswordShown en true ou false
+ * @param  {Func} newConfirmPasswordVisibility - Change isNewConfirmPasswordShown en true ou false
+ * @param  {Bool} isNewPasswordShown - Permet de cacher le mot de passe
+ * @param  {Bool} isNewConfirmPasswordShown - Permet de cacher le champ confirme mot de passe
+ */
 const NewPassword = ({
   password,
   confirmPassword,
@@ -22,11 +33,17 @@ const NewPassword = ({
   isNewPasswordShown,
   isNewConfirmPasswordShown,
 }) => {
+  /**
+   * @param  {Object} event
+   */
   const handleChange = (event) => {
     const { name, value } = event.target;
     changeValue(name, value);
   };
 
+  /**
+   * @param  {Object} event
+   */
   const handleChangePassword = (event) => {
     const { value } = event.target;
     if (!RegExp.escape) {
@@ -36,14 +53,9 @@ const NewPassword = ({
     t.pattern = RegExp.escape(value);
   };
 
-  const toggleNewPasswordVisiblity = () => {
-    newPasswordVisibility();
-  };
-
-  const toggleNewConfirmPasswordVisiblity = () => {
-    newConfirmPasswordVisibility();
-  };
-
+  /**
+   * @param  {Object} event
+   */
   const handleSubmit = (event) => {
     const userId = () => {
       const url = document.location.pathname;
@@ -68,7 +80,17 @@ const NewPassword = ({
         <img src={logo} alt="Logo" className="newPassword-logo" />
         <h1 className="newPassword-subtitle">Changer son mot de passe</h1>
         <p className="newPassword-description">Veuillez rentrer un nouveau mot de passe et de le confirmer dans les champs ci-dessous</p>
-        {messageSend === 'New password is accepted' ? <p className="newPassword-description-message">Ton mot de passe a bien été changé, tu peux retourner sur la page <NavLink to="/connect" className="newPassword-description-message-link">se connecter</NavLink> pour continuer ton aventure</p> : ''}
+        {errorLink({
+          param1: messageSend,
+          param2: 'New password is accepted',
+          errorItem: 'good',
+          link: {
+            route: '/connect',
+            text: ' se connecter',
+          },
+          textBefore: 'Ton mot de passe a bien été changé, tu peux retourner sur la page ',
+          textAfter: ' pour continuer ton aventure',
+        })}
         <form action="#0" className="newPassword-form" onSubmit={handleSubmit}>
           <div className="newPassword-form-container">
             <input
@@ -80,12 +102,12 @@ const NewPassword = ({
               onInput={handleChangePassword}
               name="password"
               value={password.trim()}
-              className="newPassword-form-input"
+              className="_form-input"
               required
               placeholder=" "
             />
-            <label htmlFor="password" className="newPassword-form-label"><span className="newPassword-form-label-icon"><FiLock className="newPassword-form-label-icon" /></span> Mot de passe</label>
-            <div className="newPassword-password-icon" onClick={toggleNewPasswordVisiblity}>{isNewPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
+            <label htmlFor="password" className="_form-label"><span className="_form-label-icon"><FiLock className="_form-label-icon" /></span> Mot de passe</label>
+            <div className="newPassword-password-icon" onClick={newPasswordVisibility}>{isNewPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
           </div>
           <div className="newPassword-form-container">
             <input
@@ -96,18 +118,18 @@ const NewPassword = ({
               name="confirmPassword"
               value={confirmPassword.trim()}
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
-              className="newPassword-form-input"
+              className="_form-input"
               required
               placeholder=" "
             />
-            <label htmlFor="confirmPassword" className="newPassword-form-label"><span className="newPassword-form-label-icon"><FiLock className="newPassword-form-label-icon" /></span> Confirme ton mot de passe</label>
-            <div className="newPassword-password-icon" onClick={toggleNewConfirmPasswordVisiblity}>{isNewConfirmPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
+            <label htmlFor="confirmPassword" className="_form-label"><span className="_form-label-icon"><FiLock className="_form-label-icon" /></span> Confirme ton mot de passe</label>
+            <div className="newPassword-password-icon" onClick={newConfirmPasswordVisibility}>{isNewConfirmPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
             <div className="requirements">Vos mots de passe ne correspondent pas.</div>
           </div>
-          <div className="newPassword-form-input-send-icon">
-            <button type="submit" className="newPassword-form-input-send">
+          <div className="_btn-form-input-send-icon">
+            <button type="submit" className="_btn-form-input-send">
               Confirmer
-              <span className="newPassword-form-input-send-arrow"><FaArrowRight /></span>
+              <span className="_btn-form-input-send-arrow"><FaArrowRight /></span>
             </button>
           </div>
         </form>
@@ -123,6 +145,10 @@ NewPassword.propTypes = {
   password: PropTypes.string.isRequired,
   messageSend: PropTypes.string.isRequired,
   confirmPassword: PropTypes.string.isRequired,
+  newPasswordVisibility: PropTypes.func.isRequired,
+  newConfirmPasswordVisibility: PropTypes.func.isRequired,
+  isNewPasswordShown: PropTypes.bool.isRequired,
+  isNewConfirmPasswordShown: PropTypes.bool.isRequired,
 };
 
 // == Export

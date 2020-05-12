@@ -3,9 +3,14 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FiLogOut } from 'react-icons/fi';
 import { MdDeleteForever } from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
-import CustomPrompt from './CustomPrompt';
-
+import CustomPrompt from './CustomPrompt/index';
+/**
+ * @param  {Func} getLogout - Permet la déconnexion du user
+ * @param  {Func} deleteProfile - Fait apparaître la prompt pour supprimer son compte
+ * @param  {Bool} show - Booléan pour l'apparaition de la prompt
+ * @param  {Func} showPrompt - Voir la prompt
+ * @param  {Bool} showPromptCancel - Ne plus voir la prompt
+ */
 const Account = ({
   getLogout, deleteProfile, show, showPrompt, showPromptCancel,
 }) => {

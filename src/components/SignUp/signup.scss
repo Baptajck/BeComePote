@@ -14,19 +14,6 @@
     }
   }
 
-  button[type="submit"] {
-    color: #fff;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 0 auto;
-    align-items: center;
-    width: 70%;
-    background: linear-gradient(to left, #ee670d, #e9872b);
-    border-radius: 2em;
-  }
-
   .signUp {
     max-width: 80%;
     margin: 7rem auto 1rem;
@@ -107,116 +94,7 @@
         margin-top: .8rem;
         display: block;
         color: gray;
-        width: 50%;
-      }
-
-      &-label {
-        opacity: 0.5;
-        font-size: 12px;
-        font-weight: bold;
-        position: absolute;
-        top: 11px;
-        left: 20px;
-        cursor: auto;
-        display: block;
-        transition: 0.2s;
-
-        &-icon {
-          display: inline;
-          vertical-align: text-top;
-        }
-      }
-
-      &-input {
-        display: block;
-        margin: .5rem auto;
-        width: 100%;
-        border-radius: 2em;
-        padding: 0.7rem 2.1rem;
-        border: none;
-        -webkit-box-shadow: 0px 0px 5px 0px $color-grey-shadow;
-        box-shadow: 0px 0px 5px 0px $color-grey-shadow;
-
-        &:focus {
-          ~ .signUp-form-label {
-            position: absolute;
-            top: -8px;
-            display: block;
-            transition: 0.2s;
-            opacity: 1;
-            padding: 0 .2rem;
-            background-color: $color-white;
-            border-radius: 2em;
-            font-size: 12px;
-            color: $color-blue;
-          }
-          -webkit-box-shadow: 0px 0px 5px 0px $color-blue;
-          box-shadow: 0px 0px 5px 0px $color-blue;
-          border-width: 3px;
-          border-image-slice: 1;
-        }
-
-        &:placeholder-shown {
-          font-style: italic;
-        }
-        
-        &:valid {
-          background: url(https://i.imgur.com/cKUyms3.png);
-          background-size: 20px;
-          background-repeat: no-repeat;
-          background-position: 10px 10px;
-
-          & + label {
-            opacity: 0;
-          }
-        }
-
-        &:invalid:not(:focus):not(:placeholder-shown) {
-          -webkit-box-shadow: 0px 0px 5px 0px $color-red;
-          box-shadow: 0px 0px 5px 0px $color-red;
-
-          & + label {
-            opacity: 0;
-          }
-        }
-        
-        &:invalid:focus:not(:placeholder-shown) {
-          & ~ .requirements {
-            max-height: 200px;
-            padding: 0 15px 20px 15px;
-            font-size: 13px;
-          }
-        }
-
-        &-send {
-          text-align: right;
-          border: none;
-          background: none;
-          font-size: 1.2em;
-
-          &-icon {
-            display: flex;
-            justify-content: center;
-            margin-top: 5rem;
-            color: #fff;
-          }
-
-          &-arrow {
-            // background: linear-gradient(to left, #ee670d,#e9872b);
-            // border-radius: 2em;
-            // display: inline-block;
-            // margin-left: 0.5rem;
-            // vertical-align: middle;
-            // width: 3rem;
-            // text-align: center;
-            // color: $color-white;
-            // padding: 0.5rem;
-            display: flex;
-            justify-content: flex-end;
-            padding: .5rem;
-            width: 3rem;
-          }
-        }
+        width: 55%;
       }
     }
   }
@@ -224,11 +102,6 @@
 
 
 @media screen and (min-width: 768px) {
-  button[type="submit"] {
-    width: 50%;
-    margin-left: auto;
-  }
-
   .signUp {
     width: 70%;
     border: 1px solid $color-gray-light;
@@ -240,12 +113,6 @@
     margin: 2rem auto;
 
     &-container {
-      // background: linear-gradient(to left, #ee670d,#e9872b);
-      // background-image: url(https://i.imgur.com/xQrtPdC.jpg);
-      // background-repeat: no-repeat;
-      // background-size: cover;
-      // height: 100vh;
-      // padding: 22% 0;
       margin: 0;
       padding: 2rem 0;
     }
@@ -260,9 +127,5 @@
 @media screen and (min-width: 1000px) {
   .signUp {
     width: 40%;
-
-    &-container {
-      // padding: 2rem 0;
-    }
   }
 }

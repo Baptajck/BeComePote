@@ -1,6 +1,11 @@
 // /* eslint-disable no-console */
 
 // module.exports = withAuth;
+/**
+ * @param  {Object} req
+ * @param  {Object} res
+ * @param  {func} next
+ */
 const withAuth = (req, res, next) => {
   if (req.session && req.session.user) {
     next();

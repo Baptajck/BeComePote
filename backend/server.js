@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const {
@@ -51,6 +52,9 @@ app.use(cookieParser());
 
 // TODO Gérer le flavicon pour le back
 // app.use(express.favicon(`${__dirname}src/favicon/favicon.ico`));
+
+// File Upload
+app.use(fileUpload({ useTempFiles: true }));
 
 // Start on assigned port
 app.listen(PORT_BACK, () => {

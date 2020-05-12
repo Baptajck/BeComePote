@@ -12,7 +12,9 @@ import {
   showPromptCancel,
   GET_CHOICES,
   showChoices,
+  mountedTrue,
   cancelMounted,
+  cancelPreviewImage,
 } from 'src/store/reducers/profile';
 import { showDeleteProfile } from 'src/store/reducers/forms/connexion';
 
@@ -22,8 +24,7 @@ const profileMiddleware = (store) => (next) => (action) => {
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/user')
         .then((response) => {
-          const save = showProfile(response.data);
-          store.dispatch(save);
+          store.dispatch(showProfile(response.data));
         })
         .catch(() => (
           AxiosError
@@ -59,18 +60,24 @@ const profileMiddleware = (store) => (next) => (action) => {
 
       const formData = new FormData();
       formData.append('image', fileUpload);
-      formData.append('name', 'Baptiste Yoyo');
       axios.defaults.withCredentials = true;
-      axios.post('http://localhost:3000/api/uploads', {
+      axios.post('http://localhost:3000/api/uploads',
         formData,
-      })
-        .then((test) => {
-          console.log(test);
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         })
-        .catch((err) => (
-          console.log(err, fileUpload)
-          // AxiosError
-        ));
+        .then(() => {
+          store.dispatch(mountedTrue());
+        })
+        .catch(() => (
+          AxiosError
+        ))
+        .finally(() => {
+          store.dispatch(cancelPreviewImage());
+          store.dispatch(cancelMounted());
+        });
       break;
     }
     case DELETE_PROFILE: {
@@ -91,8 +98,7 @@ const profileMiddleware = (store) => (next) => (action) => {
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/allQuestions')
         .then((response) => {
-          const save = showQuestions(response.data);
-          store.dispatch(save);
+          store.dispatch(showQuestions(response.data));
         })
         .catch(() => (
           AxiosError
@@ -109,8 +115,7 @@ const profileMiddleware = (store) => (next) => (action) => {
         testBody3,
       })
         .then((response) => {
-          const save = showResponses(response.data);
-          store.dispatch(save);
+          store.dispatch(showResponses(response.data));
         })
         .catch(() => (
           AxiosError
@@ -124,9 +129,7 @@ const profileMiddleware = (store) => (next) => (action) => {
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/selectedResponse')
         .then((response) => {
-          console.log(response);
-          const save = showChoices(response.data);
-          store.dispatch(save);
+          store.dispatch(showChoices(response.data));
         })
         .catch(() => (
           AxiosError

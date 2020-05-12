@@ -19,7 +19,8 @@ const initialState = {
   testBody3: +null,
   show: false,
   mounted: false,
-  fileUpload: {},
+  fileUpload: '',
+  preview: '',
 };
 
 // == Types
@@ -60,15 +61,19 @@ export const SHOW_PROMPT_CANCEL = 'SHOW_PROMPT_CANCEL';
 export const GET_CHOICES = 'GET_CHOICES';
 const SHOW_CHOICES = 'SHOW_CHOICES';
 // == Edit son avatar
-export const TEST = 'TEST';
+export const FILE_UPLOAD = 'FILE_UPLOAD';
 export const EDIT_PROFILE_AVATAR = 'EDIT_PROFILE_AVATAR';
-
+// Mounted
+export const MOUNTED_TRUE = 'MOUNTED_TRUE';
 export const CANCEL_MOUNTED = 'CANCEL_MOUNTED';
+// Image Previw
+export const PREVIEW_IMAGE = 'PREVIEW_IMAGE';
+export const CANCEL_PREVIEW_IMAGE = 'CANCEL_PREVIEW_IMAGE';
 
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {
@@ -80,7 +85,18 @@ const reducer = (state = initialState, action = {}) => {
         // [action.name]: action.value,
         isFailEdit: false,
       };
-    case TEST:
+    case PREVIEW_IMAGE:
+      return {
+        ...state,
+        preview: action.preview,
+      };
+    case CANCEL_PREVIEW_IMAGE:
+      return {
+        ...state,
+        preview: '',
+        fileUpload: '',
+      };
+    case FILE_UPLOAD:
       return {
         ...state,
         fileUpload: action.fileUpload,
@@ -235,6 +251,11 @@ const reducer = (state = initialState, action = {}) => {
         mounted: true,
         responses: action.responses,
       };
+    case MOUNTED_TRUE:
+      return {
+        ...state,
+        mounted: true,
+      };
     case CANCEL_MOUNTED:
       return {
         ...state,
@@ -256,12 +277,19 @@ export const changeInputProfile = (name, value) => ({
   name,
   value,
 });
+export const previewImage = (preview) => ({
+  type: PREVIEW_IMAGE,
+  preview,
+});
+export const cancelPreviewImage = () => ({
+  type: CANCEL_PREVIEW_IMAGE,
+});
 // == Pouvoir éditer son avatar
 export const editProfileAvatar = () => ({
   type: EDIT_PROFILE_AVATAR,
 });
-export const test = (fileUpload) => ({
-  type: TEST,
+export const FileUploadFunc = (fileUpload) => ({
+  type: FILE_UPLOAD,
   fileUpload,
 });
 
@@ -271,6 +299,9 @@ export const getChoices = () => ({
 export const showChoices = (choices) => ({
   type: SHOW_CHOICES,
   choices,
+});
+export const mountedTrue = () => ({
+  type: MOUNTED_TRUE,
 });
 export const cancelMounted = () => ({
   type: CANCEL_MOUNTED,

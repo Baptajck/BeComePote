@@ -1,24 +1,55 @@
+/* eslint-disable max-len */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-fragments */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable camelcase */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-
 import { FaRegCheckCircle, FaRegEdit, FaRegTimesCircle } from 'react-icons/fa';
+import DropZone from './DropZone/index';
 
+/**
+ * @param  {Object} profile - Voir toutes les informations venant de la BDD pour le user
+ * @param  {Bool} isInEditModeFirstname - Change le front pour Firstname
+ * @param  {Bool} isInEditModeLastname - Change le front pour Lastname
+ * @param  {Bool} isInEditModePseudo - Change le front pour Pseudo
+ * @param  {Bool} isInEditModeAge - Change le front pour Age
+ * @param  {Bool} isInEditModePresentation - Change le front pour Presentation
+ * @param  {Func} changeEditModeFirstname - Permet le changement du Booléan { isInEditModeFirstname }
+ * @param  {Func} changeEditModeLastname - Permet le changement du Booléan { isInEditModeLastname }
+ * @param  {Func} changeEditModePseudo - Permet le changement du Booléan { isInEditModePseudo }
+ * @param  {Func} changeEditModeAge - Permet le changement du Booléan { isInEditModeAge }
+ * @param  {Func} changeEditModePresentation - Permet le changement du Booléan { isInEditModePresentation }
+ * @param  {Func} changeInputProfile - Champ(s) contrôlé(s) pour le profil
+ * @param  {Func} updateInputValueFirstname - Modifie dans la BDD le firstname du user
+ * @param  {Func} updateInputValueLastname - Modifie dans la BDD le lastname du user
+ * @param  {Func} updateInputValuePseudo - Modifie dans la BDD le Pseudo du user
+ * @param  {Func} updateInputValueAge - Modifie dans la BDD le Age du user
+ * @param  {Func} updateInputValuePresentation - Modifie dans la BDD le Presentation du user
+ * @param  {String} oldValueFirstname - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValueLastname - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValuePseudo - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValueAge - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValuePresentation - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {Func} closeFirstname - Ferme le mode écriture pour le user
+ * @param  {Func} closeLastname - Ferme le mode écriture pour le user
+ * @param  {Func} closePseudo - Ferme le mode écriture pour le user
+ * @param  {Func} closeAge - Ferme le mode écriture pour le user
+ * @param  {Func} closePresentation - Ferme le mode écriture pour le user
+ * @param  {Bool} isFailEdit - Permet de voir la valeur du champ
+ * @param  {Func} editProfile - Permet d'envoyer dans la BDD la/les nouvelle(s) information(s) du profil user
+ * @param  {Func} editProfileAvatar - Editer son profil
+ * @param  {Func} FileUploadFunc - Permet de changer le state avec les infos de la photo choisie
+ * @param  {String} fileUpload - Permet l'apprarition du nom de la photo et du boutton
+ * @param  {String} preview - URL fictive rendu par le navigateur
+ * @param  {Func} previewImage - Fonction qui ramène l'URL fictive dans le state
+ */
 const Informations = ({
-  // firstname,
-  // lastname,
-  // pseudo,
-  // age,
-  // presentation,
-  // updated_at,
-  // created_at,
   profile: {
     firstname,
     lastname,
     pseudo,
     age,
-    avatar,
     presentation,
     updated_at,
     created_at,
@@ -52,31 +83,11 @@ const Informations = ({
   isFailEdit,
   editProfile,
   editProfileAvatar,
+  FileUploadFunc,
   fileUpload,
-  test,
+  previewImage,
+  preview,
 }) => {
-  // closed button
-  const closeActionFirstname = () => {
-    closeFirstname();
-  };
-
-  const closeActionLastname = () => {
-    closeLastname();
-  };
-
-  const closeActionPseudo = () => {
-    closePseudo();
-  };
-
-  const closeActionAge = () => {
-    closeAge();
-  };
-
-  const closeActionPresentation = () => {
-    closePresentation();
-  };
-
-  // saved button
   const handleUpdateInputValueFirstname = () => {
     updateInputValueFirstname();
     editProfile();
@@ -98,49 +109,19 @@ const Informations = ({
     editProfile();
   };
 
-  // Champs contrôlés
+  /**
+   * Champ(s) controlé(s)
+   * @param  {Object} event
+   */
   const handleChange = (event) => {
     const { name, value } = event.target;
     changeInputProfile(name, value);
   };
 
-  // Passer de input à non input
-  const handleChangeEditModeFirstname = () => {
-    changeEditModeFirstname();
-  };
-  const handleChangeEditModeLastname = () => {
-    changeEditModeLastname();
-  };
-  const handleChangeEditModePseudo = () => {
-    changeEditModePseudo();
-  };
-  const handleChangeEditModeAge = () => {
-    changeEditModeAge();
-  };
-  const handleChangeEditModePresentation = () => {
-    changeEditModePresentation();
-  };
-
-  const handleFile = (e) => {
-    // test(event.target.files);
-    // const image = Array.from(e.target.files);
-
-    // const formData = new FormData();
-    // formData.append('image', e.target.files[0]);
-    // formData.append('name', 'Baptiste Yoyo');
-    test(e.target.files[0]);
-    // console.log(formData);
-    // test(files);
-    // changeInputProfile(name, event.target.files[0]);
-  };
-
-  const handleEditProfileAvatar = () => {
-    // console.log(event.target.files);
-    console.log('Je suis fileUpload du state: ', fileUpload);
-    editProfileAvatar();
-  };
-
-  // == Age
+  /**
+   * Récupération de J/M/A et calcul pour le mettre en année (ex: 25)
+   * @param  {Object} event
+   */
   const submitBday = (event) => {
     const { name, value } = event.target;
     const Bdate = value;
@@ -149,6 +130,11 @@ const Informations = ({
     changeInputProfile(name, String(ageNow));
   };
 
+  /**
+   * Récupération de la date pour changer son format et le mettre au format français
+   * @param  {String} reviewDate
+   * @returns  {String} reviewDateFormated
+   */
   const formatDate = (reviewDate) => {
     const options = {
       weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
@@ -160,83 +146,15 @@ const Informations = ({
   };
 
   return (
-    // eslint-disable-next-line react/jsx-fragments
     <Fragment>
       <form action="#0" className="profile-form">
-        {!isInEditModeFirstname && (
-          <div className="profile-form-container">
-            <label htmlFor="prénom" className="profile-form-label">Prénom</label>
-            <div className="edition-mode">
-              {isFailEdit ? oldValueFirstname : firstname}
-              <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeFirstname}>
-                <span className="edition-mode-icon"><FaRegEdit /></span>
-              </button>
-            </div>
-          </div>
-        )}
-        {isInEditModeFirstname && (
-          <div className="profile-form-container">
-            <label htmlFor="prénom" className="profile-form-label">Prénom</label>
-            <div className="edition-mode open">
-              <input
-                type="text"
-                className="edition-mode-text"
-                name="firstname"
-                value={isFailEdit ? oldValueFirstname : firstname}
-                onChange={handleChange}
-                minLength="3"
-                maxLength="20"
-              />
-              <button type="button" className="edition-mode-button" title="Valider" name="firstname" onClick={handleUpdateInputValueFirstname}>
-                <span className="edition-mode-icon"><FaRegCheckCircle /></span>
-              </button>
-              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionFirstname}>
-                <span className="edition-mode-icon"><FaRegTimesCircle /></span>
-              </button>
-            </div>
-          </div>
-        )}
-        {/* NOM */}
-        {!isInEditModeLastname && (
-          <div className="profile-form-container">
-            <label htmlFor="nom" className="profile-form-label">Nom</label>
-            <div className="edition-mode">
-              {isFailEdit ? oldValueLastname : lastname}
-              <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeLastname}>
-                <span className="edition-mode-icon"><FaRegEdit /></span>
-              </button>
-            </div>
-          </div>
-        )}
-        {isInEditModeLastname && (
-          <div className="profile-form-container">
-            <label htmlFor="nom" className="profile-form-label">Nom</label>
-            <div className="edition-mode open">
-              <input
-                type="text"
-                className="edition-mode-text"
-                name="lastname"
-                value={isFailEdit ? oldValueLastname : lastname}
-                onChange={handleChange}
-                minLength="3"
-                maxLength="20"
-              />
-              <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValueLastname}>
-                <span className="edition-mode-icon"><FaRegCheckCircle /></span>
-              </button>
-              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionLastname}>
-                <span className="edition-mode-icon"><FaRegTimesCircle /></span>
-              </button>
-            </div>
-          </div>
-        )}
         {/* CHANGER SON PSEUDO */}
         {!isInEditModePseudo && (
           <div className="profile-form-container">
             <label htmlFor="pseudo" className="profile-form-label">Pseudo</label>
             <div className="edition-mode">
               {isFailEdit ? oldValuePseudo : pseudo} {/* pseudo */}
-              <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePseudo}>
+              <button type="button" className="edition-mode-button" title="Editer" onClick={changeEditModePseudo}>
                 <span className="edition-mode-icon"><FaRegEdit /></span>
               </button>
             </div>
@@ -259,7 +177,74 @@ const Informations = ({
               <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValuePseudo}>
                 <span className="edition-mode-icon"><FaRegCheckCircle /></span>
               </button>
-              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionPseudo}>
+              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closePseudo}>
+                <span className="edition-mode-icon"><FaRegTimesCircle /></span>
+              </button>
+            </div>
+          </div>
+        )}
+        {!isInEditModeFirstname && (
+          <div className="profile-form-container">
+            <label htmlFor="prénom" className="profile-form-label">Prénom</label>
+            <div className="edition-mode">
+              {isFailEdit ? oldValueFirstname : firstname}
+              <button type="button" className="edition-mode-button" title="Editer" onClick={changeEditModeFirstname}>
+                <span className="edition-mode-icon"><FaRegEdit /></span>
+              </button>
+            </div>
+          </div>
+        )}
+        {isInEditModeFirstname && (
+          <div className="profile-form-container">
+            <label htmlFor="prénom" className="profile-form-label">Prénom</label>
+            <div className="edition-mode open">
+              <input
+                type="text"
+                className="edition-mode-text"
+                name="firstname"
+                value={isFailEdit ? oldValueFirstname : firstname}
+                onChange={handleChange}
+                minLength="3"
+                maxLength="20"
+              />
+              <button type="button" className="edition-mode-button" title="Valider" name="firstname" onClick={handleUpdateInputValueFirstname}>
+                <span className="edition-mode-icon"><FaRegCheckCircle /></span>
+              </button>
+              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeFirstname}>
+                <span className="edition-mode-icon"><FaRegTimesCircle /></span>
+              </button>
+            </div>
+          </div>
+        )}
+        {/* NOM */}
+        {!isInEditModeLastname && (
+          <div className="profile-form-container">
+            <label htmlFor="nom" className="profile-form-label">Nom</label>
+            <div className="edition-mode">
+              {isFailEdit ? oldValueLastname : lastname}
+              <button type="button" className="edition-mode-button" title="Editer" onClick={changeEditModeLastname}>
+                <span className="edition-mode-icon"><FaRegEdit /></span>
+              </button>
+            </div>
+          </div>
+        )}
+        {isInEditModeLastname && (
+          <div className="profile-form-container">
+            <label htmlFor="nom" className="profile-form-label">Nom</label>
+            <div className="edition-mode open">
+              <input
+                type="text"
+                className="edition-mode-text"
+                name="lastname"
+                value={isFailEdit ? oldValueLastname : lastname}
+                onChange={handleChange}
+                minLength="3"
+                maxLength="20"
+              />
+              <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValueLastname}>
+                <span className="edition-mode-icon"><FaRegCheckCircle /></span>
+              </button>
+              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeLastname}>
                 <span className="edition-mode-icon"><FaRegTimesCircle /></span>
               </button>
             </div>
@@ -271,7 +256,7 @@ const Informations = ({
             <label htmlFor="age" className="profile-form-label">Age</label>
             <div className="edition-mode">
               {isFailEdit ? oldValueAge : age}
-              <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeAge}>
+              <button type="button" className="edition-mode-button" title="Editer" onClick={changeEditModeAge}>
                 <span className="edition-mode-icon"><FaRegEdit /></span>
               </button>
             </div>
@@ -290,7 +275,7 @@ const Informations = ({
               <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValueAge}>
                 <span className="edition-mode-icon"><FaRegCheckCircle /></span>
               </button>
-              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionAge}>
+              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeAge}>
                 <span className="edition-mode-icon"><FaRegTimesCircle /></span>
               </button>
             </div>
@@ -301,9 +286,9 @@ const Informations = ({
           <div className="profile-form-container">
             <label htmlFor="presentation" className="profile-form-label profile-label-presentation">Présentation</label>
             <div className="edition-mode presentation">
-              {isFailEdit ? oldValuePresentation : presentation} {/* presentation */}
+              {isFailEdit ? oldValuePresentation : presentation}
             </div>
-            <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePresentation}>
+            <button type="button" className="edition-mode-button" title="Editer" onClick={changeEditModePresentation}>
               <span className="edition-mode-icon"><FaRegEdit /></span>
             </button>
           </div>
@@ -322,26 +307,25 @@ const Informations = ({
               <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValuePresentation}>
                 <span className="edition-mode-icon"><FaRegCheckCircle /></span>
               </button>
-              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionPresentation}>
+              <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closePresentation}>
                 <span className="edition-mode-icon"><FaRegTimesCircle /></span>
               </button>
             </div>
           </div>
         )}
-        <p className="profile-modification">Création du compte : <span className="profile-modification-span">{formatDate(created_at)}</span></p>
-        {updated_at === null ? '' : <p className="profile-modification">Dernière modification : <span className="profile-modification-span">{formatDate(updated_at)}</span></p>}
       </form>
       <hr className="profile-hr" />
-      {/* Avatar */}
-      <div className="profile-form-container">
-        <form>
-          <p className="profile-form-label profile-label-presentation">Avatar</p>
-          <div className="profile-container-avatar">
-            <input type="file" name="avatar" onChange={handleFile} className="profile-container-avatar-input" />
-            <button type="button" name="avatar" className="profile-container-avatar-button" onClick={handleEditProfileAvatar}>Changer mon avatar</button>
-          </div>
-        </form>
-      </div>
+      {/* AVATAR */}
+      <p className="profile-label-avatar">Avatar</p>
+      <DropZone
+        FileUploadFunc={FileUploadFunc}
+        editProfileAvatar={editProfileAvatar}
+        fileUpload={fileUpload}
+        preview={preview}
+        previewImage={previewImage}
+      />
+      <p className="profile-modification">Création du compte : <span className="profile-modification-span">{formatDate(created_at)}</span></p>
+      {updated_at === null ? '' : <p className="profile-modification">Dernière modification : <span className="profile-modification-span">{formatDate(updated_at)}</span></p>}
     </Fragment>
   );
 };
@@ -353,6 +337,7 @@ Informations.defaultProps = {
     pseudo: '',
     presentation: '',
     age: '',
+    avatar: '',
     updated_at: '',
     created_at: '',
   },
@@ -364,6 +349,7 @@ Informations.propTypes = {
     lastname: PropTypes.string,
     pseudo: PropTypes.string,
     presentation: PropTypes.string,
+    avatar: PropTypes.string,
     age: PropTypes.string,
     updated_at: PropTypes.string,
     created_at: PropTypes.string,
@@ -396,6 +382,10 @@ Informations.propTypes = {
   closeAge: PropTypes.func.isRequired,
   closePresentation: PropTypes.func.isRequired,
   isFailEdit: PropTypes.bool.isRequired,
+  editProfileAvatar: PropTypes.func.isRequired,
+  FileUploadFunc: PropTypes.func.isRequired,
+  previewImage: PropTypes.func.isRequired,
+  preview: PropTypes.string.isRequired,
 };
 
 export default Informations;

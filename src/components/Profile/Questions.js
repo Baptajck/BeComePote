@@ -5,8 +5,16 @@
 /* eslint-disable camelcase */
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-
+import { errorOrNot } from 'src/utils/Errors';
+/**
+ * @param  {Object} questions - Toutes les questions et réponses reliées
+ * @param  {Func} submitQuestions - Permet de mettre les réponses du user dans la BDD
+ * @param  {Func} getIdOptions - Récupérer l'id de la réponse au click
+ * @param  {Object} responses - Récupérèes les réponses
+ * @param  {Object} choices - Les choix du user
+ * @param  {Func} getChoices - Récupère les choix du user
+ * @param  {Bool} mounted - Booléan pour mettre a jour le profil
+ */
 const Questions = ({
   questions, submitQuestions, getIdOptions, responses, choices, getChoices, mounted,
 }) => {
@@ -15,10 +23,10 @@ const Questions = ({
       getChoices();
     }
   }, [mounted]);
-  const handleSubmitChoices = () => {
-    submitQuestions();
-  };
 
+  /**
+   * @param  {Object} event
+   */
   const handleGetIdOptions = (event) => {
     const { attributes, id } = event.target;
     getIdOptions(attributes.name.value, +id);
@@ -28,11 +36,17 @@ const Questions = ({
     <Fragment>
       <form action="#0" className="profile-form profile-form-quizz-container">
         {/* QUESTIONS */}
-        {responses.message === 'Your three choices have been saved' ? <p className="profile-message"> <span className="profile-message--message">Tes réponses ont bien été mises à jour</span></p> : '' }
+        {errorOrNot({
+          param1: responses.message,
+          param2: 'Your three choices have been saved',
+          errorItem: 'good',
+          text: 'Tes réponses ont bien été mises à jour',
+        })}
         <div className="profile-select">
-          { choices.map(({ choice_content, id, question_id }) => (
+          { choices.map(({ choice_content, id, question_content }) => (
             <div>
-              <p>Votre réponse à la question {question_id} </p>
+              <p>{question_content}</p>
+              {/* <p>Votre réponse à la question {question_id}</p> */}
               <p key={id} className="profile-select-p--default">{choice_content}</p>
             </div>
           )) }
@@ -57,7 +71,7 @@ const Questions = ({
             </div>
           )) }
           <div className="logout-container">
-            <button type="button" onClick={handleSubmitChoices} className="profile-select-button">Sauvegarder</button>
+            <button type="button" onClick={submitQuestions} className="profile-select-button">Sauvegarder</button>
           </div>
         </div>
       </form>

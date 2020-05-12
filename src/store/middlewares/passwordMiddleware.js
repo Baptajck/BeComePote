@@ -29,8 +29,6 @@ const passwordMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           store.dispatch(messageSendMail(response.data));
-          // const messageSend = messageSendMail(response.data);
-          // store.dispatch(messageSend);
         })
         .catch((error) => {
           store.dispatch(messageSendMail(error.response.data));

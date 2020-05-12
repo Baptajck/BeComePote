@@ -27,6 +27,11 @@ import NewPassword from 'src/containers/forms/newPassword';
 import Profile from 'src/containers/profile';
 
 // == Composant
+/**
+ * @param  {func} getHome - Function permettant de récupérer les infos d'un utilisateur
+ * @param  {bool} isConnected - Booléan permettant de savoir si on est connecté ou pas
+ * @param  {bool} loading - Booléan permettant de mettre en route le spinner
+ */
 const App = ({ getHome, isConnected, loading }) => {
   const { pathname } = useLocation();
   const changeTitle = () => {

@@ -1,71 +1,6 @@
 @import 'src/styles/vars';
 
 @media screen and (min-width: 300px) {
-  .prompt {
-    z-index: 2;
-    width: 100%;
-    padding: 1.2rem;
-    max-width: 400px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: .3s;
-
-    &-1 {
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,.16),0 1px 3px rgba(0,0,0,.13);
-    }
-
-    &-head {
-      padding: 10px 15px 10px 20px;
-      background-color: $color-blue;
-
-      &-title {
-        color: #fff;
-        position: relative;
-
-        &--span {
-          position: absolute;
-          right: 0;
-          cursor: pointer;
-          width: 30px;
-          height: 20px;
-        }
-      }
-    }
-
-    &-message {
-      padding: 20px;
-      background-color: #fff;
-    }
-
-    &-buttons {
-      padding: 1rem;
-      text-align: center;
-      background-color: #fff;
-
-      &-item {
-        &--cancel {
-          padding: .5rem;
-          color: red;
-          border-radius: .5rem;
-          margin-right: 1rem;
-          background-color: pink;
-          border: 1px solid #f5c6cb;
-        }
-        &--confirm {
-          padding: .5rem;
-          border-radius: .5rem;
-          margin-left: 1rem;
-          border: 1px solid #c3e6cb;
-          background-color: #d4edda;
-          color: #155724;
-        }
-      }
-    }
-  }
   /* 
   Set up of the form section
   */
@@ -132,24 +67,11 @@
         color: RGBA(255, 0, 0, 0.7);
       }
     }
-    &-message {
-      text-align: justify;
-      line-height: 1.3rem;
-      font-size: 0.8rem;
-      width: 80%;
-      margin: 1rem auto;
-      transition: .3s;
-      padding: 1rem;
-      border-radius: 1em;
-      border: 1px solid #c3e6cb;
-      background-color: #d4edda;
-      color: #155724;
-    }
 
     &-modification {
       text-align: right;
       font-size: 10px;
-      margin: 1rem 0;
+      margin: .4rem 1rem;
 
       &-span {
         opacity: .7;
@@ -174,38 +96,20 @@
       }
     }
     
-    // &-select .select{
-    //   width: 100%;
-    //   margin: 1rem auto;
-    //   padding: .5rem .1rem;
-    //   border-top: none;
-    //   border-left: none;
-    //   border-right: none;
-    //   -webkit-appearance: none;
-    //   -moz-appearance: none;
-    //   appearance: none;
-    //   background: url('arrow.png') no-repeat;
-    //   background-position: 100% center;
-    // }
-    
-    // &-select .select select{
-    //   background: transparent;
-    //   line-height: 1;
-    //   border: 0;
-    //   padding: 0;
-    //   border-radius: 0;
-    //   width: 100%;
-    //   position: relative;
-    //   z-index: 10;
-    //   font-size: 1em;
-    // }
-    
     &-hr {
       width: 30%;
       color: $color-orange;
     }
     &-label-presentation {
       line-height: 2.5rem;
+    }    
+    &-label-avatar {
+      margin: 1rem auto .5rem;
+      opacity: 0.8;
+      font-size: 0.8em;
+      font-weight: bold;
+      color: #292929;
+      cursor: default;
     }
     // Container for the full profile page
     &-layout{
@@ -346,64 +250,6 @@
       text-align: left;
       color: #292929;
       cursor: default;
-    }
-
-    // Input layout
-    &-input {
-      display: block;
-      margin: .5rem auto;
-      width: 100%;
-      padding: 0.7rem;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-size: 1.2rem;
-      line-height: 1.2rem;
-      background-color: rgba(119, 93, 165, 0);
-      color: #fff;
-
-      // Different behaviour depending on focus, placeholder delimitations and if input is valid or not
-      &:focus {
-        border-color: $color-white;
-        border-width: 3px;
-        border-image-slice: 1;
-
-        ~ .profile-form-label {
-          position: absolute;
-          top: -8px;
-          display: block;
-          transition: 0.2s;
-          opacity: 1;
-          padding: 0 .5rem;
-          background-color: $color-white;
-          border-radius: 2em;
-          font-size: 12px;
-          color: $color-blue;
-        }
-      }
-
-      &:placeholder-shown {
-        font-style: italic;
-      }
-      
-
-
-      &:invalid:not(:focus):not(:placeholder-shown) {
-        -webkit-box-shadow: 0px 0px 5px 0px $color-red;
-        box-shadow: 0px 0px 5px 0px $color-red;
-
-        & + label {
-          opacity: 0;
-        }
-      }
-      
-      &:invalid:focus:not(:placeholder-shown) {
-        & ~ .requirements {
-          max-height: 200px;
-          padding: 0 15px 20px 15px;
-          font-size: 13px;
-        }
-      }
     }
   }
 

@@ -5,22 +5,9 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const cloudinary = require('cloudinary').v2;
-const multer = require('multer');
 const User = require('../Models/Users');
 const withAuth = require('../middleware');
 
-// TEMPORARY STORAGE ON AWS
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename(req, file, cb) {
-    // console.log(file);
-    cb(null, file.originalname);
-  },
-});
-
-console.log(process.env.CLOUDINARY);
 // SEND FILE TO CLOUDINARY
 cloudinary.config({
   cloud_name: process.env.HOST_CLOUD,
@@ -38,20 +25,9 @@ cloudinary.config({
 // Send to cloudinary
 router.post('/uploads', (req, res) => {
   const userId = Number(req.session.user.id);
-  // const upload = multer({ storage }).single('image');
-  // upload(req, res, (err) => {
-  //   if (err) {
-  //     res.status(503).send({
-  //       message: 'Cannot reach AWS becomepote server',
-  //       err,
-  //     });
-  //     return;
-  //   }
-  //   // const { path } = req.file;
+  const image = req.files.image.tempFilePath;
 
-  cloudinary.uploader.upload(req.file, {
-    ressource_type: 'image', public_id: `BeComePote_${userId}`, tags: 'BeComePote', folder: 'becomepote',
-  }, (error, result) => {
+  cloudinary.uploader.upload(image, { public_id: `BeComePote_${userId}`, tags: 'BeComePote', folder: 'becomepote' }, (error, result) => {
     if (error) {
       res.status(503).send({
         message: 'Cannot reach Cloudinary server',
@@ -74,8 +50,6 @@ router.post('/uploads', (req, res) => {
       }));
   });
 });
-// });
-
 
 /**
    * CREATE - Route for creating a user account, checking if email
@@ -149,7 +123,7 @@ router.get('/users', (req, res) => {
    * READ - Route to get a single user
    * @param {object} req
    * @param {object} res
-   * @returns {[object]} user/:id array
+   * @returns {[object]} user/ array
    */
 router.get('/user', (req, res) => {
   const id = Number(req.session.user.id);
@@ -263,7 +237,7 @@ router.post('/connect', (req, res) => {
    * LOGOUT - Route to connect a user
    * @param {object} req
    * @param {object} res
-   * @returns string
+   * @returns {string}
    */
 router.get('/logout', (req, res) => {
   req.session.destroy();

@@ -35,7 +35,8 @@
         font-weight: 700;
         margin: 2rem 0 0;
         background: linear-gradient(to right, #3453a1,#775da5,#ce6795,#e68676);
-        -webkit-background-clip:text;
+        -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
         text-transform: uppercase;
       }
@@ -69,7 +70,7 @@
 
       &-button {
         margin-bottom: 0.4rem;
-        width: 60%;
+        width: 65%;
         margin-left: auto;
 
         &:hover {
