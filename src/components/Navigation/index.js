@@ -14,7 +14,7 @@ const Navigation = () => (
     <ul className="navbar-nav">
       <img src={logo} alt="logo" className="navbar-img" />
       <li className="navbar-nav-item" activeclassname="active">
-        <NavLink to="/search" className="navbar-nav-link">
+        <NavLink to="/searchGroup" className="navbar-nav-link">
           <svg
             viewBox="0 0 24 24"
             fill="none"

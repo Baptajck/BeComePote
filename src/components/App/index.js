@@ -15,6 +15,7 @@ import HomePage from 'src/components/HomePage';
 import ChatRoomGroup from 'src/components/ChatRoomGroup';
 import ChatRoom from 'src/components/ChatRoom';
 import Search from 'src/components/Search';
+import SearchGroup from 'src/components/SearchGroup';
 import Error404 from 'src/components/Error404';
 import Spinner from 'src/components/Spinner';
 import Navigation from 'src/components/Navigation';
@@ -105,6 +106,10 @@ const App = ({ getHome, isConnected, loading }) => {
           </Route>
           <Route exact path="/chatroom/:id/:pseudo">
             {isConnected ? <ChatRoom /> : <Redirect to="/" />}
+            <Navigation />
+          </Route>
+          <Route path="/searchGroup">
+            {isConnected ? <SearchGroup /> : <Redirect to="/" />}
             <Navigation />
           </Route>
           <Route path="/search">
