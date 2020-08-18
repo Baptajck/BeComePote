@@ -140,6 +140,7 @@
       border: 0.5em solid rgba(255, 255, 255, .4);
       -webkit-filter: drop-shadow(2px 2px 2px white);
       filter:  drop-shadow(2px 2px 2px white);
+      object-fit: cover;
     }
 
     // Wrapper for the section under the avatar
