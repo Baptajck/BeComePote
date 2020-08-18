@@ -1,11 +1,55 @@
 /* eslint-disable import/newline-after-import */
 /* eslint-disable no-console */
+require('dotenv').config();
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
+const cloudinary = require('cloudinary').v2;
 const User = require('../Models/Users');
 const withAuth = require('../middleware');
 
+// SEND FILE TO CLOUDINARY
+cloudinary.config({
+  cloud_name: process.env.HOST_CLOUD,
+  api_key: process.env.API_CLOUD,
+  api_secret: process.env.API_SECRET,
+});
+
+/**
+   * SEND CLOUDINARY - Route for creating a user account, checking if email
+   * already exist and using bcyrpt to hash password
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Image Cloudinary
+   */
+// Send to cloudinary
+router.post('/uploads', (req, res) => {
+  const userId = Number(req.session.user.id);
+  const image = req.files.image.tempFilePath;
+
+  cloudinary.uploader.upload(image, { public_id: `BeComePote_${userId}`, tags: 'BeComePote', folder: 'becomepote' }, (error, result) => {
+    if (error) {
+      res.status(503).send({
+        message: 'Cannot reach Cloudinary server',
+        error,
+      });
+      return;
+    }
+    // Query update avatar user
+    User.query()
+      .findById(userId)
+      .patch({
+        avatar: result.secure_url,
+      })
+      .then(() => res.status(200).send({
+        message: 'Your avatar was successfully updated',
+      }))
+      .catch((errQuery) => res.status(500).send({
+        message:
+          errQuery.message || 'Your avatar has not been uploaded, an error occurred.',
+      }));
+  });
+});
 
 /**
    * CREATE - Route for creating a user account, checking if email
@@ -22,6 +66,7 @@ router.post('/register', (req, res) => {
     .then((user) => {
       if (user.length > 0) {
         res.status(409).send('Email already exist');
+        return;
       }
       if (!email || !password || !pseudo) {
         res.status(400).send({ message: 'One or more values are missing for creating account' });
@@ -78,7 +123,7 @@ router.get('/users', (req, res) => {
    * READ - Route to get a single user
    * @param {object} req
    * @param {object} res
-   * @returns {[object]} user/:id array
+   * @returns {[object]} user/ array
    */
 router.get('/user', (req, res) => {
   const id = Number(req.session.user.id);
@@ -161,6 +206,7 @@ router.post('/connect', (req, res) => {
     .then((user) => {
       if (!user.length > 0) {
         res.status(401).send('Email is wrong');
+        return;
       }
       const passwordIsValid = bcrypt.compareSync(password, user[0].password);
       if (!passwordIsValid) {
@@ -191,7 +237,7 @@ router.post('/connect', (req, res) => {
    * LOGOUT - Route to connect a user
    * @param {object} req
    * @param {object} res
-   * @returns string
+   * @returns {string}
    */
 router.get('/logout', (req, res) => {
   req.session.destroy();

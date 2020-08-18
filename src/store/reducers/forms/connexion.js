@@ -86,6 +86,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         isConnected: false,
+        loading: false,
       };
     default:
       return state;

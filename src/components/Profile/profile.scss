@@ -47,54 +47,69 @@
     margin: 0 1rem;
     opacity: 1;
   }
-
-  .logout {
-    &-container{
-      margin-right: auto;
-      margin-left: auto;
-      margin-top: 2rem;
-      padding-bottom: 1rem;
-
-      // Text on the button
-      &-text {
-        text-align: center;
-        margin-top: 0.5rem;
-        font-size: 0.65em;
-        text-transform: uppercase;
-      }
-
-      // Button
-      &-input{
-        border: none;
-        background: none;
-        text-align: center;
-        margin: 5rem auto;
-        background-color: $color-orange;
-        padding: 1rem;
-        color: white;
-        font-size: 15px;
-        border-radius: 2em;
-
-        & svg {
-          margin-left: .5rem;
-          display: inline;
-          vertical-align: text-top;
-          font-size: 1.1rem;
-        }
-      }
-    }
-  }
   
   /*
   Set up of the profile section
   */
   .profile {
+    &-disabled {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+
+    &-danger-zone {
+      &-title {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        text-transform: uppercase;
+        font-style: italic;
+        letter-spacing: .2rem;
+        color: RGBA(255, 0, 0, 0.7);
+      }
+    }
+
+    &-modification {
+      text-align: right;
+      font-size: 10px;
+      margin: .4rem 1rem;
+
+      &-span {
+        opacity: .7;
+      }
+    }
+    &-select{
+      font-size: 13px;
+      background: #fff;
+      border-radius: 1em;
+      position: relative;
+
+      &-button {
+        border: none;
+        background: none;
+        text-align: center;
+        margin: 0 auto;
+        background-color: $color-orange;
+        padding: 1rem;
+        color: white;
+        font-size: 15px;
+        border-radius: 2em;
+      }
+    }
+    
     &-hr {
       width: 30%;
       color: $color-orange;
     }
     &-label-presentation {
       line-height: 2.5rem;
+    }    
+    &-label-avatar {
+      margin: 1rem auto .5rem;
+      opacity: 0.8;
+      font-size: 0.8em;
+      font-weight: bold;
+      color: #292929;
+      cursor: default;
     }
     // Container for the full profile page
     &-layout{
@@ -111,6 +126,7 @@
         background: $gradient-background2;
         height: 350px;
         border-bottom-left-radius: 70%;
+        -webkit-box-shadow: inset 3px 0px 15px #292929;
         box-shadow: inset 3px 0px 15px #292929;
       }
     }
@@ -123,6 +139,8 @@
       border-radius: 50%;
       border: 0.5em solid rgba(255, 255, 255, .4);
       -webkit-filter: drop-shadow(2px 2px 2px white);
+      filter:  drop-shadow(2px 2px 2px white);
+      object-fit: cover;
     }
 
     // Wrapper for the section under the avatar
@@ -146,12 +164,8 @@
 
   // Layout of the form before inputs
   .profile-form {
-    // width: 90%; 
     margin: 0 auto;
-    // border: 1px solid $color-orange-light;
-    // border-radius: 1em;
     padding: 2rem;
-    // box-shadow: 0px 0px 5px 0px #eee;
 
     &-info {
       display: flex;
@@ -162,11 +176,56 @@
       border-bottom: 2px solid $color-orange;
     }
 
+    &-quizz-answers {
+      width: 100%;
+      text-align: left;
+      margin-left: 0.8rem;
+    }
+
     &-quizz-container {
       border-left: 2px solid $color-orange;
       border-right: 2px solid $color-orange;
       border-bottom: 2px solid $color-orange;
     }
+
+    &-button {
+      border-left: 2px solid $color-orange;
+      border-right: 2px solid $color-orange;
+      border-bottom: 2px solid $color-orange;
+      display: flex;
+      flex-direction: column;
+      
+      &-title {
+        margin: 1rem auto;
+      }
+
+      &-container {
+        margin: 1.5rem auto;
+        padding: .5rem 0;
+      }
+
+      &-button {
+        border: none;
+        background: none;
+        margin: 0 auto;
+        background-color: $color-orange;
+        padding: 1rem;
+        color: white;
+        font-size: 15px;
+        border-radius: 2em;
+        display: inline-block;
+        text-align: center;
+        margin-top: 0.5rem;
+        text-transform: uppercase;
+
+        & svg {
+        margin-left: .5rem;
+        display: inline;
+        vertical-align: text-top;
+        font-size: 1.1rem;
+      }
+    }
+  }
 
     &-subtitle {
       margin-bottom: 1.3rem;
@@ -178,6 +237,9 @@
     // General form container
     &-container {
       margin: 1rem 0rem 1.7rem;
+      &:nth-child(4) {
+        margin-bottom: 5rem;
+      }
     }
 
     // Title of inputs
@@ -189,63 +251,6 @@
       text-align: left;
       color: #292929;
       cursor: default;
-    }
-
-    // Input layout
-    &-input {
-      display: block;
-      margin: .5rem auto;
-      width: 100%;
-      padding: 0.7rem;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-size: 1.2rem;
-      line-height: 1.2rem;
-      background-color: rgba(119, 93, 165, 0);
-      color: #fff;
-
-      // Different behaviour depending on focus, placeholder delimitations and if input is valid or not
-      &:focus {
-        border-color: $color-white;
-        border-width: 3px;
-        border-image-slice: 1;
-
-        ~ .profile-form-label {
-          position: absolute;
-          top: -8px;
-          display: block;
-          transition: 0.2s;
-          opacity: 1;
-          padding: 0 .5rem;
-          background-color: $color-white;
-          border-radius: 2em;
-          font-size: 12px;
-          color: $color-blue;
-        }
-      }
-
-      &:placeholder-shown {
-        font-style: italic;
-      }
-      
-
-
-      &:invalid:not(:focus):not(:placeholder-shown) {
-        box-shadow: 0px 0px 5px 0px $color-red;
-
-        & + label {
-          opacity: 0;
-        }
-      }
-      
-      &:invalid:focus:not(:placeholder-shown) {
-        & ~ .requirements {
-          max-height: 200px;
-          padding: 0 15px 20px 15px;
-          font-size: 13px;
-        }
-      }
     }
   }
 
@@ -316,21 +321,10 @@
 
   // Questionnaire accordion element
     .profile-form-quizz {
-    // width: 100%;
-    text-align: left;
-    margin: 0 0 1.5em 0;
-
-    &-question {
-      font-size: 1em;
-      line-height: 1.3em;
-      margin: 1.5em 0 0.2em 0;
-      color: $color-black;
-    }
-
-    &-answer {
-      color: $color-fullBlack;
-      line-height: 1.3em;
-    }
+      border: 1px solid $color-orange-light;
+      border-radius: 1em;
+      padding: 1rem;
+      margin: 1rem auto;
   }
 }
 

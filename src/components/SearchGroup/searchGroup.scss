@@ -1,0 +1,47 @@
+@import 'src/styles/vars';
+
+@media screen and (min-width: 300px) {
+  /* 
+  Set up of the search page
+  */
+  .searchGroup {
+    padding-bottom: 6rem;
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .profile-card {
+    margin-top: 2rem;
+    position: relative;
+
+    &-image {
+      display: block;
+      height: 320px;
+      width: 320px;
+      object-fit: cover;
+      margin: 1rem auto;
+      border-radius: 2em;
+      box-shadow: 0px 0px 5px 0px #7c7c7c;
+    }
+
+    &-options {
+      position: absolute;
+
+      &-nickname {
+        text-align: center;
+        font-size: 1.5rem;
+        color: $color-white;
+        text-shadow: 3px 3px 2px black;
+        font-style: italic;
+        font-weight: bold;
+      }
+
+      &-button {
+
+      }
+    }
+  }
+}

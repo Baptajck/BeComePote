@@ -16,7 +16,7 @@ import {
 
 
 const connexionMiddleware = (store) => (next) => (action) => {
-  console.log('Middleware Connexion', action);
+  // console.log('Middleware Connexion', action);
   switch (action.type) {
     case CREATE_USER: {
       const state = store.getState();
@@ -29,18 +29,14 @@ const connexionMiddleware = (store) => (next) => (action) => {
           pseudo, email, password,
         })
           .then((response) => {
-            const save = saveUserSignUp(response.data);
-            store.dispatch(save);
-            console.log(response);
+            store.dispatch(saveUserSignUp(response.data));
           })
           .catch((error) => {
-            const actionError = errorMessage(error.response.data);
-            store.dispatch(actionError);
+            store.dispatch(errorMessage(error.response.data));
           })
           .finally(() => {
-            const actionStopLoading = stopLoading();
             setTimeout(() => {
-              store.dispatch(actionStopLoading);
+              store.dispatch(stopLoading());
             }, 1000);
           });
       }
@@ -55,17 +51,14 @@ const connexionMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
-          const actionSaveUser = connectUserSignIn(response.data);
-          store.dispatch(actionSaveUser);
+          store.dispatch(connectUserSignIn(response.data));
         })
         .catch((error) => {
-          const actionError = errorMessage(error.response.data);
-          store.dispatch(actionError);
+          store.dispatch(errorMessage(error.response.data));
         })
         .finally(() => {
-          const actionStopLoading = stopLoading();
           setTimeout(() => {
-            store.dispatch(actionStopLoading);
+            store.dispatch(stopLoading());
           }, 1000);
         });
       break;
@@ -74,15 +67,13 @@ const connexionMiddleware = (store) => (next) => (action) => {
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/checkToken')
         .then((res) => {
-          const save = showHome(res.data);
-          store.dispatch(save);
+          store.dispatch(showHome(res.data));
         })
         .catch(() => (
           AxiosError
         ))
         .finally(() => {
-          const actionStopLoading = stopLoading();
-          store.dispatch(actionStopLoading);
+          store.dispatch(stopLoading());
         });
       break;
     }
@@ -92,17 +83,11 @@ const connexionMiddleware = (store) => (next) => (action) => {
       axios.defaults.withCredentials = true;
       axios.get('http://localhost:3000/api/logout')
         .then((res) => {
-          console.log(res);
-          const save = showLogout(res.data);
-          store.dispatch(save);
+          store.dispatch(showLogout(res.data));
         })
-        .catch((err) => {
-          console.error(err);
-          return isConnected;
-        })
+        .catch(() => isConnected)
         .finally(() => {
-          const actionStopLoading = stopLoading();
-          store.dispatch(actionStopLoading);
+          store.dispatch(stopLoading());
         });
       break;
     }

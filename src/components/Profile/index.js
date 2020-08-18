@@ -1,319 +1,205 @@
+/* eslint-disable max-len */
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-indent */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 // == Import : npm
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { FaRegCheckCircle, FaRegEdit, FaRegTimesCircle } from 'react-icons/fa';
-import { FiLogOut } from 'react-icons/fi';
-import { MdDeleteForever } from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
 
 // == Import : local
 import './profile.scss';
-import questions from 'src/data/questions';
 import Tabs from 'src/utils/Tabs/Tabs';
+import Questions from './Questions';
+import Informations from './Informations';
+import Account from './Account';
 
-// == Component
+/**
+ * @param  {Object} profile - Voir toutes les informations venant de la BDD pour le user
+ * @param  {Bool} isInEditModeFirstname - Change le front pour Firstname
+ * @param  {Bool} isInEditModeLastname - Change le front pour Lastname
+ * @param  {Bool} isInEditModePseudo - Change le front pour Pseudo
+ * @param  {Bool} isInEditModeAge - Change le front pour Age
+ * @param  {Bool} isInEditModePresentation - Change le front pour Presentation
+ * @param  {Func} changeEditModeFirstname - Permet le changement du Booléan { isInEditModeFirstname }
+ * @param  {Func} changeEditModeLastname - Permet le changement du Booléan { isInEditModeLastname }
+ * @param  {Func} changeEditModePseudo - Permet le changement du Booléan { isInEditModePseudo }
+ * @param  {Func} changeEditModeAge - Permet le changement du Booléan { isInEditModeAge }
+ * @param  {Func} changeEditModePresentation - Permet le changement du Booléan { isInEditModePresentation }
+ * @param  {Func} changeInputProfile - Champ(s) contrôlé(s) pour le profil
+ * @param  {Func} updateInputValueFirstname - Modifie dans la BDD le firstname du user
+ * @param  {Func} updateInputValueLastname - Modifie dans la BDD le lastname du user
+ * @param  {Func} updateInputValuePseudo - Modifie dans la BDD le Pseudo du user
+ * @param  {Func} updateInputValueAge - Modifie dans la BDD le Age du user
+ * @param  {Func} updateInputValuePresentation - Modifie dans la BDD le Presentation du user
+ * @param  {String} oldValueFirstname - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValueLastname - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValuePseudo - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValueAge - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {String} oldValuePresentation - Récupère l'ancienne valeur de l'utilisateur avant de changer de mode
+ * @param  {Func} closeFirstname - Ferme le mode écriture pour le user
+ * @param  {Func} closeLastname - Ferme le mode écriture pour le user
+ * @param  {Func} closePseudo - Ferme le mode écriture pour le user
+ * @param  {Func} closeAge - Ferme le mode écriture pour le user
+ * @param  {Func} closePresentation - Ferme le mode écriture pour le user
+ * @param  {Bool} isFailEdit - Permet de voir la valeur du champ
+ * @param  {Func} editProfile - Permet d'envoyer dans la BDD la/les nouvelle(s) information(s) du profil user
+ * @param  {Func} getProfile - Récupère les données du user
+ * @param  {Func} getLogout - Permet la déconnection du user
+ * @param  {Func} deleteProfile - Permet la suppression du user
+ * @param  {Func} getQuestions - Récupère les questions
+ * @param  {Object} questions - Object avec toutes les questions
+ * @param  {Func} submitQuestions - Envoie des réponses à la BDD
+ * @param  {Func} getIdOptions - Récupère l'id du champ
+ * @param  {Object} responses - Les réponses aux questions
+ * @param  {Bool} show - Permet de voir le prompt
+ * @param  {Func} showPrompt - Voir la prompt
+ * @param  {Bool} showPromptCancel - Ne plus voir la prompt
+ * @param  {Object} choices - les chois du user
+ * @param  {Func} getChoices - Récupère les choix dans la BDD
+ * @param  {Func} editProfileAvatar - Editer son profil
+ * @param  {Bool} mounted - Permet le changement des données une fois édité
+ * @param  {Func} FileUploadFunc - Permet de changer le state avec les infos de la photo choisie
+ * @param  {String} fileUpload - Permet l'apprarition du nom de la photo et du boutton
+ * @param  {String} preview - URL fictive rendu par le navigateur
+ * @param  {Func} previewImage - Fonction qui ramène l'URL fictive dans le state
+ */
 const Profile = ({
-  firstname,
-  lastname,
-  pseudo,
-  presentation,
+  // == Toutes les informations
+  profile,
+  // Tout ce qui est nécessaire pour que tout fonctionne indépendamment
   isInEditModeFirstname,
   isInEditModeLastname,
   isInEditModePseudo,
+  isInEditModeAge,
   isInEditModePresentation,
   changeEditModeFirstname,
   changeEditModeLastname,
   changeEditModePseudo,
+  changeEditModeAge,
   changeEditModePresentation,
   changeInputProfile,
   updateInputValueFirstname,
   updateInputValueLastname,
   updateInputValuePseudo,
+  updateInputValueAge,
   updateInputValuePresentation,
-  getLogout,
   oldValueFirstname,
   oldValueLastname,
   oldValuePseudo,
+  oldValueAge,
   oldValuePresentation,
   closeFirstname,
   closeLastname,
   closePseudo,
+  closeAge,
   closePresentation,
   isFailEdit,
-  getProfile,
+  // == Pouvoir éditer/supprimer/déconnecter et récupérer le profile
   editProfile,
+  getProfile,
+  getLogout,
   deleteProfile,
+  // == Tout ce qui concerne la partie questions
+  getQuestions,
+  questions,
+  submitQuestions,
+  getIdOptions,
+  responses,
+  show,
+  // == Prompt
+  showPrompt,
+  showPromptCancel,
+  choices,
+  getChoices,
+  editProfileAvatar,
+  mounted,
+  FileUploadFunc,
+  fileUpload,
+  previewImage,
+  preview,
 }) => {
   useEffect(() => {
     getProfile();
+    getQuestions();
+    getChoices();
   }, []);
-
-
-  // Logout
-  const handleLogout = () => {
-    getLogout();
-  };
-  // closed button
-  const closeActionFirstname = () => {
-    closeFirstname();
-  };
-
-  const closeActionLastname = () => {
-    closeLastname();
-  };
-
-  const closeActionPseudo = () => {
-    closePseudo();
-  };
-
-  const closeActionPresentation = () => {
-    closePresentation();
-  };
-
-  // saved button
-  const handleUpdateInputValueFirstname = () => {
-    updateInputValueFirstname();
-    editProfile();
-  };
-  const handleUpdateInputValueLastname = () => {
-    updateInputValueLastname();
-    editProfile();
-  };
-  const handleUpdateInputValuePseudo = () => {
-    updateInputValuePseudo();
-    editProfile();
-  };
-  const handleUpdateInputValuePresentation = () => {
-    updateInputValuePresentation();
-    editProfile();
-  };
-
-  // Champs contrôlés
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    changeInputProfile(name, value);
-  };
-
-  // Passer de input à non input
-  const handleChangeEditModeFirstname = () => {
-    changeEditModeFirstname();
-  };
-  const handleChangeEditModeLastname = () => {
-    changeEditModeLastname();
-  };
-  const handleChangeEditModePseudo = () => {
-    changeEditModePseudo();
-  };
-  const handleChangeEditModePresentation = () => {
-    changeEditModePresentation();
-  };
-
-  // Supprimer le profil
-  const handleDeleteProfile = () => {
-    deleteProfile();
-    // getLogout();
-  };
+  useEffect(() => {
+    if (mounted) {
+      getProfile();
+    }
+  }, [mounted]);
 
   return (
     <div className="profile-layout">
       <div className="profile-container">
         <div className="profile-container-image">
-          <img src="https://i.imgur.com/HgoCwpu.png" title="profile header" alt="header" className="profile-header" />
+          <img src={profile.avatar} title="profile header" alt="header" className="profile-header" />
         </div>
         <div className="profile-wrapper">
           <h1 className="profile-title">Mon profil</h1>
           <Tabs>
-          <div label="Informations">
-            <div className="profile-form-info">
-            <form action="#0" className="profile-form">
-                {/* PRENOM */}
-                {!isInEditModeFirstname && (
-                  <div className="profile-form-container">
-                    <label htmlFor="prénom" className="profile-form-label">Prénom</label>
-                    <div className="edition-mode">
-                      {isFailEdit ? oldValueFirstname : firstname} {/* firstname */}
-                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeFirstname}>
-                        <span className="edition-mode-icon"><FaRegEdit /></span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {isInEditModeFirstname && (
-                  <div className="profile-form-container">
-                    <label htmlFor="prénom" className="profile-form-label">Prénom</label>
-                    <div className="edition-mode open">
-                      <input
-                        type="text"
-                        className="edition-mode-text"
-                        name="firstname"
-                        value={isFailEdit ? oldValueFirstname : firstname}
-                        onChange={handleChange}
-                        minLength="3"
-                        maxLength="20"
-                      />
-                      <button type="button" className="edition-mode-button" title="Valider" name="firstname" onClick={handleUpdateInputValueFirstname}>
-                        <span className="edition-mode-icon"><FaRegCheckCircle /></span>
-                      </button>
-                      <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionFirstname}>
-                        <span className="edition-mode-icon"><FaRegTimesCircle /></span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {/* NOM */}
-                {!isInEditModeLastname && (
-                  <div className="profile-form-container">
-                    <label htmlFor="nom" className="profile-form-label">Nom</label>
-                    <div className="edition-mode">
-                      {isFailEdit ? oldValueLastname : lastname} {/* lastname */}
-                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModeLastname}>
-                        <span className="edition-mode-icon"><FaRegEdit /></span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {isInEditModeLastname && (
-                  <div className="profile-form-container">
-                    <label htmlFor="nom" className="profile-form-label">Nom</label>
-                    <div className="edition-mode open">
-                      <input
-                        type="text"
-                        className="edition-mode-text"
-                        name="lastname"
-                        value={isFailEdit ? oldValueLastname : lastname}
-                        onChange={handleChange}
-                        minLength="3"
-                        maxLength="20"
-                      />
-                      <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValueLastname}>
-                        <span className="edition-mode-icon"><FaRegCheckCircle /></span>
-                      </button>
-                      <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionLastname}>
-                        <span className="edition-mode-icon"><FaRegTimesCircle /></span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {/* CHANGER SON PSEUDO */}
-                {!isInEditModePseudo && (
-                  <div className="profile-form-container">
-                    <label htmlFor="pseudo" className="profile-form-label">Pseudo</label>
-                    <div className="edition-mode">
-                      {isFailEdit ? oldValuePseudo : pseudo} {/* pseudo */}
-                      <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePseudo}>
-                        <span className="edition-mode-icon"><FaRegEdit /></span>
-                      </button>
-                    </div>
-                    <div className="requirements">Votre pseudo doit contenir au moins 3 caractères.</div>
-                  </div>
-                )}
-                {isInEditModePseudo && (
-                  <div className="profile-form-container">
-                    <label htmlFor="nom" className="profile-form-label">Changer son pseudo</label>
-                    <div className="edition-mode open">
-                      <input
-                        type="text"
-                        className="edition-mode-text"
-                        name="pseudo"
-                        value={isFailEdit ? oldValuePseudo : pseudo}
-                        onChange={handleChange}
-                        minLength="3"
-                        maxLength="20"
-                      />
-                      <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValuePseudo}>
-                        <span className="edition-mode-icon"><FaRegCheckCircle /></span>
-                      </button>
-                      <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionPseudo}>
-                        <span className="edition-mode-icon"><FaRegTimesCircle /></span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-                <hr className="profile-hr" />
-                {!isInEditModePresentation && (
-                <div className="profile-form-container">
-                  <label htmlFor="presentation" className="profile-form-label profile-label-presentation">Présentation</label>
-                  <div className="edition-mode presentation">
-                    {isFailEdit ? oldValuePresentation : presentation} {/* presentation */}
-                  </div>
-                  <button type="button" className="edition-mode-button" title="Editer" onClick={handleChangeEditModePresentation}>
-                      <span className="edition-mode-icon"><FaRegEdit /></span>
-                  </button>
-                </div>
-                )}
-                {isInEditModePresentation && (
-                  <div className="profile-form-container">
-                    <div className="edition-mode open">
-                      <textarea
-                        type="text"
-                        rows="8"
-                        className="edition-mode-text"
-                        name="presentation"
-                        value={isFailEdit ? oldValuePresentation : presentation}
-                        onChange={handleChange}
-                      />
-                      <button type="button" className="edition-mode-button" title="Valider" onClick={handleUpdateInputValuePresentation}>
-                        <span className="edition-mode-icon"><FaRegCheckCircle /></span>
-                      </button>
-                      <button type="button" className="edition-mode-button" title="Annuler les changements" onClick={closeActionPresentation}>
-                          <span className="edition-mode-icon"><FaRegTimesCircle /></span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-            </form>
-            </div>
-          </div>
-            <div className="profile-form-subtitle" label="Questions">
-            <form action="#0" className="profile-form profile-form-quizz-container">
-            {/* QUESTIONS */}
-            {questions.map((question) => (
-              <div key={question.id} className="profile-form-quizz">
-                <p className="profile-form-quizz-question">{question.question}</p>
-                <div>
-                  <input
-                    type="radio"
-                    id={question.response1}
-                    name={`${question.response}${question.id}`}
-                    value={question.response1}
-                  />
-                  <label className="profile-form-quizz-answer" htmlFor={question.response1}>{question.response1}</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id={question.response2}
-                    name={`${question.response}${question.id}`}
-                    value={question.response2}
-                  />
-                  <label className="profile-form-quizz-answer" htmlFor={question.response2}>{question.response2}</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id={question.response3}
-                    name={`${question.response}${question.id}`}
-                    value={question.response3}
-                  />
-                  <label className="profile-form-quizz-answer" htmlFor={question.response3}>{question.response3}</label>
-                </div>
+            {/* INFORMATIONS */}
+            <div label="Infos">
+              <div className="profile-form-info">
+                <Informations
+                  profile={profile}
+                  preview={preview}
+                  previewImage={previewImage}
+                  FileUploadFunc={FileUploadFunc}
+                  fileUpload={fileUpload}
+                  isInEditModeFirstname={isInEditModeFirstname}
+                  isInEditModeLastname={isInEditModeLastname}
+                  isInEditModePseudo={isInEditModePseudo}
+                  isInEditModeAge={isInEditModeAge}
+                  isInEditModePresentation={isInEditModePresentation}
+                  changeEditModeFirstname={changeEditModeFirstname}
+                  changeEditModeLastname={changeEditModeLastname}
+                  changeEditModePseudo={changeEditModePseudo}
+                  changeEditModeAge={changeEditModeAge}
+                  changeEditModePresentation={changeEditModePresentation}
+                  changeInputProfile={changeInputProfile}
+                  updateInputValueFirstname={updateInputValueFirstname}
+                  updateInputValueLastname={updateInputValueLastname}
+                  updateInputValuePseudo={updateInputValuePseudo}
+                  updateInputValueAge={updateInputValueAge}
+                  updateInputValuePresentation={updateInputValuePresentation}
+                  oldValueFirstname={oldValueFirstname}
+                  oldValueLastname={oldValueLastname}
+                  oldValuePseudo={oldValuePseudo}
+                  oldValueAge={oldValueAge}
+                  oldValuePresentation={oldValuePresentation}
+                  closeFirstname={closeFirstname}
+                  closeLastname={closeLastname}
+                  closePseudo={closePseudo}
+                  closeAge={closeAge}
+                  closePresentation={closePresentation}
+                  isFailEdit={isFailEdit}
+                  editProfile={editProfile}
+                  editProfileAvatar={editProfileAvatar}
+                />
               </div>
-            ))}
-            </form>
+            </div>
+            {/* QUESTIONS */}
+            <div className="profile-form-subtitle" label="Questions">
+              <Questions
+                mounted={mounted}
+                getChoices={getChoices}
+                choices={choices}
+                questions={questions}
+                getIdOptions={getIdOptions}
+                submitQuestions={submitQuestions}
+                responses={responses}
+              />
+            </div>
+            {/* COMPTE */}
+            <div label="Compte">
+              <Account
+                showPrompt={showPrompt}
+                showPromptCancel={showPromptCancel}
+                show={show}
+                getLogout={getLogout}
+                deleteProfile={deleteProfile}
+              />
             </div>
           </Tabs>
-              <div className="logout-container">
-                  <NavLink to="/connect" onClick={handleLogout} className="logout-container-text logout-container-input">Déconnexion <FiLogOut /></NavLink>
-              </div>
-              <div className="logout-container">
-                  <NavLink to="/create" onClick={handleDeleteProfile} className="logout-container-text logout-container-input">
-                    {/* <Prompt message="Voulez vous vraiment supprimer votre compte ?" /> */}
-                    Supprimer son compte <MdDeleteForever />
-                  </NavLink>
-              </div>
         </div>
       </div>
     </div>
@@ -322,35 +208,3 @@ const Profile = ({
 
 // == Export
 export default Profile;
-
-Profile.defaultProps = {
-  firstname: '',
-  lastname: '',
-  pseudo: '',
-  presentation: '',
-};
-
-Profile.propTypes = {
-  firstname: PropTypes.string,
-  lastname: PropTypes.string,
-  pseudo: PropTypes.string,
-  presentation: PropTypes.string,
-  isInEditModeFirstname: PropTypes.bool.isRequired,
-  isInEditModeLastname: PropTypes.bool.isRequired,
-  isInEditModePseudo: PropTypes.bool.isRequired,
-  isInEditModePresentation: PropTypes.bool.isRequired,
-  changeEditModeFirstname: PropTypes.func.isRequired,
-  changeEditModeLastname: PropTypes.func.isRequired,
-  changeEditModePseudo: PropTypes.func.isRequired,
-  changeEditModePresentation: PropTypes.func.isRequired,
-  changeInputProfile: PropTypes.func.isRequired,
-  updateInputValueFirstname: PropTypes.func.isRequired,
-  updateInputValueLastname: PropTypes.func.isRequired,
-  updateInputValuePseudo: PropTypes.func.isRequired,
-  getLogout: PropTypes.func.isRequired,
-  editProfile: PropTypes.func.isRequired,
-  deleteProfile: PropTypes.func.isRequired,
-  oldValueFirstname: PropTypes.string.isRequired,
-  oldValueLastname: PropTypes.string.isRequired,
-  oldValuePseudo: PropTypes.string.isRequired,
-};

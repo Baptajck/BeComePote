@@ -18,13 +18,25 @@ const transporter = nodemailer.createTransport({
 });
 
 // Replaces all characters chosen by another
+/**
+ * @param  {String} string
+ * @param  {String} search
+ * @param  {String} replace
+ */
 const replaceAll = (string, search, replace) => string.split(search).join(replace);
 
 // Generation of the Password Reset URL with token and dynamic ID User
+/**
+ * @param  {String} user
+ * @param  {String} token
+ */
 const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/${user.id}/${replaceAll(token, '.', '$')}`;
 
 
 // Generating a hashedToken to set the timestamp on reset password link valid for an hour
+/**
+ * @param  {Number} userId
+ */
 const usePasswordHashToMakeToken = (userId) => {
   const token = jwt.sign({ userId }, process.env.SECRET, {
     expiresIn: 3600, // 1 hour
@@ -36,7 +48,7 @@ const usePasswordHashToMakeToken = (userId) => {
    * SEND MAIL - Sends an email to the User following his password request through our Gmail account
    * @param {object} req
    * @param {object} res
-   * @param {object} next
+   * @param {func} next
    * @returns {object} user object
    */
 router.post('/user/:email', (req, res, next) => {

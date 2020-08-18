@@ -5,11 +5,16 @@ import { connect } from 'react-redux';
 import NewPassword from 'src/components/NewPassword';
 
 // Action Creators
-import { changeInputForgotten, resetPassword } from 'src/store/reducers/forms/forgottenPassword';
+import {
+  changeInputForgotten, resetPassword, newPasswordVisibility, newConfirmPasswordVisibility,
+} from 'src/store/reducers/forms/forgottenPassword';
 
 const mapStateToProps = (state) => ({
   password: state.forgottenPassword.password,
   confirmPassword: state.forgottenPassword.confirmPassword,
+  messageSend: state.forgottenPassword.messageSend,
+  isNewPasswordShown: state.forgottenPassword.isNewPasswordShown,
+  isNewConfirmPasswordShown: state.forgottenPassword.isNewConfirmPasswordShown,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -18,6 +23,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetPassword: (userId, token) => {
     dispatch(resetPassword(userId, token));
+  },
+  newPasswordVisibility: () => {
+    dispatch(newPasswordVisibility());
+  },
+  newConfirmPasswordVisibility: () => {
+    dispatch(newConfirmPasswordVisibility());
   },
 });
 

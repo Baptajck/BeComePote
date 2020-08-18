@@ -1,0 +1,54 @@
+@import 'src/styles/vars';
+
+@media screen and (min-width: 300px) {
+/*-------------------------------------------*\
+    Error style:
+
+      - For errors
+      - The validation messages
+  
+\*-------------------------------------------*/
+  ._error {
+
+    &--error {
+      color: red;
+      text-align: justify;
+      line-height: 1.3rem;
+      font-size: .8rem;
+      width: 80%;
+      margin: 1rem auto;
+      transition: .3s;
+      background-color: pink;
+      padding: 1rem;
+      border-radius: 1em;
+      border: 1px solid #f5c6cb;
+
+      &--link {
+        color: blue;
+
+        &:hover {
+          opacity: .7;
+        }
+      }
+    }
+
+    &--good {
+      text-align: justify;
+      line-height: 1.3rem;
+      font-size: 0.8rem;
+      width: 80%;
+      margin: 1rem auto;
+      transition: .3s;
+      padding: 1rem;
+      border-radius: 1em;
+      border: 1px solid #c3e6cb;
+      background-color: #d4edda;
+      color: #155724;
+
+      &-link {
+        color: blue;
+      }
+    }
+
+  }
+}

@@ -13,6 +13,9 @@ import spinner from './spinner.scss';
 /*
  * Component
  */
+/**
+ * @param  {Bool} {loading}
+ */
 const Spinner = ({ loading }) => (
   <div className="spinner">
     <h2 className="spinner-title">Veuillez patienter...</h2>

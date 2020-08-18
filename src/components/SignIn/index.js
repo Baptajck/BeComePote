@@ -4,27 +4,38 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiLock, FiMail } from 'react-icons/fi';
 import { FaArrowRight } from 'react-icons/fa';
-import { IoIosEye, IoMdEyeOff, IoMdCloseCircle } from 'react-icons/io';
+import { IoIosEye, IoMdEyeOff } from 'react-icons/io';
 import PropTypes from 'prop-types';
-
+import errorLink from 'src/utils/Errors';
 // == Import Local
 import './signIn.scss';
 
+/**
+ * @param  {String} email - Email du user
+ * @param  {String} password - mot de passe du user
+ * @param  {Func} changeValue - Champ(s) contrôlé(s)
+ * @param  {Func} connectUser - Permettant la connection du user
+ * @param  {String} error - Voir les erreurs
+ * @param  {Bool} isPasswordShown - Pouvoir voir le mot de passe en clair
+ * @param  {Func} passwordVisibility - Permet le changement du Booléan { isPasswordShown }
+ */
 const SignIn = ({
   email, password, changeValue, connectUser, error, isPasswordShown, passwordVisibility,
 }) => {
+  /**
+   * @param  {Object} event
+   */
   const handleChange = (event) => {
     const { name, value } = event.target;
     changeValue(name, value);
   };
 
+  /**
+   * @param  {Object} event
+   */
   const handleSubmit = (event) => {
     event.preventDefault();
     connectUser();
-  };
-
-  const togglePasswordVisiblity = () => {
-    passwordVisibility();
   };
 
   return (
@@ -32,8 +43,26 @@ const SignIn = ({
       <div className="signIn">
         <h1 className="signIn-title">Salut !</h1>
         <p className="signIn-subtitle">Connecte toi pour chercher de nouveaux amis sur <strong className="BeComePote">BeComePote</strong>&nbsp;!</p>
-        {error === 'Email is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Ce compte BeComePote n'existe pas, entre un autre compte ou <NavLink to="/create" className="signIn-error--link"> obtiens-en un nouveau</NavLink></span></p> : <p> </p>}
-        {error === 'Password is wrong' ? <p className="signIn-error"><IoMdCloseCircle /> <span className="signIn-error--message">Ton mot de passe est incorrect. Si tu as oublié ton mot de passe,<NavLink to="/forgottenPassword" className="signIn-error--link"> redéfinit-le ici</NavLink></span></p> : <p> </p>}
+        {errorLink({
+          param1: error,
+          param2: 'Email is wrong',
+          errorItem: 'error',
+          link: {
+            route: '/create',
+            text: ' obtiens-en un nouveau',
+          },
+          textBefore: 'Ce compte BeComePote n\'existe pas, entre un autre compte ou ',
+        })}
+        {errorLink({
+          param1: error,
+          param2: 'Password is wrong',
+          errorItem: 'error',
+          link: {
+            route: '/forgottenPassword',
+            text: '  redéfinit-le ici',
+          },
+          textBefore: 'Ton mot de passe est incorrect. Si tu as oublié ton mot de passe,',
+        })}
         <form className="signIn-form" onSubmit={handleSubmit}>
           <div className="signIn-form-container">
             <input
@@ -43,12 +72,12 @@ const SignIn = ({
               id="email"
               name="email"
               value={email.trim()}
-              className="signIn-form-input"
+              className="_form-input"
               minLength="3"
               required
               placeholder=" "
             />
-            <label htmlFor="email" className="signIn-form-label"><FiMail className="signIn-form-label-icon" /> E-mail</label>
+            <label htmlFor="email" className="_form-label"><FiMail className="_form-label-icon" /> E-mail</label>
             <div className="requirements">Veuillez insérer une adresse mail valide :<br /><span className="requirements-span">exemple@exemple.com</span></div>
           </div>
           <div className="signIn-form-container">
@@ -60,19 +89,19 @@ const SignIn = ({
               onChange={handleChange}
               name="password"
               value={password.trim()}
-              className="signIn-form-input"
+              className="_form-input"
               required
               placeholder=" "
             />
-            <label htmlFor="password" className="signIn-form-label"><span className="signIn-form-label-icon"><FiLock className="signIn-form-label-icon" /></span> Mot de passe</label>
+            <label htmlFor="password" className="_form-label"><span className="_form-label-icon"><FiLock className="_form-label-icon" /></span> Mot de passe</label>
             <div className="requirements">Votre mot de passe doit contenir au moins 6 caractères: au moins un en majuscule, un en minuscule et un chiffre.</div>
-            <div className="signIn-password-icon" onClick={togglePasswordVisiblity}>{isPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
+            <div className="signIn-password-icon" onClick={passwordVisibility}>{isPasswordShown ? <IoMdEyeOff /> : <IoIosEye />}</div>
           </div>
           <NavLink to="/forgottenPassword" className="signIn-form-forgottenPassword">Mot de passe oublié</NavLink>
-          <div className="signIn-form-input-send-icon">
-            <button type="submit" className="signIn-form-input-send">
+          <div className="_btn-form-input-send-icon">
+            <button type="submit" className="_btn-form-input-send">
               Se connecter
-              <span className="signIn-form-input-send-arrow"><FaArrowRight /></span>
+              <span className="_btn-form-input-send-arrow"><FaArrowRight /></span>
             </button>
           </div>
         </form>
@@ -80,6 +109,10 @@ const SignIn = ({
       </div>
     </div>
   );
+};
+
+SignIn.defaultProps = {
+  error: '',
 };
 
 SignIn.propTypes = {
@@ -90,10 +123,6 @@ SignIn.propTypes = {
   connectUser: PropTypes.func.isRequired,
   error: PropTypes.string,
   passwordVisibility: PropTypes.func.isRequired,
-};
-
-SignIn.defaultProps = {
-  error: '',
 };
 // == Export
 export default SignIn;

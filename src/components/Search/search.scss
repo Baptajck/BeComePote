@@ -1,5 +1,112 @@
-.test {
-  text-align: center;
-  margin-top: 8rem;
-  font-size: 3em;
+@import 'src/styles/vars';
+
+@media screen and (min-width: 300px) {
+  /* 
+  Set up of the search section
+  */
+  .search {
+    margin-bottom: 6rem;
+    
+    // Set up of the user's avatar
+    &-profile {
+      position: relative;
+      
+      // User's avatar 
+      &-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      }
+
+      // User's nickname, description and chat options
+      &-options {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        bottom: 2.5rem;
+        left: 2rem;
+        width: 80%;
+        line-height: 2.7rem;
+
+        // User's nickname
+        &-nickname {
+          font-size: 2rem;
+          text-shadow: 3px 3px 2px black;
+          color: white;
+          font-style: italic;
+          font-weight: bold;
+        }
+
+        // Chat button
+        &-button {
+          background-color: $color-button;
+          border: none;
+          font-size: 1.7rem;
+          color: $color-white;
+          border-radius: 2em;
+          padding: 0.45rem;
+          height: 2.7rem;
+        }
+      }
+        // Description
+        &-description {
+          padding: 1rem;
+          line-height: 1.4rem;
+          color: #5e5e5e;
+          text-align: justify;
+          margin: 1.5rem auto;
+          width: 90%;
+          font-size: 0.9rem;
+
+          // Profile informations
+          &-questions {
+            padding: 1rem;
+            line-height: 1.6rem;
+            color: $color-button;
+            text-align: justify;
+            margin: 1.5rem auto;
+            width: 90%;
+            font-size: 0.85rem;
+
+            // Questions replied too
+            &-content {
+              font-style: italic;
+              line-height: 1.2rem;
+              color: #292929;
+            }
+
+            // Replies
+            &-reply {
+              font-weight: bold;
+              margin-bottom: 1rem;
+              margin-left: 1rem;
+              color: #292929;
+
+                // Stylisation on replies
+              &-bullet {
+                list-style-type: none;
+
+                & li::before {
+                  content: "\2022";
+                  color: $color-orange;
+                  font-weight: bold;
+                  display: inline-block; 
+                  width: 1em;
+                  margin-left: -1em;
+                }
+              }
+            }
+          }
+        }
+        
+      //
+      &-separation {
+        background-color: #ff9854;
+        width: 70%;
+        margin: 1.5rem auto;
+        border: none;
+        height: 2px;
+      }
+    }
+  }
 }
