@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 // ImPORT_BACK
 require('dotenv').config();
 const express = require('express');
@@ -13,18 +12,20 @@ const {
   PORT_BACK, PORT_FRONT, HOST, // FRONT_URL,
 } = process.env;
 
-const Origins = ['http://becomepote.fr', 'http://www.becomepote.fr', `http://localhost:${PORT_FRONT}`, `http://localhost:${PORT_BACK}`];
+// CORS SETUP & OPTIONS
+const Origins = ['http://becomepote.fr', 'http://becomepote.fr:3000/api/$/', '/\.becomepote\.fr$/', `http://localhost:${PORT_FRONT}`, `http://localhost:${PORT_BACK}`];
+const Origins2 = ['http://becomepote.fr', 'http://becomepote.fr:3000'];
 
-// CORS
-app.use(
-  cors({
-    origin: Origins,
-    methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-    exposedHeaders: 'Authorization',
-    credentials: true,
-  }),
-);
+
+const corsOptions = {
+  origin: Origins,
+  methods: ['GET', 'POST', 'HEAD', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Origin', 'Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Access-Control-Request-Method', 'Access-Control-Request-Headers'],
+  exposedHeaders: ['Access-Control-Allow-Origin', 'Access-Control-Allow-Credentials', 'Content-Range', 'X-Content-Range'],
+  credentials: true,
+  preflightContinue: true,
+  optionsSuccessStatus: 200,
+};
 
 // BODYPARSER
 app.use(bodyParser.json());
@@ -37,7 +38,6 @@ app.use(
 // SESSION
 app.use(session({
   secret: process.env.SECRET,
-  name: 'myCookie',
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -53,15 +53,20 @@ app.use(cookieParser());
 // TODO Gérer le flavicon pour le back
 // app.use(express.favicon(`${__dirname}src/favicon/favicon.ico`));
 
-// File Upload
+// FILE UPLOAD
 app.use(fileUpload({ useTempFiles: true }));
 
 // Start on assigned port
 app.listen(PORT_BACK, () => {
-  console.log(`Welcome, this server running at http://${HOST}:${PORT_BACK}`);
+console.log(`Welcome, this server running at http://${HOST}:${PORT_BACK}`);
 });
+
+
+// CORS PREFLIGHT REQUESTS
+app.use(cors(corsOptions));
 
 // Routes
 app.use('/api', require('./api/users').router);
 app.use('/api', require('./api/question').router);
 app.use('/email', require('./email/email.model').router);
+
