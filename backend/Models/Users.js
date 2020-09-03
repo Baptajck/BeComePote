@@ -12,7 +12,7 @@ class User extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['email', 'password'],
+      required: ['email', 'password', 'pseudo'],
       properties: {
         id: {
           type: 'integer',
