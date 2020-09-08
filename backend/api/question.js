@@ -33,7 +33,7 @@ router.get('/allQuestions', (req, res) => {
   */
 router.post('/addResponses', (req, res) => {
   const userId = Number(req.session.user.id);
-  const { testBody1, testBody2, testBody3 } = req.body;
+  const { testBody1, testBody2, testBody3, testBody4 } = req.body;
   const options = {
     relate: true,
     unrelate: true,
@@ -53,6 +53,10 @@ router.post('/addResponses', (req, res) => {
     choice_id: testBody3,
     user_id: userId,
   };
+  const forthChoice = {
+    choice_id: testBody4,
+    user_id: userId,
+  };
 
   Selected.query()
     .delete()
@@ -65,7 +69,9 @@ router.post('/addResponses', (req, res) => {
           .upsertGraph(secondChoice, options);
         const thirdChoiceInserted = await Selected.query()
           .upsertGraph(thirdChoice, options);
-        return (firstChoiceInserted, secondChoiceInserted, thirdChoiceInserted);
+        const forthChoiceInserted = await Selected.query()
+          .upsertGraph(forthChoice, options);
+        return (firstChoiceInserted, secondChoiceInserted, thirdChoiceInserted, forthChoiceInserted);
       }
       res.json({
         result,

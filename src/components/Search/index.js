@@ -19,10 +19,15 @@ const Search = () => {
     ));
   }
   const userInfo = () => {
-    axios.get('http://localhost:3000/api/user')
+    const url = document.location.pathname;
+    const a = url.split('/');
+    const userId = Number(a[3]);
+    console.log('Test: ', userId);
+
+    axios.get(`http://localhost:3000/api/userWithId/${userId}`)
     .then((res) => {
-      setUser(res.data[0]);
-      console.log(user);
+      setUser(res.data);
+      console.log(res);
     })
     .catch(() => (
       AxiosError

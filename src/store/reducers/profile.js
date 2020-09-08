@@ -17,6 +17,7 @@ const initialState = {
   testBody1: +null,
   testBody2: +null,
   testBody3: +null,
+  testBody4: +null,
   show: false,
   mounted: false,
   fileUpload: '',
