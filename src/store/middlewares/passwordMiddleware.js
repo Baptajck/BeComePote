@@ -9,7 +9,6 @@ function resetPassword(store, userId, token) {
   axios.defaults.withCredentials = true;
   axios.post(`http://localhost:3000/email/newPasswordReset/${userId}/${token}`, { password })
     .then((response) => {
-      console.log(response);
       store.dispatch(messageSendMail(response.data));
     })
     .catch((error) => {
@@ -18,7 +17,6 @@ function resetPassword(store, userId, token) {
 }
 
 const passwordMiddleware = (store) => (next) => (action) => {
-  // console.log('Je suis le middleware: ', action);
   switch (action.type) {
     case CHANGE_PASSWORD: {
       const state = store.getState();

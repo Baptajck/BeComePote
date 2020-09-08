@@ -23,7 +23,6 @@ const SearchGroup = () => {
   useEffect(() => {
     usersInfos();
   }, [])
-  console.log(users);
   return (
     <div className="searchGroup">
       {

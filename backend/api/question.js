@@ -108,6 +108,29 @@ router.get('/selectedResponse', (req, res) => {
     }));
 });
 
+/**
+  * SELECT RESPONSE - Route for user with id
+  * @param {object} req
+  * @param {object} res
+  * @returns {object} user object
+  */
+router.get('/selectedResponseWithId/:id', (req, res) => {
+  const userId = Number(req.params.id);
+  Choices.query()
+    .withGraphJoined('choice')
+    .join('questions', 'choices.question_id', 'questions.id')
+    .select('choice_content', 'question_id', 'question_content')
+    .where('user_id', userId)
+    .then((select) => {
+      res.json(select);
+      res.status(200).send('All the questions and choices have been successful listed!');
+    })
+    .catch((err) => res.status(500).send({
+      message:
+          err.message || 'An error has occurred while producing the listing.',
+    }));
+});
+
 module.exports = {
   router,
 };
@@ -119,7 +142,6 @@ module.exports = {
 //     .join('questions')
 //      .select('choice_content', 'question_id', 'question_content', 'questions.id')
 //     .then((select) => {
-//       console.log(select);
 //       res.json(select);
 //       res.status(200).send('All the questions and choices have been successful listed!');
 //     })
