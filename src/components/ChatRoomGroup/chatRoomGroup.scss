@@ -3,6 +3,7 @@
 @media screen and (min-width: 300px) {
   .container-chatroom {
     font-size: 14px;
+    margin-bottom: 5rem;
   }
   .link-chatroom {
     display: flex;
@@ -17,10 +18,29 @@
     height: 50px;
     border-radius: 50%;
     margin: 1rem;
+    object-fit: cover;
   }
+  .chatroom-group-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .group-text {
     justify-content: space-evenly;
     display: flex;
     flex-direction: column;
+    width: 75%;
+  }
+  .chatroom-date {
+    font-size: .5rem;
+    text-align: right;
+    margin-left: .5rem;
+    color: gray;
+  }
+
+  .text {
+    font-size: .8rem;
+    color: gray;
   }
 }
