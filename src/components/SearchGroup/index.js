@@ -1,6 +1,7 @@
 // == Import : npm
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
+import { NavLink } from 'react-router-dom';
 import { MdAdd } from "react-icons/md";
 // == Import : local
 import './searchGroup.scss';
@@ -22,7 +23,6 @@ const SearchGroup = () => {
   useEffect(() => {
     usersInfos();
   }, [])
-  console.log(users);
   return (
     <div className="searchGroup">
       {
@@ -31,7 +31,7 @@ const SearchGroup = () => {
             <img src={avatar} alt="Photo_avatar" className="profile-card-image"/>
             <div className="search-profile-options profile-card-options">
             <h1 className="profile-options-nickname profile-card-options-nickname">{pseudo}</h1>
-            <button type="button" className="search-profile-options-button profile-card-options-button" title="Voir le profil"><MdAdd /></button>
+            <NavLink to={`search/${pseudo}/${id}`} className="search-profile-options-button profile-card-options-button" title="Voir le profil"><MdAdd /></NavLink>
             </div>
           </div>
         ))

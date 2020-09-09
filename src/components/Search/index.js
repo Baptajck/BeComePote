@@ -10,7 +10,11 @@ const Search = () => {
   const [details, setDetails] = useState([]);
   const [user, setUser] = useState([]);
   const sendDetails = () => {
-    axios.get('http://localhost:3000/api/selectedResponse')
+    const url = document.location.pathname;
+    const a = url.split('/');
+    const userId = Number(a[3]);
+
+    axios.get(`http://localhost:3000/api/selectedResponseWithId/${userId}`)
     .then((res) => {
       setDetails(res.data);
     })
@@ -19,10 +23,13 @@ const Search = () => {
     ));
   }
   const userInfo = () => {
-    axios.get('http://localhost:3000/api/user')
+    const url = document.location.pathname;
+    const a = url.split('/');
+    const userId = Number(a[3]);
+
+    axios.get(`http://localhost:3000/api/userWithId/${userId}`)
     .then((res) => {
-      setUser(res.data[0]);
-      console.log(user);
+      setUser(res.data);
     })
     .catch(() => (
       AxiosError

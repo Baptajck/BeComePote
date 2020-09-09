@@ -17,6 +17,7 @@ const initialState = {
   testBody1: +null,
   testBody2: +null,
   testBody3: +null,
+  testBody4: +null,
   show: false,
   mounted: false,
   fileUpload: '',
@@ -73,7 +74,6 @@ export const CANCEL_PREVIEW_IMAGE = 'CANCEL_PREVIEW_IMAGE';
 
 // == Reducer
 const reducer = (state = initialState, action = {}) => {
-  // console.log(action);
   switch (action.type) {
     case CHANGE_INPUT_PROFILE:
       return {

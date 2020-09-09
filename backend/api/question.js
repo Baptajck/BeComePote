@@ -33,7 +33,7 @@ router.get('/allQuestions', (req, res) => {
   */
 router.post('/addResponses', (req, res) => {
   const userId = Number(req.session.user.id);
-  const { testBody1, testBody2, testBody3 } = req.body;
+  const { testBody1, testBody2, testBody3, testBody4 } = req.body;
   const options = {
     relate: true,
     unrelate: true,
@@ -53,6 +53,10 @@ router.post('/addResponses', (req, res) => {
     choice_id: testBody3,
     user_id: userId,
   };
+  const forthChoice = {
+    choice_id: testBody4,
+    user_id: userId,
+  };
 
   Selected.query()
     .delete()
@@ -65,7 +69,9 @@ router.post('/addResponses', (req, res) => {
           .upsertGraph(secondChoice, options);
         const thirdChoiceInserted = await Selected.query()
           .upsertGraph(thirdChoice, options);
-        return (firstChoiceInserted, secondChoiceInserted, thirdChoiceInserted);
+        const forthChoiceInserted = await Selected.query()
+          .upsertGraph(forthChoice, options);
+        return (firstChoiceInserted, secondChoiceInserted, thirdChoiceInserted, forthChoiceInserted);
       }
       res.json({
         result,
@@ -102,6 +108,29 @@ router.get('/selectedResponse', (req, res) => {
     }));
 });
 
+/**
+  * SELECT RESPONSE - Route for user with id
+  * @param {object} req
+  * @param {object} res
+  * @returns {object} user object
+  */
+router.get('/selectedResponseWithId/:id', (req, res) => {
+  const userId = Number(req.params.id);
+  Choices.query()
+    .withGraphJoined('choice')
+    .join('questions', 'choices.question_id', 'questions.id')
+    .select('choice_content', 'question_id', 'question_content')
+    .where('user_id', userId)
+    .then((select) => {
+      res.json(select);
+      res.status(200).send('All the questions and choices have been successful listed!');
+    })
+    .catch((err) => res.status(500).send({
+      message:
+          err.message || 'An error has occurred while producing the listing.',
+    }));
+});
+
 module.exports = {
   router,
 };
@@ -113,7 +142,6 @@ module.exports = {
 //     .join('questions')
 //      .select('choice_content', 'question_id', 'question_content', 'questions.id')
 //     .then((select) => {
-//       console.log(select);
 //       res.json(select);
 //       res.status(200).send('All the questions and choices have been successful listed!');
 //     })

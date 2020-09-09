@@ -140,6 +140,27 @@ router.get('/user', (req, res) => {
 });
 
 /**
+   * READ - Route to get a single user with ID
+   * @param {object} req
+   * @param {object} res
+   * @returns {[object]} user/ array
+   */
+router.get('/userWithId/:id', (req, res) => {
+  const u = req.params.id;
+  console.log(u);
+  User.query()
+    .findById(Number(u))
+    .then((user) => {
+      res.json(user);
+      res.status(200).send('The user\'s profile has been successful displayed!');
+    })
+    .catch((err) => res.status(500).send({
+      message:
+          err.message || 'Some error has occurred while displaying the user\'s profile.',
+    }));
+});
+
+/**
    * UPDATE - Route for updating a user account
    * @param {object} req
    * @param {object} res

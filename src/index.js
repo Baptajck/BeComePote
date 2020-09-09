@@ -8,6 +8,7 @@ import Favicon from 'react-favicon';
 // == Import : local
 import App from 'src/containers/home';
 import store from 'src/store';
+import DesktopWait from 'src/components/DesktopWait';
 
 // == Render
 const rootComponent = (
@@ -15,6 +16,12 @@ const rootComponent = (
     <Router>
       <Favicon url="https://i.imgur.com/yJ90Yvt.png" />
       <App />
+      {/*
+        window.addEventListener('resize', () => {
+            window.innerWidth <= 557 ? <App /> : <DesktopWait />
+          }
+        )
+      */}
     </Router>
   </Provider>
 );

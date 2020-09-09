@@ -34,8 +34,6 @@
       border-radius: 1em;
       padding: 0.7rem 2.1rem;
       border: solid 1px RGBA(124, 124, 124, .7);
-      // -webkit-box-shadow: 0px 0px 5px 0px $color-grey-shadow;
-      // box-shadow: 0px 0px 5px 0px $color-grey-shadow;
 
       &:focus {
         ~ ._form-label {
@@ -50,10 +48,8 @@
           font-size: 12px;
           color: $color-blue;
         }
+
         border: solid 1px $color-blue;
-        // -webkit-box-shadow: 0px 0px 5px 0px $color-blue;
-        // box-shadow: 0px 0px 5px 0px $color-blue;
-        // border-width: 3px;
         border-image-slice: 1;
       }
 
@@ -66,9 +62,20 @@
         background-size: 20px;
         background-repeat: no-repeat;
         background-position: 10px 10px;
+        border-color: #2ecc71;
 
         & + label {
-          opacity: 0;
+          position: absolute;
+          top: -8px;
+          display: block;
+          transition: 0.2s;
+          opacity: 1;
+          padding: 0 .5rem;
+          background-color: #fff;
+          border-radius: 2em;
+          font-size: 12px;
+          color: #2ecc71;
+
         }
       }
 
@@ -83,10 +90,14 @@
           background-color: $color-white;
           border-radius: 2em;
           font-size: 12px;
-          color: $color-red;
+          color: #e74c3c;
         }
 
-        border-color: $color-red;
+        & + ._form-input {
+          border: none;
+        }
+
+        border-color: #e74c3c;
         
         & + label {
           opacity: 0;
