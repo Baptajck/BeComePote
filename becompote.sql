@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Client :  localhost:3306
--- Généré le :  Jeu 03 Septembre 2020 à 20:00
+-- Hôte : localhost
+-- Généré le : ven. 04 sep. 2020 à 15:35
 -- Version du serveur :  5.7.31-0ubuntu0.18.04.1
--- Version de PHP :  7.4.9
+-- Version de PHP : 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `becomepote`
+-- Base de données : `becomepote`
 --
 
 -- --------------------------------------------------------
@@ -48,7 +49,7 @@ CREATE TABLE `choices` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `choices`
+-- Déchargement des données de la table `choices`
 --
 
 INSERT INTO `choices` (`id`, `choice_content`, `question_id`, `created_at`, `updated_at`) VALUES
@@ -62,7 +63,12 @@ INSERT INTO `choices` (`id`, `choice_content`, `question_id`, `created_at`, `upd
 (8, 'Force jaune', 3, '2020-04-14 08:09:51', NULL),
 (9, 'Force noire', 3, '2020-04-14 08:09:51', NULL),
 (10, 'Force vert', 3, '2020-04-14 08:09:51', NULL),
-(11, 'Force rose', 3, '2020-04-14 08:09:51', NULL);
+(11, 'Force rose', 3, '2020-04-14 08:09:51', NULL),
+(12, 'Regarder des séries TV', 4, '2020-04-14 08:09:51', NULL),
+(13, 'Sortir boire une bière ou du vin', 4, '2020-04-14 08:09:51', NULL),
+(14, 'Aller voir une expo', 4, '2020-04-14 08:09:51', NULL),
+(15, 'Festoyer au resto', 4, '2020-04-14 08:09:51', NULL),
+(16, 'Partir faire une belle rando', 4, '2020-04-14 08:09:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -92,13 +98,14 @@ CREATE TABLE `questions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `questions`
+-- Déchargement des données de la table `questions`
 --
 
 INSERT INTO `questions` (`id`, `question_content`, `question_type`, `created_at`, `updated_at`) VALUES
 (1, 'Quitte à choisir, vous préféreriez être ?', 1, '2020-04-14 08:04:27', NULL),
 (2, 'Vite choissisez un mot, le temps presse !', 1, '2020-04-14 08:04:27', NULL),
-(3, 'Oh non ! Un méchant à l\'horizon, transformation en ?', 1, '2020-04-14 08:04:27', NULL);
+(3, 'Oh non ! Un méchant à l\'horizon, transformation en ?', 1, '2020-04-14 08:04:27', NULL),
+(4, 'La chose que j\'aime le plus en ce moment c\'est ...', 1, '2020-04-14 08:04:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -114,7 +121,7 @@ CREATE TABLE `selected` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `selected`
+-- Déchargement des données de la table `selected`
 --
 
 INSERT INTO `selected` (`id`, `choice_id`, `user_id`, `created_at`) VALUES
@@ -130,9 +137,6 @@ INSERT INTO `selected` (`id`, `choice_id`, `user_id`, `created_at`) VALUES
 (630, 2, 381, '2020-09-03 15:02:50'),
 (631, 6, 381, '2020-09-03 15:02:50'),
 (632, 11, 381, '2020-09-03 15:02:50'),
-(633, 1, 382, '2020-09-03 15:07:39'),
-(634, 4, 382, '2020-09-03 15:07:39'),
-(635, 7, 382, '2020-09-03 15:07:39'),
 (636, 3, 383, '2020-09-03 15:11:40'),
 (637, 4, 383, '2020-09-03 15:11:40'),
 (638, 9, 383, '2020-09-03 15:11:40'),
@@ -151,9 +155,14 @@ INSERT INTO `selected` (`id`, `choice_id`, `user_id`, `created_at`) VALUES
 (651, 3, 389, '2020-09-03 19:51:47'),
 (652, 4, 389, '2020-09-03 19:51:47'),
 (653, 10, 389, '2020-09-03 19:51:47'),
-(654, 3, 390, '2020-09-03 19:57:51'),
-(655, 5, 390, '2020-09-03 19:57:51'),
-(656, 9, 390, '2020-09-03 19:57:51');
+(710, 1, 390, '2020-09-03 21:22:41'),
+(711, 4, 390, '2020-09-03 21:22:41'),
+(712, 10, 390, '2020-09-03 21:22:41'),
+(713, 14, 390, '2020-09-03 21:22:41'),
+(738, 1, 382, '2020-09-04 07:24:07'),
+(739, 5, 382, '2020-09-04 07:24:07'),
+(740, 7, 382, '2020-09-04 07:24:07'),
+(741, 16, 382, '2020-09-04 07:24:07');
 
 -- --------------------------------------------------------
 
@@ -176,7 +185,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `users`
+-- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `pseudo`, `firstname`, `lastname`, `avatar`, `age`, `presentation`, `created_at`, `updated_at`) VALUES
@@ -192,7 +201,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `pseudo`, `firstname`, `lastname
 (390, 'pampam@maildrop.cc', '$2b$10$.Z2HhFVTouOoDfagHJLZ7OBkVKs33kzrZQAKf9lz2BBoCdhTWZU9S', 'PamPam', 'Carole', 'Madam', 'https://res.cloudinary.com/becomepote/image/upload/v1599162878/becomepote/BeComePote_390.jpg', '24', 'Bonjour tout le monde, me voici enfin sur ce super site !\nJe suis ravie à l\'idée de rencontrer des nouvelles personnes. N\'ayez pas peur de venir me parler !', '2020-09-03 19:54:30', '2020-09-03 19:59:39');
 
 --
--- Index pour les tables exportées
+-- Index pour les tables déchargées
 --
 
 --
@@ -235,7 +244,7 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT pour les tables exportées
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
@@ -243,31 +252,38 @@ ALTER TABLE `users`
 --
 ALTER TABLE `chat_message`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT pour la table `choices`
 --
 ALTER TABLE `choices`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
 --
 -- AUTO_INCREMENT pour la table `has_message`
 --
 ALTER TABLE `has_message`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT pour la table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT pour la table `selected`
 --
 ALTER TABLE `selected`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=657;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=742;
+
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=391;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
