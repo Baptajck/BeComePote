@@ -14,7 +14,7 @@ const {
 
 // CORS SETUP & OPTIONS
 const Origins = ['http://becomepote.fr', 'http://becomepote.fr:3000/api/$/', '/\.becomepote\.fr$/', `http://localhost:${PORT_FRONT}`, `http://localhost:${PORT_BACK}`];
-const Origins2 = ['http://becomepote.fr', 'http://becomepote.fr:3000'];
+// const Origins2 = ['http://becomepote.fr', 'http://becomepote.fr:3000'];
 
 
 const corsOptions = {
@@ -58,7 +58,7 @@ app.use(fileUpload({ useTempFiles: true }));
 
 // Start on assigned port
 app.listen(PORT_BACK, () => {
-console.log(`Welcome, this server running at http://${HOST}:${PORT_BACK}`);
+console.log(`>> Welcome, this server running at http://${HOST}:${PORT_BACK}`);
 });
 
 
@@ -68,5 +68,6 @@ app.use(cors(corsOptions));
 // Routes
 app.use('/api', require('./api/users').router);
 app.use('/api', require('./api/question').router);
+app.use('/api', require('./api/message').router);
 app.use('/email', require('./email/email.model').router);
 
