@@ -37,14 +37,14 @@ const ChatApp = ({
     submitMessage();
   };
 
-  const [maximizeChat = false, setMaximizeChat] = useState('');
-  const [statusChat = false, setStatusChat] = useState('');
+  // const [maximizeChat = false, setMaximizeChat] = useState('');
+  // const [statusChat = false, setStatusChat] = useState('');
 
-  const handleClickWidget = () => (maximizeChat ? (setMaximizeChat(false), setStatusChat(false)) : (setMaximizeChat(true), setStatusChat(true)));
+  // const handleClickWidget = () => (maximizeChat ? (setMaximizeChat(false), setStatusChat(false)) : (setMaximizeChat(true), setStatusChat(true)));
 
   return (
     <div>
-      <div className={
+      {/* <div className={
         classNames(
           { chat: true },
           { 'chat-minimize': !maximizeChat },
@@ -57,7 +57,7 @@ const ChatApp = ({
             { 'chat-display-none': !maximizeChat },
           )
         }
-        >
+        > */}
           <div className="chat-title">Chat</div>
           <div ref={chatZone} className="chat-body">
             {messages.map((state, id) => {
@@ -73,7 +73,10 @@ const ChatApp = ({
                     )
                   }
                 >
-                  <div className="chat-body-message-author">{state.user[0].pseudo}</div>
+                  <div className="chat-group-avatar">
+                    <div className="chat-body-message-author">{state.user[0].pseudo}</div>
+                    <img src={state.user[0].avatar} alt="" className="chatroom-avatar" />
+                  </div>
                   <p className="chat-body-message-content">{state.message_content}</p>
                 </div>
               );
@@ -97,10 +100,10 @@ const ChatApp = ({
               </button>
             </form>
           </div>
-        </div>
-      </div>
-      {!statusChat && <div onClick={handleClickWidget} className="chat-widget"><IoIosChatbubbles /></div>}
-      {statusChat && <div onClick={handleClickWidget} className="chat-widget"><MdClose /></div>}
+       {/* </div>
+      </div> */}
+      {/* !statusChat && <div onClick={handleClickWidget} className="chat-widget"><IoIosChatbubbles /></div>*/}
+      {/* statusChat && <div onClick={handleClickWidget} className="chat-widget"><MdClose /></div> */}
     </div>
   );
 };

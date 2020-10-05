@@ -46,6 +46,20 @@
   }
 }
 
+.chat-group-avatar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.chatroom-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 1rem;
+  object-fit: cover;
+}
+
 .chat { 
   border-radius: 10px;
   bottom: 100px;
