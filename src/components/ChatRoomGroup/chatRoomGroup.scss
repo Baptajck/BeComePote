@@ -1,46 +1,43 @@
 @import 'src/styles/vars';
 
 @media screen and (min-width: 300px) {
-  .container-chatroom {
-    font-size: 14px;
-    margin-bottom: 5rem;
-  }
-  .link-chatroom {
+  /* 
+  Set up of the search page
+  */
+  .categories {
+    padding-bottom: 6rem;
+    background: #eee;
     display: flex;
-    border-bottom: 1px solid #292929;
-
-    &:hover {
-      border-bottom: 1px solid $color-orange;
-    }
-  }
-  .chatroom-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin: 1rem;
-    object-fit: cover;
-  }
-  .chatroom-group-info {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
     align-items: center;
   }
 
-  .group-text {
-    justify-content: space-evenly;
-    display: flex;
-    flex-direction: column;
-    width: 75%;
-  }
-  .chatroom-date {
-    font-size: .5rem;
-    text-align: right;
-    margin-left: .5rem;
-    color: gray;
-  }
+  .category-card {
+    margin-top: 2rem;
+    position: relative;
 
-  .text {
-    font-size: .8rem;
-    color: gray;
+    &-image {
+      display: block;
+      height: 320px;
+      width: 320px;
+      object-fit: cover;
+      margin: 1rem auto;
+      border-radius: 2em;
+      box-shadow: 0px 0px 5px 0px #7c7c7c;
+    }
+
+    &-options {
+      position: absolute;
+
+      &-name {
+        text-align: center;
+        font-size: 1.5rem;
+        color: $color-white;
+        text-shadow: 3px 3px 2px black;
+        font-style: italic;
+        font-weight: bold;
+      }
+    }
   }
 }

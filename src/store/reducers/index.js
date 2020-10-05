@@ -4,6 +4,8 @@ import { combineReducers } from 'redux';
 import connexion from './forms/connexion';
 import forgottenPassword from './forms/forgottenPassword';
 import profile from './profile';
+import chat from './chat';
+
 
 /**
 * combineReducers nous retourne le reducer parent généré
@@ -16,6 +18,7 @@ const reducer = combineReducers({
   connexion,
   forgottenPassword,
   profile,
+  chat,
 });
 
 export default reducer;

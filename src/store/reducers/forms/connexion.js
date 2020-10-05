@@ -10,6 +10,7 @@ const initialState = {
   isPasswordShown: false,
   isConfirmPasswordShown: false,
   error: '',
+  sessionUserId: 0,
 };
 
 // == Types
@@ -48,6 +49,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         loading: true,
         isConnected: true,
+        sessionUserId: action.user.session.user.id,
         user: action.user,
       };
     case SHOW_HOME:

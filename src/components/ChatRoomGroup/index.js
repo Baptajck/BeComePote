@@ -9,59 +9,28 @@ import './chatRoomGroup.scss';
 
 // == Composant
 const ChatRoomGroup = () => {
-  const truncStr = (string, limit) => (string.length > limit
-    ? `${string
-      .trim()
-      .substring(0, limit - 3)
-      .trim()}...`
-    : string);
-
-  const [persons, setUsers] = useState([]);
-  const usersInfos = () => {
-    axios.get('http://localhost:3000/api/users')
+  const [categories, setCategories] = useState([]);
+  const getCategories = () => {
+    axios.get('http://localhost:3000/api/allCategories')
     .then((res) => {
-      console.log(res);
-      setUsers(res.data);
+      setCategories(res.data);
     })
     .catch(() => (
       AxiosError
     ));
   }
 
-   /**
-   * Récupération de la date pour changer son format et le mettre au format français
-   * @param  {String} reviewDate
-   * @returns  {String} reviewDateFormated
-   */
-  const formatDate = (reviewDate) => {
-    const options = {
-      weekday: 'long', day: 'numeric',
-    };
-    const timestamp = Date.parse(reviewDate);
-    const timestampToDate = new Date(timestamp);
-    const reviewDateFormated = timestampToDate.toLocaleDateString('en-GB');
-    return reviewDateFormated;
-  };
-
   useEffect(() => {
-    usersInfos();
+    getCategories();
   }, [])
 
   return (
-    <div className="container-chatroom">
-      {persons.map(({ id, pseudo, avatar, presentation, updated_at }) => (
-        <NavLink key={id} to={`chatroom/${id}/${pseudo}`} className="link-chatroom">
-          <img src={avatar} alt="profil" className="chatroom-avatar" />
-          <div className="group-text">
-            {/*
-            <p className="chatroom-pseudo">{truncStr(pseudo, 30)}</p>
-            <p className="chatroom text">{truncStr(text, 45)}</p>
-            */}
-            <div className="chatroom-group-info">
-              <p className="chatroom-pseudo">{pseudo}</p>
-              <p className="chatroom-date">{formatDate(updated_at)}</p>
-            </div>
-            <p className="chatroom text">{truncStr(presentation, 45)}</p>
+    <div className="categories">
+      {categories.map(({ background, id, category_name }) => (
+        <NavLink key={id} to={`chatroom/${id}/${category_name}`} className="category-card">
+          <img src={background} alt={category_name} className="category-card-image"/>
+          <div className="search-profile-options category-card-options">
+            <h1 className="profile-options-nickname category-card-options-name">{category_name}</h1>
           </div>
         </NavLink>
       ))}

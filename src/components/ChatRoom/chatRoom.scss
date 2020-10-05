@@ -19,7 +19,7 @@
       padding: 1.5rem;
       justify-content: center;
       align-items: center;
-      margin-bottom: 0.5rem;
+      //margin-top: 0.5rem;
 
       &-arrow {
         font-size: 3em;
@@ -27,13 +27,12 @@
         position: absolute;
         left: 0;
         margin-left: 2.5%;
+        top: 2.5%;
       }
 
       &-image {
-        height: 15%;
-        width: 15%;
-        border-radius: 50%;
-        border: 0.25em solid rgba(255, 255, 255, 1);
+        width: 20%;
+        border: 0.15em solid rgba(255, 255, 255, 1);
       }
 
       &-title {

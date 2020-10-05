@@ -7,13 +7,50 @@ const cors = require('cors');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 
-const app = express();
 const {
   PORT_BACK, PORT_FRONT, HOST, // FRONT_URL,
 } = process.env;
 
+
+// == SOCKET IO
+// ===================================================================================
+const http = require("http");
+const socketIo = require("socket.io");
+
+const port = 5000;
+const app = express();
+
+const server = http.createServer(app);
+const io = socketIo(server); // < Interesting!
+
+let interval;
+
+io.on("connection", (socket) => {
+  console.log("New user connected");
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+    clearInterval(interval);
+  });
+});
+
+const getApiAndEmit = socket => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  socket.emit("FromAPI", response);
+};
+
+
+server.listen(port, () => console.log(`>> Listening for chat : ${port}`));
+
+// ===================================================================================
+
+
 // CORS SETUP & OPTIONS
-const Origins = ['http://becomepote.fr', 'http://becomepote.fr:3000/api/$/', '/\.becomepote\.fr$/', `http://localhost:${PORT_FRONT}`, `http://localhost:${PORT_BACK}`];
+const Origins = ['http://becomepote.fr', 'http://becomepote.fr:3000/api/$/', '/\.becomepote\.fr$/', `http://localhost:${PORT_FRONT}`, `http://localhost:${PORT_BACK}`,`http://localhost:${port}`];
 // const Origins2 = ['http://becomepote.fr', 'http://becomepote.fr:3000'];
 
 

@@ -1,14 +1,24 @@
 // == Import : npm
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import axios, { AxiosError } from 'axios';
+import { NavLink } from 'react-router-dom';
 import { IoIosArrowRoundBack } from 'react-icons/io';
-import { FaRegPaperPlane } from 'react-icons/fa';
+import Field from './Field';
+import ChatApp from './ChatApp';
 
 // == Import : local
 import './chatRoom.scss';
 import MessageList from './MessageList';
 
 // == Composant
-const ChatRoom = () => {
+const ChatRoom = ({
+  chatMessage,
+  newMessage,
+  submitMessage,
+  fetchMessages,
+  messages,
+  sessionUserId,
+}) => {
   // const chatZone = useRef(null);
 
   // useEffect(
@@ -16,33 +26,54 @@ const ChatRoom = () => {
   //     chatZone.current.scrollBy(0, chatZone.current.scrollHeight);
   //   },
   // );
+  const [category, setCategory] = useState([]);
+  const [url, setUrl] = useState("");
+  const getCategory = (url) => {
+    axios.get(`http://localhost:3000/api/category/${url}`)
+    .then((res) => {
+      setCategory(res.data);
+    })
+    .catch(() => (
+      AxiosError
+    ));
+  }
+
+  const splitURL = () => {
+    const url = document.location.pathname;
+    const a = url.split('/');
+    setUrl(Number(a[2]));
+  };
+
+  useEffect(() => {
+    getCategory(url);
+    splitURL();
+  }, [url])
+
+  const { category_name, background } = category;
 
   return (
     <div className="chatroom">
-      <div className="chatroom-container">
+    <ChatApp 
+      chatMessage={chatMessage}
+      newMessage={newMessage}
+      submitMessage={submitMessage}
+      fetchMessages={fetchMessages}
+      messages={messages}
+      sessionUserId={sessionUserId}
+    />
+      {/* <div className="chatroom-container">
         <div className="chatroom-header">
-          <IoIosArrowRoundBack className="chatroom-header-arrow" />
-          <img src="https://i.imgur.com/HgoCwpu.png" title="chatroom header" alt="header" className="chatroom-header-image" />
-          <h1 className="chatroom-header-title">Chat avec Fanny</h1>
+          <NavLink to={`/chatroom`} className="chatroom-header-arrow">
+            <IoIosArrowRoundBack />
+          </NavLink>
+              <img src={background} title={category_name} alt={category_name} className="chatroom-header-image" />
+              <h1 className="chatroom-header-title">Salon : {category_name}</h1>
         </div>
         <div className="chatroom-messages-container">
           <MessageList />
         </div>
-        <div className="chatroom-reply-container">
-          <form action="#0" className="chatroom-reply-form">
-            <input
-              type="text"
-              className="chatroom-reply-input"
-              placeholder="&nbsp;envoyer un message..."
-            />
-            <button type="button" title="envoyer un message" className="chatroom-reply-button">
-              <i type="button" className="chatroom-reply-icon">
-                <FaRegPaperPlane />
-              </i>
-            </button>
-          </form>
-        </div>
-      </div>
+        <Field />
+      </div> */}
     </div>
   );
 };
