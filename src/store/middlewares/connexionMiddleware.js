@@ -50,6 +50,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
+          localStorage.setItem('User_Session', JSON.stringify(response.data.session.user));
           store.dispatch(connectUserSignIn(response.data));
         })
         .catch((error) => {

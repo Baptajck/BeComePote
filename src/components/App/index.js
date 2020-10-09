@@ -106,7 +106,6 @@ const App = ({ getHome, isConnected, loading }) => {
           </Route>
           <Route exact path="/chatroom/:id/:pseudo">
             {isConnected ? <ChatRoom /> : <Redirect to="/" />}
-            <Navigation />
           </Route>
           <Route path="/searchGroup">
             {isConnected ? <SearchGroup /> : <Redirect to="/" />}

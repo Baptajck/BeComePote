@@ -7,7 +7,7 @@ import Field from './Field';
 import ChatApp from './ChatApp';
 
 // == Import : local
-import './chatRoom.scss';
+import './chatApp.scss';
 import MessageList from './MessageList';
 
 // == Composant

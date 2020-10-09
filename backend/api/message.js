@@ -32,7 +32,6 @@ router.get('/allCategories', (req, res) => {
   */
 router.get('/category/:id', (req, res) => {
   const category_id = req.params.id;
-  console.log('>> Category id: ', category_id);
   Categories.query()
     .findById(category_id)
     .then((category) => {
