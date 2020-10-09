@@ -21,6 +21,12 @@ const ChatApp = ({
   const chatZone = useRef(null);
   const [category, setCategory] = useState([]);
   const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    fetchMessages();
+    getCategory(url);
+    splitURL();
+  }, [url]);
   
   const getCategory = (url) => {
     axios.get(`http://localhost:3000/api/category/${url}`)
@@ -53,17 +59,15 @@ const ChatApp = ({
     event.preventDefault();
   }
 
+  // category 
+  localStorage.setItem('Category', url)
+
   // ID de la session du user connecté
   const sessionUserId = +JSON.parse(localStorage.getItem('User_Session')).id;
 
   // on crée une fonction utilitaire réutilisable pour voir si on est l'auteur
   const isMe = (messageUserId, sessionUserId) => messageUserId === sessionUserId;
 
-  useEffect(() => {
-    fetchMessages();
-    getCategory(url);
-    splitURL();
-  }, [url]);
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);

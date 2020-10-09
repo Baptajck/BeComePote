@@ -51,12 +51,12 @@ router.get('/category/:id', (req, res) => {
   * @returns {object} user object
   */
 router.post('/addMessage', (req, res) => {
-  const { message_content, /* category_id */ } = req.body;
+  const { message_content, category_id } = req.body;
   const userId = Number(req.session.user.id);
   Messages.query()
     .insert({
       message_content,
-      // category_id: Number(category_id),
+      category_id: Number(category_id),
     })
     .then((newMessage) => {
       HasMessages.query()
@@ -93,6 +93,7 @@ router.get('/getMessage/:id', (req, res) => {
     .select('user.pseudo', 'chat_message.message_content', 'chat_message.created_at')
     .where('chat_message.category_id', categoryId)
     .then((test) => {
+      console.log(test);
       res.json(test);
       res.status(200).send('Your message has been successful displayed!');
     })

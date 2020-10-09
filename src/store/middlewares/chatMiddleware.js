@@ -19,9 +19,11 @@ const chatMiddleware = (store) => (next) => (action) => {
       const state = store.getState();
       const userId = state.connexion.sessionUserId;
       const message_content = state.chat.chatMessage;
+      const category_id = +localStorage.getItem('Category');
 
       axios.post('http://localhost:3000/api/addMessage',{
-        message_content
+        message_content,
+        category_id,
       })
         .then((response) => {
           const { pseudo, avatar, id } = JSON.parse(localStorage.getItem('User_Session'));
@@ -46,7 +48,8 @@ const chatMiddleware = (store) => (next) => (action) => {
       break;
     }
     case GET_MESSAGES: {
-      axios.get('http://localhost:3000/api/getMessages')
+      const category_id = +localStorage.getItem('Category');
+      axios.get(`http://localhost:3000/api/getMessage/${category_id}`)
         .then((response) => {
           const messageAction = displayMessages(response.data);
           store.dispatch(messageAction);
