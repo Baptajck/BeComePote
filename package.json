@@ -7,7 +7,7 @@
     "@babel/preset-env": "*",
     "@babel/preset-react": "*",
     "@babel/register": "*",
-    "autoprefixer": "*",
+    "autoprefixer": "^10.0.1",
     "babel-eslint": "*",
     "babel-loader": "*",
     "css-loader": "*",
@@ -23,18 +23,18 @@
     "html-webpack-plugin": "*",
     "ignore-styles": "*",
     "mini-css-extract-plugin": "*",
-    "node-sass": "*",
+    "node-sass": "^4.14.1",
     "optimize-css-assets-webpack-plugin": "*",
-    "postcss": "*",
-    "postcss-loader": "*",
-    "sass-loader": "*",
+    "postcss": "^8.1.1",
+    "postcss-loader": "^4.0.4",
+    "sass-loader": "7.0.1",
     "style-loader": "*",
     "stylelint": "*",
     "stylelint-config-recommended": "*",
     "uglifyjs-webpack-plugin": "*",
-    "webpack": "*",
-    "webpack-cli": "*",
-    "webpack-dev-server": "*"
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
     "start": "webpack-dev-server",
@@ -45,7 +45,8 @@
     "build:prod": "NODE_ENV=production webpack --mode production",
     "build:prod:win": "set NODE_ENV=production && webpack --mode production",
     "start:server": "nodemon backend/server.js",
-    "save-deps": "node updateDeps.js"
+    "save-deps": "node updateDeps.js",
+    "dev": "webpack serve --mode production --env production"
   },
   "dependencies": {
     "axios": "^0.19.0",
