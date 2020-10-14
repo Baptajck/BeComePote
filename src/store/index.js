@@ -6,6 +6,8 @@ import reducer from 'src/store/reducers';
 import connexionMiddleware from './middlewares/connexionMiddleware';
 import passwordMiddleware from './middlewares/passwordMiddleware';
 import profileMiddleware from './middlewares/profileMiddleware';
+import chatMiddleware from './middlewares/chatMiddleware';
+import { websocketConnect } from 'src/store/reducers/chat';
 
 // == Store
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -15,6 +17,7 @@ const enhancers = composeEnhancers(
     connexionMiddleware,
     passwordMiddleware,
     profileMiddleware,
+    chatMiddleware,
   ),
 );
 
@@ -23,6 +26,8 @@ const store = createStore(
   // preloadedState,
   enhancers,
 );
+
+store.dispatch(websocketConnect());
 
 // == Export
 export default store;

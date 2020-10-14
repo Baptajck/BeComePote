@@ -11,4 +11,11 @@ const getMediaBySlug = (medias, slug) => {
   return searchedMedia;
 };
 
+// Permet de split l'url pour recupèrer une données dedans
+// const splitURL = () => {
+//   const url = document.location.hash;
+//   const a = url.split('/');
+//   const n = Number(a[2]);
+//   return n;
+// };
 module.exports = getMediaBySlug;

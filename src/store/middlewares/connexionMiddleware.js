@@ -43,13 +43,14 @@ const connexionMiddleware = (store) => (next) => (action) => {
     }
     case CONNECT_USER: {
       const state = store.getState();
-      const { email, password } = state.connexion;
+      const { email, password, sessionUserId } = state.connexion;
       axios.defaults.withCredentials = true;
       axios.post('http://localhost:3000/api/connect', {
         email,
         password,
       })
         .then((response) => {
+          localStorage.setItem('User_Session', JSON.stringify(response.data.session.user));
           store.dispatch(connectUserSignIn(response.data));
         })
         .catch((error) => {

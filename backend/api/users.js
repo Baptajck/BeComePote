@@ -223,7 +223,7 @@ router.post('/connect', (req, res) => {
   const { email, password } = req.body;
   User.query()
     .where('email', email)
-    .select('id', 'email', 'password')
+    .select('id', 'email', 'password', 'pseudo', 'avatar')
     .then((user) => {
       if (!user.length > 0) {
         res.status(401).send('Email is wrong');
@@ -238,6 +238,8 @@ router.post('/connect', (req, res) => {
         const userSession = {
           id: user[0].id,
           email: user[0].email,
+          pseudo: user[0].pseudo,
+          avatar: user[0].avatar,
         };
         req.session.user = userSession;
         const { session } = req;

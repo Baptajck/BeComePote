@@ -13,7 +13,6 @@ import './app.scss';
 import ScrollToTop from 'src/components/ScrollToTop';
 import HomePage from 'src/components/HomePage';
 import ChatRoomGroup from 'src/components/ChatRoomGroup';
-import ChatRoom from 'src/components/ChatRoom';
 import Search from 'src/components/Search';
 import SearchGroup from 'src/components/SearchGroup';
 import Error404 from 'src/components/Error404';
@@ -23,6 +22,7 @@ import Navigation from 'src/components/Navigation';
 // == CONTAINERS
 import SignUp from 'src/containers/forms/signUp';
 import SignIn from 'src/containers/forms/signIn';
+import ChatRoom from 'src/containers/chat';
 import ForgottenPassword from 'src/containers/forms/forgottenPassword';
 import NewPassword from 'src/containers/forms/newPassword';
 import Profile from 'src/containers/profile';
@@ -106,7 +106,6 @@ const App = ({ getHome, isConnected, loading }) => {
           </Route>
           <Route exact path="/chatroom/:id/:pseudo">
             {isConnected ? <ChatRoom /> : <Redirect to="/" />}
-            <Navigation />
           </Route>
           <Route path="/searchGroup">
             {isConnected ? <SearchGroup /> : <Redirect to="/" />}
