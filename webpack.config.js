@@ -83,13 +83,13 @@ module.exports = {
           devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
           // Chargement du CSS
           'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [require('autoprefixer')],
-              sourceMap: true,
-            },
-          },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: {
+          //     plugins: () => [require('autoprefixer')],
+          //     sourceMap: true,
+          //   },
+          // },
           // SASS
           'sass-loader',
         ],
