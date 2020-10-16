@@ -8,11 +8,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../Models/Users');
 
-const { USER_EMAIL, USER_CLIENTID, USER_CLIENTSECRET, USER_REFRESHTOKEN, SECRET } = process.env;
+const { HOST_EMAIL, USER_EMAIL, USER_CLIENTID, USER_CLIENTSECRET, USER_REFRESHTOKEN, SECRET } = process.env;
 
 // Identification to our sender provider - Gmail
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: HOST_EMAIL,
   port: 465,
   secure: true,
   auth: {
