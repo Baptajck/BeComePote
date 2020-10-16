@@ -54,9 +54,10 @@ const profileMiddleware = (store) => (next) => (action) => {
     }
     case EDIT_PROFILE_AVATAR: {
       const state = store.getState();
-      const {
-        fileUpload,
-      } = state.profile;
+      const { fileUpload } = state.profile;
+      
+      const userProfile = state.profile.profile;
+      delete userProfile.password;
 
       const formData = new FormData();
       formData.append('image', fileUpload);
@@ -69,6 +70,8 @@ const profileMiddleware = (store) => (next) => (action) => {
           },
         })
         .then(() => {
+          localStorage.removeItem('User_Session');
+          localStorage.setItem('User_Session', JSON.stringify(userProfile));
           store.dispatch(mountedTrue());
         })
         .catch(() => (

@@ -28,6 +28,7 @@ const connexionMiddleware = (store) => (next) => (action) => {
           pseudo, email, password,
         })
           .then((response) => {
+            localStorage.setItem('User_Session', JSON.stringify(response.data.session.user));
             store.dispatch(saveUserSignUp(response.data));
           })
           .catch((error) => {

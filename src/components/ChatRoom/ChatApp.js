@@ -25,8 +25,13 @@ const ChatApp = ({
   useEffect(() => {
     fetchMessages();
     getCategory(url);
-    splitURL();
   }, [url]);
+
+  
+  useEffect(() => {
+    splitURL();
+    window.scrollTo(0, document.body.scrollHeight);
+  });
   
   const getCategory = (url) => {
     axios.get(`http://localhost:3000/api/category/${url}`)
@@ -67,11 +72,6 @@ const ChatApp = ({
 
   // on crée une fonction utilitaire réutilisable pour voir si on est l'auteur
   const isMe = (messageUserId, sessionUserId) => messageUserId === sessionUserId;
-
-
-  useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
-  });
 
   const { category_name, background } = category;
 

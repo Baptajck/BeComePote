@@ -8,12 +8,19 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../Models/Users');
 
+const { HOST_EMAIL, USER_EMAIL, USER_CLIENTID, USER_CLIENTSECRET, USER_REFRESHTOKEN, SECRET } = process.env;
+
 // Identification to our sender provider - Gmail
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: HOST_EMAIL,
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.EMAIL_LOGIN,
-    pass: process.env.EMAIL_PASSWORD,
+    type: 'OAuth2',
+    user: USER_EMAIL,
+    clientId: USER_CLIENTID,
+    clientSecret: USER_CLIENTSECRET,
+    refreshToken: USER_REFRESHTOKEN
   },
 });
 
@@ -38,7 +45,7 @@ const getPasswordResetURL = (user, token) => `http://localhost:8080/newPassword/
  * @param  {Number} userId
  */
 const usePasswordHashToMakeToken = (userId) => {
-  const token = jwt.sign({ userId }, process.env.SECRET, {
+  const token = jwt.sign({ userId }, SECRET, {
     expiresIn: 3600, // 1 hour
   });
   return token;
@@ -58,7 +65,7 @@ router.post('/user/:email', (req, res, next) => {
     .then((user) => {
       const resetPasswordTemplate = (url) => {
         const date = new Date();
-        const from = process.env.EMAIL_LOGIN;
+        const from = USER_EMAIL;
         const to = email;
         const subject = 'BeComePote - Changement de mot de passe';
         const html = `
@@ -359,7 +366,7 @@ router.post('/newPasswordReset/:userId/:token', (req, res) => {
     .where('id', userId)
     .then((user) => {
       const oldToken = replaceAll(token, '$', '.');
-      const payload = jwt.decode(oldToken, process.env.SECRET);
+      const payload = jwt.decode(oldToken, SECRET);
       const hash = bcrypt.hashSync(password, 10);
       if (payload.userId === user[0].id) {
         User.query()

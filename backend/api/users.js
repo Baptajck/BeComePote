@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const cloudinary = require('cloudinary').v2;
 const User = require('../Models/Users');
+const Messages = require('../Models/Messages');
+const HasMessages = require('../Models/HasMessages');
 const withAuth = require('../middleware');
 
 // SEND FILE TO CLOUDINARY
@@ -83,6 +85,8 @@ router.post('/register', (req, res) => {
             const userSession = {
               id: newUser.id,
               email: newUser.email,
+              pseudo: newUser.pseudo,
+              avatar: 'https://i.imgur.com/1ttSyNq.jpg',
             };
             req.session.user = userSession;
             const { session } = req;
@@ -201,8 +205,62 @@ router.patch('/user/edit', (req, res) => {
 router.delete('/user/delete', (req, res) => {
   const id = Number(req.session.user.id);
   User.query()
-    .deleteById(id)
-    .then(() => {
+    .findById(id)
+    .then((user) => {
+      HasMessages.query()
+      .where('has_message.user_id', id)
+      .then((t) => {
+        // This deletes the user's chat messages
+        t.forEach(element => {
+          Messages.query()
+          .findById(element.chat_message_id)
+          .then((u) => {
+            Messages.query()
+            .deleteById(u.id)
+            .then((messageDelete) => {
+              res.status(200).send(messageDelete)
+            })
+            .catch((err) => {
+              res.status(500).send({
+              message:
+                err.message || 'Some error occurred when deleting the user\'s message.',
+            })
+            console.log(err.message);
+            })
+          })
+        });
+        // This deletes the user's account
+        t.forEach(element => {
+          User.query()
+          .deleteById(element.user_id)
+          .then((userDelete) => {
+             res.status(200).send(userDelete)
+            .catch((err) => {
+              res.status(500).send({
+              message:
+                err.message || 'Some error occurred when deleting the user\'s profile.',
+            })
+            console.log(err.message);
+            })
+          })
+        });
+        // This enables the relationship table HasMessage to be emptied when an user deletes his account
+        t.forEach(element => {
+          HasMessages.query()
+          .deleteById(element.id)
+          .then((hasMessageDelete) => {
+            res.status(200).send(hasMessageDelete)
+            .catch((err) => {
+              res.status(500).send({
+              message:
+                err.message || 'Some error occurred when deleting the user\'s messages.',
+            })
+            console.log(err.message);
+            })
+          })
+        });
+
+      })
       req.session.destroy();
       res.clearCookie('myCookie');
       res.status(200).send('Success, your profile has been deleted!');

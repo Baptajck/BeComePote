@@ -8,9 +8,7 @@ const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const Message = require('./Models/Messages')
 
-const {
-  PORT_BACK, PORT_FRONT, HOST, // FRONT_URL,
-} = process.env;
+const { PORT_BACK, PORT_FRONT, HOST } = process.env;
 
 
 // SOCKET IO
@@ -83,10 +81,8 @@ app.use(session({
 }));
 
 // COOKIE
+// ===================================================================================
 app.use(cookieParser());
-
-// TODO Gérer le flavicon pour le back
-// app.use(express.favicon(`${__dirname}src/favicon/favicon.ico`));
 
 // FILE UPLOAD
 // ===================================================================================
