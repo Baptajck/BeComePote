@@ -97,7 +97,6 @@ const ChatApp = ({
       </div>
       <div ref={chatZone} className="chat-body">
         {messages.map((state, id) => {
-          console.log('>> User: ', state.user[0]);
           const itsMe = isMe(state.user[0].id, sessionUserId);
           return (
             <div key={id}>

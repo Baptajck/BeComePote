@@ -24,7 +24,7 @@ const CustomPrompt = ({
           <div className="prompt-message">{message}</div>
           <div className="prompt-buttons">
             <button type="button" className="prompt-buttons-item--cancel" onClick={cancel}>Refuser</button>
-            <button type="button" className="prompt-buttons-item--confirm" onClick={deleteProfile()}>Confirmer</button>
+            <button type="button" className="prompt-buttons-item--confirm" onClick={deleteProfile}>Confirmer</button>
           </div>
         </div>
       </div>
