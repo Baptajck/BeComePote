@@ -14,17 +14,23 @@ const CustomPrompt = ({
   show, message, deleteProfile, cancel,
 }) => {
   if (!show) return null;
+  const deleteProfileButton = () => {
+    deleteProfile();
+    localStorage.removeItem('User_Session');
+  }
   return (
     <React.Fragment>
-      <div className="prompt">
-        <div className="prompt-1">
-          <div className="prompt-head">
-            <h3 className="prompt-head-title">Supprimer son compte <span className="prompt-head-title--span" onClick={cancel}><MdClose /></span></h3>
-          </div>
-          <div className="prompt-message">{message}</div>
-          <div className="prompt-buttons">
-            <button type="button" className="prompt-buttons-item--cancel" onClick={cancel}>Refuser</button>
-            <button type="button" className="prompt-buttons-item--confirm" onClick={deleteProfile}>Confirmer</button>
+      <div className="prompt-blur">
+        <div className="prompt">
+          <div className="prompt-1">
+            <div className="prompt-head">
+              <h3 className="prompt-head-title">Supprimer son compte <span className="prompt-head-title--span" onClick={cancel}><MdClose /></span></h3>
+            </div>
+            <div className="prompt-message">{message}</div>
+            <div className="prompt-buttons">
+              <button type="button" className="prompt-buttons-item--cancel" onClick={cancel}>Refuser</button>
+              <button type="button" className="prompt-buttons-item--confirm" onClick={deleteProfileButton}>Confirmer</button>
+            </div>
           </div>
         </div>
       </div>

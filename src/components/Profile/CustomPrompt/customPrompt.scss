@@ -16,6 +16,17 @@
     left: 50%;
     transform: translate(-50%, -50%);
     transition: .3s;
+    
+    &-blur {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.7);
+      z-index: 500;
+    }
+
 
     &-1 {
       border-radius: 1rem;

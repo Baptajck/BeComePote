@@ -1,0 +1,99 @@
+// For smaller mobile screens
+@media screen and (min-width: 300px) {
+.desktop {
+    background-color: #343434;
+    color: #fff;
+    height: 100%;
+    padding: 2rem 5rem;
+    display: flex;
+
+    &-container {
+      background-color: #262626;
+      border-radius: 10px;
+    }
+    
+    &-header {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    &-title {
+      font-size: 2em;
+      margin: 1rem 0 1rem 0;
+      background: linear-gradient(to right, #3453a1, #775da5, #ce6795, #e68676);  
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &-info {
+      padding: 1rem 0;
+      width: 75%;
+      margin: 0 auto;
+      letter-spacing: .1rem;
+      text-align: justify;
+    }
+
+    &-desc {
+      margin: 3rem 0;
+      line-height: 1.3rem;
+    }
+
+    &-logo {
+      height: 200px;
+    }
+
+    &-bullet {
+      display: none;
+    }
+  }
+}
+
+@media screen and (min-width: 610px) {
+  .desktop {
+    height: 100vh;
+  }
+}
+
+
+// For mobile screens
+@media screen and (min-width: 728px) {
+  .desktop {
+
+    &-container {
+      position: relative;
+    }
+
+    &-title {
+      font-size: 4em;
+    }
+
+    &-info {
+      padding: 1rem 2rem;
+    }
+
+    &-bullet {
+      display: inline;
+      height: 150px;
+      position: absolute;
+      top: -30px;
+      right: -35px;
+      transform: rotate(10deg);
+    }
+  }
+}
+
+
+// For mobile screens
+@media screen and (min-width: 878px) {
+  .desktop {
+
+    &-container {
+      width: 80%;
+      margin: auto;
+    }
+
+    &-bullet {
+      height:200px;
+    }
+  }
+}
