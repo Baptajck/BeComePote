@@ -153,7 +153,7 @@ const useWindowSize = () => {
             </Switch>
           )
         ) : (
-          <DesktopWait />
+          !loading && (<DesktopWait />)
         )
       }
       

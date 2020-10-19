@@ -20,7 +20,6 @@ const Account = ({
   };
   // Logout
   const handleLogout = () => {
-    localStorage.removeItem('User_Session');
     setTimeout(() => {
       getLogout();
     }, 500);

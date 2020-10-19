@@ -90,7 +90,7 @@
       color: white;
       padding: 0 1rem .5rem;
       border-radius: 1em;
-      width: 55%;
+      width: 75%;
       line-height: 0.6em;
 
       &--not-mine{
@@ -111,7 +111,7 @@
         &--not-mine {
           text-align: right;
           margin-left: 1rem;
-          width: 46.5%;
+          width: 66.5%;
         }
       }
    
@@ -122,8 +122,8 @@
         border-radius: 10px;
         display: inline-block;
         position: relative;
-        max-width: 200px;
-        word-break: break-all;
+        max-width: 235px;
+        word-break: break-word;
         line-height: 1.2rem;
         
         &::before{
@@ -156,6 +156,7 @@
         width: 100%;
         margin-right: 0.5rem;
         color: #fff;
+        font-size: 16px;
       }
 
       &-submit[type="submit"] {
