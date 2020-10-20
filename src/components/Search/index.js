@@ -47,7 +47,7 @@ const Search = () => {
         <img src={user.avatar} alt="Photo_avatar" className="search-profile-image"/>
         <div className="search-profile-options">
           <h1 className="search-profile-options-nickname">{user.pseudo}</h1>
-          <button type="button" className="search-profile-options-button" title="Lancez votre conversation !"><IoIosChatbubbles /></button>
+          {/* <button type="button" className="search-profile-options-button" title="Lancez votre conversation !"><IoIosChatbubbles /></button> */}
         </div>
       </div>
       <div className="search-profile-description">
