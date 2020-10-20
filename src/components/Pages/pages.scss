@@ -23,6 +23,7 @@
         background: linear-gradient(to right, #3453a1, #775da5, #ce6795, #e68676);  
         background-clip: text;
         -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
       }
 
       &-navigation {
