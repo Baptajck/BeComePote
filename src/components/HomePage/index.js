@@ -36,7 +36,11 @@ const HomePage = () => (
           </NavLink>
         </div>
       </main>
-      <footer className="homePage-footer">Mentions légales - Qui sommes-nous ?</footer>
+      <footer className="homePage-footer">
+        <a title="Mentions légales" href="/mentions">Mentions légales </a>
+         - 
+        <a title="Qui sommes-nous ?" href="/whoarewe"> Qui sommes-nous ?</a>
+      </footer>
     </div>
   </div>
 );
