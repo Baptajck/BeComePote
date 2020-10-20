@@ -20,6 +20,9 @@ import Error404 from 'src/components/Error404';
 import Spinner from 'src/components/Spinner';
 import Navigation from 'src/components/Navigation';
 import DesktopWait from 'src/components/DesktopWait';
+import Conditions from 'src/components/Pages/terms.js';
+import Mentions from 'src/components/Pages/mentions.js';
+import WhoAreWe from 'src/components/Pages/whoarewe.js';
 
 // == CONTAINERS
 import SignUp from 'src/containers/forms/signUp';
@@ -39,6 +42,15 @@ const App = ({ getHome, isConnected, loading }) => {
   const { pathname } = useLocation();
   const changeTitle = () => {
     switch (pathname) {
+      case '/terms':
+        document.title = 'Conditions d\'utilisation | BeComePote';
+        break;
+      case '/mentions':
+        document.title = 'Mentions légales | BeComePote';
+        break;
+      case '/whoarewe':
+        document.title = 'Qui sommes-nous ? | BeComePote';
+        break;
       case '/forgottenPassword':
         document.title = 'Mot de passe oublié | BeComePote';
         break;
@@ -112,6 +124,15 @@ const useWindowSize = () => {
           !loading && (
             <Switch>
               {/* Pages Non-Connectées */}
+              <Route path="/terms">
+                <Conditions />
+              </Route>
+              <Route path="/mentions">
+                <Mentions />
+              </Route>
+              <Route path="/whoarewe">
+                <WhoAreWe />
+              </Route>
               <Route path="/forgottenPassword">
                 <ForgottenPassword />
               </Route>
