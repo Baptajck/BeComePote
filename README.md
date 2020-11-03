@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://becomepote.fr">
+  <a href="http://becomepote.fr">
     <img src="https://i.imgur.com/WKiSggT.png" alt="Logo" width="150" height="150">
   </a>
 
