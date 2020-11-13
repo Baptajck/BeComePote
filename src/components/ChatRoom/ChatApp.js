@@ -1,12 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
-import axios, { AxiosError  } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { NavLink } from 'react-router-dom';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns';
-import { fr } from 'date-fns/locale'
+import {
+  format, formatDistance, formatRelative, subDays,
+} from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { MdSend, MdClose } from 'react-icons/md';
 import { IoIosChatbubbles, IoIosArrowRoundBack } from 'react-icons/io';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Spinner from './Spinner';
 
 import './ChatApp.scss';
 
@@ -16,40 +19,26 @@ const ChatApp = ({
   submitMessage,
   fetchMessages,
   messages,
+  category,
+  url,
   // sessionUserId,
 }) => {
   const chatZone = useRef(null);
-  const [category, setCategory] = useState([]);
-  const [url, setUrl] = useState("");
+  const [loading, isLoading] = useState(true);
 
   useEffect(() => {
-    fetchMessages();
-    getCategory(url);
-  }, [url]);
+    setTimeout(() => {
+      isLoading(false);
+    }, 500);
+    setTimeout(() => {
+      fetchMessages();
+    }, 100);
+  }, []);
 
-  
   useEffect(() => {
-    splitURL();
     window.scrollTo(0, document.body.scrollHeight);
   });
-  
-  const getCategory = (url) => {
-    axios.get(`http://localhost:3000/api/category/${url}`)
-    .then((res) => {
-      setCategory(res.data);
-    })
-    .catch(() => (
-      AxiosError
-    ));
-  }
 
-  const splitURL = () => {
-    const url = document.location.pathname;
-    const a = url.split('/');
-    setUrl(Number(a[2]));
-  };
-
-  
   const handleChange = (event) => {
     const { value } = event.target;
     newMessage(value);
@@ -62,10 +51,10 @@ const ChatApp = ({
 
   const handlePrevent = (event) => {
     event.preventDefault();
-  }
+  };
 
-  // category 
-  localStorage.setItem('Category', url)
+  // category
+  localStorage.setItem('Category', url);
 
   // ID de la session du user connecté
   const sessionUserId = +JSON.parse(localStorage.getItem('User_Session')).id;
@@ -80,79 +69,84 @@ const ChatApp = ({
     const result = formatDistance(
       new Date(t),
       new Date(),
-      {locale: fr} // Pass the locale as an option
-    )
+      { locale: fr }, // Pass the locale as an option
+    );
     return result;
-  }
-    
+  };
+
   return (
     <div>
-      
       <div className="chatroom-header chatroom-header-backgroundImage" style={{ backgroundImage: `url(${background})` }}>
-        <NavLink to={`/chatroom`} className="chatroom-header-arrow">
+        <NavLink to="/chatroom" className="chatroom-header-arrow">
           <IoIosArrowRoundBack />
         </NavLink>
         <h1 className="chatroom-header-title">Salon : {category_name}</h1>
-        <div className="chatroom-header-overlay"></div>
+        <div className="chatroom-header-overlay" />
       </div>
-      <div ref={chatZone} className="chat-body">
-        {messages.map((state, id) => {
-          const itsMe = isMe(state.user[0].id, sessionUserId);
-          return (
-            <div key={id}>
-            <div 
-              className={
-                classNames(
-                  'chat-body-message',
-                  { 'chat-body-message--not-mine': !itsMe },
-                )
-              }
-            >
-              <div
-                className={
+
+      {loading && (<Spinner loading={loading} />)}
+
+      {!loading && (
+        <div ref={chatZone} className="chat-body">
+          {messages.map((state, id) => {
+            const itsMe = isMe(state.user[0].id, sessionUserId);
+            return (
+              <div key={id}>
+                <div
+                  className={
+                    classNames(
+                      'chat-body-message',
+                      { 'chat-body-message--not-mine': !itsMe },
+                    )
+                  }
+                >
+                  <div
+                    className={
+                      classNames(
+                        'chat-group-avatar',
+                        { 'chat-group-avatar--not-mine': !itsMe },
+                      )
+                    }
+                  >
+                    <div className="chat-body-message-author">{state.user[0].pseudo}</div>
+                    <img
+                      src={state.user[0].avatar}
+                      alt={`Photo_de_profil_de_${state.user[0].pseudo}`}
+                      className={
+                      classNames(
+                        'chatroom-avatar',
+                        { 'chatroom-avatar--not-mine': !itsMe },
+                      )
+                    }
+                    />
+                  </div>
+                  <p
+                    className={
+                    classNames(
+                      'chat-body-message-content',
+                      { 'chat-body-message-content--not-mine': !itsMe },
+                    )
+                  }
+                  >
+                    {state.message_content}
+                  </p>
+                </div>
+                <p
+                  className={
                   classNames(
-                    'chat-group-avatar',
-                    { 'chat-group-avatar--not-mine': !itsMe },
+                    'chat-body-message-date',
+                    { 'chat-body-message-date--not-mine': !itsMe },
                   )
                 }
-              >
-                <div className="chat-body-message-author">{state.user[0].pseudo}</div>
-                <img
-                src={state.user[0].avatar}
-                alt={`Photo_de_profil_de_${state.user[0].pseudo}`}
-                className={
-                  classNames(
-                    'chatroom-avatar',
-                    { 'chatroom-avatar--not-mine': !itsMe },
-                  )
-                }
-                />
+                >
+                  {`il y a ${dateChat(state.created_at)}`}
+                </p>
               </div>
-              <p
-              className={
-                  classNames(
-                    'chat-body-message-content',
-                    { 'chat-body-message-content--not-mine': !itsMe },
-                  )
-                }
-              >
-              {state.message_content}
-              </p>
-            </div>
-            <p
-              className={
-                classNames(
-                  'chat-body-message-date',
-                  { 'chat-body-message-date--not-mine': !itsMe },
-                )
-              }
-            >
-            {`il y a ${dateChat(state.created_at)}`}
-            </p>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
+
       <div className="chat-footer">
         <form
           className="chat-footer-form"
@@ -172,28 +166,5 @@ const ChatApp = ({
     </div>
   );
 };
-
-// ChatApp.propTypes = {
-//   sessionUserId: PropTypes.number.isRequired,
-//   fetchMessages: PropTypes.func.isRequired,
-//   chatMessage: PropTypes.string,
-//   newMessage: PropTypes.func.isRequired,
-//   submitMessage: PropTypes.func.isRequired,
-//   messages: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       content: PropTypes.string.isRequired,
-//       createdAt: PropTypes.string.isRequired,
-//       user: PropTypes.shape({
-//         id: PropTypes.number.isRequired,
-//         handle: PropTypes.string.isRequired,
-//       }).isRequired,
-//     }),
-//   ).isRequired,
-// };
-
-// ChatApp.defaultProps = {
-//   chatMessage: '',
-// };
 
 export default ChatApp;
