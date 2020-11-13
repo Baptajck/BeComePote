@@ -18,6 +18,7 @@ import { errorOrNot } from 'src/utils/Errors';
 const Questions = ({
   questions, submitQuestions, getIdOptions, responses, choices, getChoices, mounted,
 }) => {
+  const [checked, setChecked] = useState();
   useEffect(() => {
     if (mounted) {
       getChoices();
@@ -34,6 +35,7 @@ const Questions = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setChecked(false);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
