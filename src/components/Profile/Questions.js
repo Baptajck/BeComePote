@@ -18,7 +18,6 @@ import { errorOrNot } from 'src/utils/Errors';
 const Questions = ({
   questions, submitQuestions, getIdOptions, responses, choices, getChoices, mounted,
 }) => {
-  const [checked, setChecked] = useState();
   useEffect(() => {
     if (mounted) {
       getChoices();
@@ -35,7 +34,6 @@ const Questions = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setChecked(false);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -86,7 +84,6 @@ const Questions = ({
                       onClick={handleGetIdOptions}
                       value={choice_content}
                       className="profile-select-option"
-                      checked={checked}
                       // required
                     />
                     <label htmlFor={id}>{choice_content}</label><br />
