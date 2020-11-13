@@ -16,7 +16,7 @@
     BeComePote cible toute personne à la recherche d’amis pour élargir ou construire leur cercle social suite à un déménagement, divorce, changement de cap particulier ou nouvelle activité sportive ou culturelle.
     <br />
     <br />
-    <a href="https://becomepote.fr">Voir le site</a>
+    <a href="http://becomepote.fr">Voir le site</a>
   </p>
 </p>
 

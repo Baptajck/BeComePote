@@ -12,15 +12,15 @@
 \*-------------------------------------------*/
   ._form {
     &-label {
-      opacity: 0.5;
-      font-size: 12px;
-      font-weight: bold;
-      position: absolute;
-      top: 13px;
-      left: 20px;
-      cursor: auto;
-      display: block;
-      transition: 0.2s;
+	  opacity: 0.5;
+	  font-size: 12px;
+	  font-weight: bold;
+	  position: absolute;
+	  top: 13px;
+	  left: 20px;
+	  cursor: auto;
+	  display: block;
+	  transition: 0.2s;
 
       &-icon {
         display: inline;
@@ -28,12 +28,12 @@
       }
     }
     &-input {
-      display: block;
-      margin: .5rem auto;
-      width: 100%;
-      border-radius: 1em;
-      padding: 0.7rem 2.1rem;
-      border: solid 1px RGBA(124, 124, 124, .7);
+	  display: block;
+	  margin: .5rem auto;
+	  width: 100%;
+	  border-radius: 1em;
+	  padding: 0.7rem 2.1rem;
+	  border: solid 1px RGBA(124, 124, 124, .7);
 
       &:focus {
         ~ ._form-label {

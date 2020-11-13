@@ -7,6 +7,7 @@ import { MdSend, MdClose } from 'react-icons/md';
 import { IoIosChatbubbles, IoIosArrowRoundBack } from 'react-icons/io';
 // import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Spinner from './Spinner';
 
 import './ChatApp.scss';
 
@@ -16,39 +17,25 @@ const ChatApp = ({
   submitMessage,
   fetchMessages,
   messages,
+  category,
+  url,
   // sessionUserId,
 }) => {
   const chatZone = useRef(null);
-  const [category, setCategory] = useState([]);
-  const [url, setUrl] = useState("");
+  const [loading, isLoading] = useState(true);
 
   useEffect(() => {
-    fetchMessages();
-    getCategory(url);
-  }, [url]);
+    setTimeout(() => {
+      isLoading(false)
+    }, 500);
+    setTimeout(() => {
+      fetchMessages();
+    }, 100);
+  }, []);
 
-  
   useEffect(() => {
-    splitURL();
     window.scrollTo(0, document.body.scrollHeight);
   });
-  
-  const getCategory = (url) => {
-    axios.get(`http://localhost:3000/api/category/${url}`)
-    .then((res) => {
-      setCategory(res.data);
-    })
-    .catch(() => (
-      AxiosError
-    ));
-  }
-
-  const splitURL = () => {
-    const url = document.location.pathname;
-    const a = url.split('/');
-    setUrl(Number(a[2]));
-  };
-
   
   const handleChange = (event) => {
     const { value } = event.target;
@@ -95,64 +82,73 @@ const ChatApp = ({
         <h1 className="chatroom-header-title">Salon : {category_name}</h1>
         <div className="chatroom-header-overlay"></div>
       </div>
-      <div ref={chatZone} className="chat-body">
-        {messages.map((state, id) => {
-          const itsMe = isMe(state.user[0].id, sessionUserId);
-          return (
-            <div key={id}>
-            <div 
-              className={
-                classNames(
-                  'chat-body-message',
-                  { 'chat-body-message--not-mine': !itsMe },
-                )
-              }
-            >
-              <div
+
+
+      {loading && (<Spinner loading={loading}/>)}
+
+      {!loading && (
+        <div ref={chatZone} className="chat-body">
+          {messages.map((state, id) => {
+            const itsMe = isMe(state.user[0].id, sessionUserId);
+            return (
+              <div key={id}>
+              <div 
                 className={
                   classNames(
-                    'chat-group-avatar',
-                    { 'chat-group-avatar--not-mine': !itsMe },
+                    'chat-body-message',
+                    { 'chat-body-message--not-mine': !itsMe },
                   )
                 }
               >
-                <div className="chat-body-message-author">{state.user[0].pseudo}</div>
-                <img
-                src={state.user[0].avatar}
-                alt={`Photo_de_profil_de_${state.user[0].pseudo}`}
+                <div
+                  className={
+                    classNames(
+                      'chat-group-avatar',
+                      { 'chat-group-avatar--not-mine': !itsMe },
+                    )
+                  }
+                >
+                  <div className="chat-body-message-author">{state.user[0].pseudo}</div>
+                  <img
+                  src={state.user[0].avatar}
+                  alt={`Photo_de_profil_de_${state.user[0].pseudo}`}
+                  className={
+                    classNames(
+                      'chatroom-avatar',
+                      { 'chatroom-avatar--not-mine': !itsMe },
+                    )
+                  }
+                  />
+                </div>
+                <p
                 className={
-                  classNames(
-                    'chatroom-avatar',
-                    { 'chatroom-avatar--not-mine': !itsMe },
-                  )
-                }
-                />
+                    classNames(
+                      'chat-body-message-content',
+                      { 'chat-body-message-content--not-mine': !itsMe },
+                    )
+                  }
+                >
+                {state.message_content}
+                </p>
               </div>
               <p
-              className={
+                className={
                   classNames(
-                    'chat-body-message-content',
-                    { 'chat-body-message-content--not-mine': !itsMe },
+                    'chat-body-message-date',
+                    { 'chat-body-message-date--not-mine': !itsMe },
                   )
                 }
               >
-              {state.message_content}
+              {`il y a ${dateChat(state.created_at)}`}
               </p>
-            </div>
-            <p
-              className={
-                classNames(
-                  'chat-body-message-date',
-                  { 'chat-body-message-date--not-mine': !itsMe },
-                )
-              }
-            >
-            {`il y a ${dateChat(state.created_at)}`}
-            </p>
-            </div>
-          );
-        })}
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+
+
       <div className="chat-footer">
         <form
           className="chat-footer-form"

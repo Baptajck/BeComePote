@@ -3,12 +3,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios, { AxiosError } from 'axios';
 import { NavLink } from 'react-router-dom';
 import { IoIosArrowRoundBack } from 'react-icons/io';
-import Field from './Field';
 import ChatApp from './ChatApp';
 
 // == Import : local
 import './chatApp.scss';
-import MessageList from './MessageList';
 
 // == Composant
 const ChatRoom = ({
@@ -19,18 +17,12 @@ const ChatRoom = ({
   messages,
   sessionUserId,
 }) => {
-  // const chatZone = useRef(null);
-
-  // useEffect(
-  //   () => {
-  //     chatZone.current.scrollBy(0, chatZone.current.scrollHeight);
-  //   },
-  // );
   const [category, setCategory] = useState([]);
   const [url, setUrl] = useState("");
   const getCategory = (url) => {
     axios.get(`http://localhost:3000/api/category/${url}`)
     .then((res) => {
+      console.log('>> Category: ', res.data);
       setCategory(res.data);
     })
     .catch(() => (
@@ -45,8 +37,11 @@ const ChatRoom = ({
   };
 
   useEffect(() => {
-    getCategory(url);
     splitURL();
+  })
+
+  useEffect(() => {
+    getCategory(url);
   }, [url])
 
   const { category_name, background } = category;
@@ -60,6 +55,8 @@ const ChatRoom = ({
       fetchMessages={fetchMessages}
       messages={messages}
       sessionUserId={sessionUserId}
+      category={category}
+      url={url}
     />
       {/* <div className="chatroom-container">
         <div className="chatroom-header">
