@@ -99,6 +99,7 @@ const SignUp = ({
               name="email"
               value={email.trim()}
               className="_form-input"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               minLength="3"
               required
               placeholder=" "

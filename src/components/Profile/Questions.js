@@ -3,7 +3,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable camelcase */
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { errorOrNot } from 'src/utils/Errors';
 /**
@@ -18,6 +18,7 @@ import { errorOrNot } from 'src/utils/Errors';
 const Questions = ({
   questions, submitQuestions, getIdOptions, responses, choices, getChoices, mounted,
 }) => {
+  const [checked, setChecked] = useState();
   useEffect(() => {
     if (mounted) {
       getChoices();
@@ -32,6 +33,17 @@ const Questions = ({
     getIdOptions(attributes.name.value, +id);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setChecked(false);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+    submitQuestions()
+  }
+
+
   return (
     <Fragment>
       <form action="#0" className="profile-form profile-form-quizz-container">
@@ -42,36 +54,51 @@ const Questions = ({
           errorItem: 'good',
           text: 'Tes réponses ont bien été mises à jour',
         })}
+
+
         <div className="profile-select">
-          { choices.map(({ choice_content, id, question_content }) => (
-            <div>
-              <p>{question_content}</p>
-              {/* <p>Votre réponse à la question {question_id}</p> */}
-              <p key={id} className="profile-select-p--default">{choice_content}</p>
+
+          {choices.length !== 0 && (
+            <div className="profile-response">
+              <h3 className="profile-response-title">Vos {checked === false && "nouvelle(s) "} Réponse(s) : </h3>
+              {
+                choices.map(({ choice_content, id, question_content }) => (
+                  <div key={id} className="profile-response-container">
+                    <p className="profile-response-text">{question_content}</p>
+                    <p className="profile-response-choice"> > {choice_content}</p>
+                  </div>
+                ))
+              }
+            <hr className="profile-response-hr"/>
             </div>
-          )) }
-          { questions.map(({ id, question_content, response }) => (
-            <div key={id} className="profile-form-quizz">
-              <label htmlfort={`question${id}`} className="profile-form-quizz-question">{question_content}</label><br />
-              {response.map(({ id, choice_content, question_id }) => (
-                <div className="profile-form-quizz-answers">
-                  <input
-                    type="radio"
-                    key={id}
-                    id={id}
-                    name={`testBody${question_id}`}
-                    onClick={handleGetIdOptions}
-                    value={choice_content}
-                    className="profile-select-option"
-                    required
-                  />
-                  <label htmlFor={id}>{choice_content}</label><br />
-                </div>
-              ))}
-            </div>
-          )) }
+          )}
+
+          {
+            questions.map(({ id, question_content, response }, i) => (
+              <div key={i} className="profile-form-quizz">
+                <label htmlfort={`question${id}`} className="profile-form-quizz-question">{question_content}</label><br />
+                {response.map(({ id, choice_content, question_id }, o) => (
+                  <div key={o} className="profile-form-quizz-answers">
+                    <input
+                      type="radio"
+                      id={id}
+                      name={`testBody${question_id}`}
+                      onClick={handleGetIdOptions}
+                      value={choice_content}
+                      className="profile-select-option"
+                      checked={checked}
+                      // required
+                    />
+                    <label htmlFor={id}>{choice_content}</label><br />
+                  </div>
+                ))}
+              </div>
+            ))
+          }
+
+
           <div className="logout-container">
-            <button type="button" onClick={submitQuestions} className="profile-select-button">Sauvegarder</button>
+            <button type="button" onClick={handleSubmit} className="profile-select-button">Sauvegarder</button>
           </div>
         </div>
       </form>

@@ -1,4 +1,4 @@
-@import 'src/styles/vars';
+@import 'src/styles/index';
 
 @media screen and (min-width: 300px) {
   /* 
@@ -16,28 +16,29 @@
 
   .category-card {
     margin-top: 2rem;
-    position: relative;
+    @include box-shadow(0px 0px 5px 0px #7c7c7c);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 
     &-image {
       display: block;
-      height: 320px;
-      width: 320px;
+      height: 160px;
+      width: 300px;
       object-fit: cover;
-      margin: 1rem auto;
-      border-radius: 2em;
-      box-shadow: 0px 0px 5px 0px #7c7c7c;
     }
 
     &-options {
-      position: absolute;
+      line-height: 1.7rem;
+      background: #292929;
+      color: #fff;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
 
       &-name {
         text-align: center;
-        font-size: 1.5rem;
-        color: $color-white;
-        text-shadow: 3px 3px 2px black;
-        font-style: italic;
-        font-weight: bold;
+        font-size: 1.3rem;
+        color: #fff;
+        padding: .7rem 0;
       }
     }
   }

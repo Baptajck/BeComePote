@@ -42,10 +42,11 @@
     background-color: white;
     border: 2px solid $color-orange;
     border-width: 2px 2px 0 2px;
-    border-radius: 1em;
+    border-radius: 10px;
     transform: scale(1.2);
     margin: 0 1rem;
     opacity: 1;
+    transition: 0.3s;
   }
   
   /*
@@ -56,7 +57,7 @@
       cursor: not-allowed;
       //opacity: .5;
     }
-
+  
     &-danger-zone {
       &-title {
         font-size: 1.5rem;
@@ -113,9 +114,7 @@
     }
     // Container for the full profile page
     &-layout{
-      background-color: $color-white;  
-      max-height: 9999px;
-      min-height: 850px;
+      position: relative;
     }
     &-container {
       text-align: center;
@@ -123,11 +122,11 @@
 
       // Image container for avatar
       &-image {
-        background: $gradient-background2;
-        height: 350px;
-        border-bottom-left-radius: 70%;
-        -webkit-box-shadow: inset 3px 0px 15px #292929;
-        box-shadow: inset 3px 0px 15px #292929;
+        // background: $gradient-background2;
+        // height: 350px;
+        // border-bottom-left-radius: 70%;
+        // -webkit-box-shadow: inset 3px 0px 15px #292929;
+        // box-shadow: inset 3px 0px 15px #292929;
       }
     }
 
@@ -137,10 +136,11 @@
       width: 250px;
       margin-top: 40px;
       border-radius: 50%;
-      border: 0.5em solid rgba(255, 255, 255, .4);
+      border: 0.5em solid rgba(55, 55, 55, .4);
       -webkit-filter: drop-shadow(2px 2px 2px white);
-      filter:  drop-shadow(2px 2px 2px white);
+      filter:  drop-shadow(2px 2px 20px black);
       object-fit: cover;
+      margin-bottom: 2.5rem;
     }
 
     // Wrapper for the section under the avatar
@@ -158,6 +158,40 @@
       margin: 2rem 1rem;
       color: $color-black;
       text-transform: uppercase;
+      position: absolute;
+      transform: rotate(-90deg) translate(-70%, 130%);
+      top: 0;
+      right: 0;
+    }
+
+    &-response {
+      &-container {
+        line-height: 1.5rem;
+        text-align: left;
+        margin-bottom: 1rem;
+      }
+
+      &-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-align: left;
+        margin-bottom: 1rem;
+      }
+
+      &-text {
+        font-size:1rem;
+      }
+
+      &-choice {
+        font-style: italic;
+        font-style: 0.75rem;
+      }
+
+      &-hr {
+        width: 30%;
+        color: #f7862f;
+        margin-bottom: 1rem;
+      }
     }
   }
 
@@ -171,9 +205,6 @@
       display: flex;
       flex-direction: column;
       align-content: space-between;
-      border-left: 2px solid $color-orange;
-      border-right: 2px solid $color-orange;
-      border-bottom: 2px solid $color-orange;
     }
 
     &-quizz-answers {
@@ -183,15 +214,9 @@
     }
 
     &-quizz-container {
-      border-left: 2px solid $color-orange;
-      border-right: 2px solid $color-orange;
-      border-bottom: 2px solid $color-orange;
     }
 
     &-button {
-      border-left: 2px solid $color-orange;
-      border-right: 2px solid $color-orange;
-      border-bottom: 2px solid $color-orange;
       display: flex;
       flex-direction: column;
       
@@ -277,6 +302,8 @@
       overflow-wrap: break-word;
       width: 90%;
       display: inline-block;
+      text-align: justify;
+      padding:0 0.6rem 0 0;
     }
 
     // Input area
@@ -325,6 +352,7 @@
       border-radius: 1em;
       padding: 1rem;
       margin: 1rem auto;
+      line-height: 1.5rem;
   }
 }
 

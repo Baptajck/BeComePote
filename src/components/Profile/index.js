@@ -129,12 +129,12 @@ const Profile = ({
 
   return (
     <div className="profile-layout">
+    <h1 className="profile-title">Mon profil</h1>
       <div className="profile-container">
         <div className="profile-container-image">
           <img src={profile.avatar} title="profile header" alt="header" className="profile-header" />
         </div>
         <div className="profile-wrapper">
-          <h1 className="profile-title">Mon profil</h1>
           <Tabs>
             {/* INFORMATIONS */}
             <div label="Infos">

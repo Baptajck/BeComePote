@@ -29,7 +29,7 @@ const ChatRoomGroup = () => {
       {categories.map(({ background, id, category_name }) => (
         <NavLink key={id} to={`chatroom/${id}/${category_name}`} className="category-card">
           <img src={background} alt={category_name} className="category-card-image"/>
-          <div className="search-profile-options category-card-options">
+          <div className="category-card-options">
             <h1 className="profile-options-nickname category-card-options-name">{category_name}</h1>
           </div>
         </NavLink>
